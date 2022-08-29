@@ -1,0 +1,40 @@
+{
+  "name": "@codinglabsau/inertia-form-builder",
+  "version": "1.0.0-beta.1",
+  "type": "module",
+  "files": [
+    "src",
+    "dist"
+  ],
+  "main": "./dist/inertia-form-builder.umd.cjs",
+  "module": "./dist/inertia-form-builder.js",
+  "exports": {
+    ".": {
+      "import": "./dist/inertia-form-builder.js",
+      "require": "./dist/inertia-form-builder.umd.cjs"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "publishConfig": {
+    "@codinglabsau:registry": "https://npm.pkg.github.com"
+  },
+  "dependencies": {
+    "@codinglabsau/ui": "^1.0.0",
+    "@inertiajs/inertia-vue3": "^0.6.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.2",
+    "@vitejs/plugin-vue": "^3.0.3",
+    "autoprefixer": "^10.4.7",
+    "postcss": "^8.4.14",
+    "prettier": "2.7.1",
+    "prettier-plugin-tailwindcss": "^0.1.12",
+    "tailwindcss": "^3.1.6",
+    "vite": "^3.0.7",
+    "vue": "^3.2.37"
+  }
+}
