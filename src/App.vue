@@ -48,7 +48,7 @@ import {
   Select,
   Text,
 } from "@codinglabsau/ui";
-import { FormBuilder, useSchema } from "./index.js";
+import { FormBuilder, useSchema } from "./index.ts";
 
 const simpleSchema = useSchema({
   firstname: Text,
