@@ -24,9 +24,9 @@ const props = defineProps({
     />
 
     <actions>
-      <PrimaryButton :loading="schema.form.processing" type="submit">{{
-        submit
-      }}</PrimaryButton>
+      <PrimaryButton :loading="schema.form.processing" type="submit">
+        {{ submit }}
+      </PrimaryButton>
     </actions>
   </div>
 </template>
