@@ -1,6 +1,6 @@
-<script setup>
-import { Actions, PrimaryButton } from '@codinglabsau/ui'
-import Schema from './Schema.vue'
+<script setup lang="ts">
+import { Actions, PrimaryButton } from "@codinglabsau/ui";
+import Schema from "./Schema.vue";
 
 const props = defineProps({
   schema: {
@@ -9,9 +9,9 @@ const props = defineProps({
   },
   submit: {
     type: String,
-    default: 'Save',
+    default: "Save",
   },
-})
+});
 </script>
 
 <template>
@@ -24,7 +24,9 @@ const props = defineProps({
     />
 
     <actions>
-      <PrimaryButton :loading="schema.form.processing" type="submit">{{ submit }}</PrimaryButton>
+      <PrimaryButton :loading="schema.form.processing" type="submit">{{
+        submit
+      }}</PrimaryButton>
     </actions>
   </div>
 </template>
