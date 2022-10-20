@@ -1,6 +1,6 @@
 {
   "name": "@codinglabsau/inertia-form-builder",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0-beta.3",
   "type": "module",
   "files": [
     "src",
@@ -23,7 +23,7 @@
     "@codinglabsau:registry": "https://npm.pkg.github.com"
   },
   "dependencies": {
-    "@codinglabsau/ui": "^1.0.0",
+    "@codinglabsau/ui": "^1.1.2",
     "@inertiajs/inertia-vue3": "^0.6.0"
   },
   "devDependencies": {
