@@ -19,12 +19,74 @@ content: [
 ## Usage
 ```vue
 <script setup>
-import { Container, Heading, Text } from '@codinglabsau/ui'
+import { usePage } from '@inertiajs/inertia-vue3'
+import { Container, Heading, Email, Text, Combobox, Select } from '@codinglabsau/ui'
 import { FormBuilder, useSchema } from '@codinglabsau/inertia-form-builder'
 
+// example user prop to pre-fill the form
+const props = defineProps({
+  user: {
+    type: Object,
+    required: true,
+  },
+})
+
 const schema = useSchema({
-  firstname: Text,
-  surname: Text,
+  // image input with a preview
+  avatar: {
+    type: Image,
+    currentImage: usePage().props.value.auth.user.avatar,
+  },
+  
+  // basic email input
+  email: {
+    type: Email,
+    value: props.user.email,
+  },
+  
+  // 2-column grid with 2 inputs
+  name: {
+    type: 'grid',
+    schema: {
+      firstname: {
+        type: Text,
+        value: props.user.firstname,
+      },
+      surname: {
+        type: Text,
+        value: props.user.surname,
+      },
+    },
+  },
+  team: {
+    type: Select,
+    value: 2,
+    options: [
+      { id: 1, name: 'Blue Team' },
+      { id: 2, name: 'Red Team' }
+    ],
+    disabled: true,
+  },
+  colour: {
+    type: Combobox,
+    value: 'bg-blue-400',
+    options: [
+      { id: 'bg-red-400', name: 'Red 400' },
+      { id: 'bg-blue-400', name: 'Blue 400' }
+    ],
+  },
+  days: {
+    type: 'checkboxes',
+    label: 'Available Days',
+    items: [
+      { label: 'Monday', value: 1 },
+      { label: 'Tuesday', value: 2 },
+      { label: 'Wednesday', value: 3 },
+      { label: 'Thursday', value: 4 },
+      { label: 'Friday', value: 5 },
+    ],
+    checked: props.user.days ?? [],
+  },
 })
 
 const submit = () => schema.form.post('/')
