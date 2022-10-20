@@ -5,13 +5,12 @@ on:
     branches:
       - main
 
-env:
-  NPM_TOKEN: ${{secrets.NPM_TOKEN}}
-#  NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
 jobs:
   publish-gpr:
     runs-on: ubuntu-latest
+    env:
+      NPM_TOKEN: ${{NPM_TOKEN_FOR_PUBLISHING_WITH_PRIVATE_DEPS}}
+      #NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -21,5 +20,3 @@ jobs:
           scope: '@codinglabsau'
       - run: npm ci --ignore-scripts
       - run: npm publish
-        env:
-          NPM_TOKEN: ${{secrets.GITHUB_TOKEN}}
