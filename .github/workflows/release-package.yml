@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NPM_TOKEN: ${{secrets.NPM_TOKEN_FOR_PUBLISHING_WITH_PRIVATE_DEPS}}
-      #NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
