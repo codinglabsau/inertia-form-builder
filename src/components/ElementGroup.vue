@@ -18,11 +18,7 @@ const props = defineProps({
 })
 
 const bindProps = (element) => {
-  if (element.hasOwnProperty('props')) {
-    return element.props
-  }
-
-  return null
+  return element.hasOwnProperty('props') ? element.props : null
 }
 </script>
 
