@@ -47,6 +47,7 @@ import {
   Image,
   Select,
   Text,
+  Checkbox,
 } from "@codinglabsau/ui";
 import { FormBuilder, useSchema } from "./index.js";
 
@@ -57,31 +58,31 @@ const simpleSchema = useSchema({
 
 const gridSchema = useSchema({
   avatar: {
-    type: Image,
+    component: Image,
     currentImage: "https://avatars.githubusercontent.com/u/1127412?v=4",
   },
   name: {
-    type: "grid",
+    component: "grid",
     schema: {
       firstname: {
-        type: Text,
+        component: Text,
         value: "Harry",
       },
       surname: {
-        type: Text,
+        component: Text,
         value: "Highpants",
       },
     },
   },
   email: {
-    type: Email,
+    component: Email,
     value: "harry@highpants.com",
   },
 });
 
 const selectAndCheckboxSchema = useSchema({
   position_id: {
-    type: Select,
+    component: Select,
     value: 2,
     options: [
       { id: 1, name: "Developer" },
@@ -90,12 +91,18 @@ const selectAndCheckboxSchema = useSchema({
     ],
     disabled: false,
   },
+  full_time: {
+    showLabel: false,
+    component: Checkbox,
+    label: "Full Time",
+    value: true,
+  },
   starts_at: {
-    type: Date,
+    component: Date,
     value: "2022-04-10",
   },
   days: {
-    type: "checkboxes",
+    component: "checkboxes",
     label: "Available Days",
     items: [
       { label: "Monday", value: 1 },
