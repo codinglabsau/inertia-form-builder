@@ -28,7 +28,7 @@ const props = defineProps({
     />
   </div>
 
-  <div v-else-if="element.component === 'grid'" class="grid grid-flow-col gap-x-4 gap-y-6">
+  <div v-else-if="element.type === 'grid'" class="grid grid-flow-col gap-x-4 gap-y-6">
     <ElementGroup
       v-for="(gridElement, gridKey) in element.schema"
       :key="gridKey"
@@ -39,7 +39,7 @@ const props = defineProps({
     />
   </div>
 
-  <template v-else-if="element.component === 'checkboxes'">
+  <template v-else-if="element.type === 'checkboxes'">
     <Label>{{ (element.label ?? label).replaceAll('_id', '').replaceAll('_', ' ') }} </Label>
     <ElementGroup
       v-for="item in element.items"

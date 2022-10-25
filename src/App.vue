@@ -58,51 +58,58 @@ const simpleSchema = useSchema({
 
 const gridSchema = useSchema({
   avatar: {
-    component: Image,
-    currentImage: "https://avatars.githubusercontent.com/u/1127412?v=4",
+    type: Image,
+    props: {
+      currentImage: "https://avatars.githubusercontent.com/u/1127412?v=4"
+    },
   },
   name: {
-    component: "grid",
+    type: "grid",
     schema: {
       firstname: {
-        component: Text,
+        type: Text,
         value: "Harry",
       },
       surname: {
-        component: Text,
+        type: Text,
         value: "Highpants",
       },
     },
   },
   email: {
-    component: Email,
+    type: Email,
     value: "harry@highpants.com",
   },
 });
 
 const selectAndCheckboxSchema = useSchema({
   position_id: {
-    component: Select,
+    type: Select,
     value: 2,
-    options: [
-      { id: 1, name: "Developer" },
-      { id: 2, name: "Designer" },
-      { id: 3, name: "Manager" },
-    ],
-    disabled: false,
+    props: {
+      options: [
+        { id: 1, name: "Developer" },
+        { id: 2, name: "Designer" },
+        { id: 3, name: "Manager" },
+      ],
+      disabled: false,
+    }
   },
   full_time: {
     showLabel: false,
-    component: Checkbox,
-    label: "Full Time",
+    type: Checkbox,
     value: true,
+    props: {
+      label: "Full Time",
+      value: null
+    }
   },
   starts_at: {
-    component: Date,
+    type: Date,
     value: "2022-04-10",
   },
   days: {
-    component: "checkboxes",
+    type: "checkboxes",
     label: "Available Days",
     items: [
       { label: "Monday", value: 1 },

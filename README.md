@@ -34,49 +34,55 @@ const props = defineProps({
 const schema = useSchema({
   // image input with a preview
   avatar: {
-    component: Image,
-    currentImage: usePage().props.value.auth.user.avatar,
+    type: Image,
+    props: {
+      currentImage: usePage().props.value.auth.user.avatar,
+    }
   },
   
   // basic email input
   email: {
-    component: Email,
+    type: Email,
     value: props.user.email,
   },
   
   // 2-column grid with 2 inputs
   name: {
-    component: 'grid',
+    type: 'grid',
     schema: {
       firstname: {
-        component: Text,
+        type: Text,
         value: props.user.firstname,
       },
       surname: {
-        component: Text,
+        type: Text,
         value: props.user.surname,
       },
     },
   },
   team: {
-    component: Select,
+    type: Select,
     value: 2,
-    options: [
-      { id: 1, name: 'Blue Team' },
-      { id: 2, name: 'Red Team' }
-    ],
-    disabled: true,
+    props: {
+      options: [
+        { id: 1, name: 'Blue Team' },
+        { id: 2, name: 'Red Team' }
+      ],
+      disabled: true,
+    }
   },
   colour: {
-    component: Combobox,
+    type: Combobox,
     value: 'bg-blue-400',
-    options: [
-      { id: 'bg-red-400', name: 'Red 400' },
-      { id: 'bg-blue-400', name: 'Blue 400' }
-    ],
+    props: {
+      options: [
+        { id: 'bg-red-400', name: 'Red 400' },
+        { id: 'bg-blue-400', name: 'Blue 400' }
+      ],
+    }
   },
   days: {
-    component: 'checkboxes',
+    type: 'checkboxes',
     label: 'Available Days',
     items: [
       { label: 'Monday', value: 1 },

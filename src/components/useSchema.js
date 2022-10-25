@@ -17,7 +17,7 @@ export default function useSchema(...args) {
       }
 
       // special handling for checkbox arrays
-      if (schema[key].component === 'checkboxes') {
+      if (schema[key].type === 'checkboxes') {
         carry[key] = schema[key].checked ?? []
 
         return carry

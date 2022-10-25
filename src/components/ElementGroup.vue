@@ -17,18 +17,12 @@ const props = defineProps({
   },
 })
 
-const prepareForBinding = (element) => {
-  const except = [
-      'value',
-  ]
+const bindProps = (element) => {
+  if (element.hasOwnProperty('props')) {
+    return element.props
+  }
 
-  except.forEach((key) => {
-    if (element.hasOwnProperty(key)) {
-      delete element[key]
-    }
-  })
-
-  return element
+  return null
 }
 </script>
 
@@ -37,8 +31,8 @@ const prepareForBinding = (element) => {
     <Label v-if="showLabel" :for="id">
       {{ id.replaceAll('_id', '').replaceAll('_', ' ') }}
     </Label>
-    <template v-if="element.component">
-      <component :is="element.component" :key="id" :id="id" v-model="form[id]" v-bind="prepareForBinding(element)" />
+    <template v-if="element.type">
+      <component :is="element.type" :key="id" :id="id" v-model="form[id]" v-bind="bindProps(element)" />
     </template>
     <template v-else>
       <component :is="element" :key="id" :id="id" v-model="form[id]" v-bind="$attrs" />
