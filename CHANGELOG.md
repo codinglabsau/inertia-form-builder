@@ -11,7 +11,7 @@ This release introduces a breaking change that will fix an issue with schema set
 Also added an actions slot in the `FormBuilder` component to allow customising the forms action buttons.
 
 ### Added
-- Added a slot for actions on the `FormBuilder` component with a prop to access the underlying form so that form actions can be customised
+- Added an `actions` slot to the `FormBuilder` component with a prop to access the underlying form so that form actions can be customised
 
 ### Changed
 - A `props` object has been added to the schema to explicitly set the props that are passed to a component
