@@ -108,6 +108,23 @@ const submit = () => schema.form.post('/')
 </template>
 ```
 
+### Customise Form Buttons
+You may use the `actions` slot that provides the underlying inertia form as a prop to customise the forms submit buttons:
+```vue
+<form @submit.prevent="submit">
+  <FormBuilder :schema="schema">
+    <template #actions="{ form }">
+      <div class="space-x-2">
+        <PrimaryButton :loading="form.processing" type="submit">
+          Save
+        </PrimaryButton>
+        <SecondaryButton type="button" @click="form.reset()">Reset</SecondaryButton>
+      </div>
+    </template>
+  </FormBuilder>
+</form>
+```
+
 ## Development
 Spin up the vite dev server with:
 ```bash

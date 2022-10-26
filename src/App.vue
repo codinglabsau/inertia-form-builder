@@ -34,6 +34,28 @@
         selectAndCheckboxSchema.form.data()
       }}</pre>
     </div>
+
+    <Heading>Custom Form Actions</Heading>
+    <div class="mt-4 grid grid-cols-2">
+      <div>
+        <form @submit.prevent="submit">
+          <FormBuilder :schema="actionsSchema">
+            <template #actions="{ form }">
+              <div class="space-x-2">
+                <PrimaryButton :loading="form.processing" type="submit">
+                  Save
+                </PrimaryButton>
+                <SecondaryButton type="button" @click="form.reset()">Reset</SecondaryButton>
+              </div>
+            </template>
+          </FormBuilder>
+        </form>
+      </div>
+
+      <pre class="border bg-gray-200 p-4">{{
+          actionsSchema.form.data()
+      }}</pre>
+    </div>
   </Container>
 </template>
 
@@ -48,6 +70,8 @@ import {
   Select,
   Text,
   Checkbox,
+  PrimaryButton,
+  SecondaryButton
 } from "@codinglabsau/ui";
 import { FormBuilder, useSchema } from "./index.js";
 
@@ -120,6 +144,12 @@ const selectAndCheckboxSchema = useSchema({
     ],
     checked: [2, 3, 5],
   },
+});
+
+const actionsSchema = useSchema({
+  Address: Text,
+  Suburb: Text,
+  Country: Text,
 });
 
 const submitted = ref(false);
