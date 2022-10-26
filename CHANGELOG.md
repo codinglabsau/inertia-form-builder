@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.0-beta.6] - 2022-10-26
+
+### Fixed
+- Updated dist files so that changes made in 1.0.0-beta.4 are now available
+
 ## [1.0.0-beta.5] - 2022-10-26
 
 ### Changed

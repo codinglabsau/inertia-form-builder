@@ -1,4 +1,4 @@
-import { defineComponent as ce, ref as H, computed as D, toRaw as G, watch as Xr, provide as sr, h as Xt, Fragment as oe, watchEffect as ke, onMounted as mt, onUnmounted as Kn, nextTick as re, cloneVNode as Zo, inject as cr, openBlock as S, createElementBlock as F, createVNode as Y, unref as V, isRef as ze, withCtx as ne, createElementVNode as B, normalizeClass as Pe, createBlock as q, renderList as Ve, toDisplayString as te, createCommentVNode as Q, withDirectives as ve, mergeProps as ae, vModelCheckbox as ea, normalizeProps as pr, guardReactiveProps as fr, vModelDynamic as ta, vModelText as Xn, renderSlot as he, vModelSelect as ra, vShow as yt, createTextVNode as tt, resolveDynamicComponent as Yr } from "vue";
+import { defineComponent as ce, ref as H, computed as D, toRaw as G, watch as Xr, provide as sr, h as Xt, Fragment as oe, watchEffect as ke, onMounted as mt, onUnmounted as Kn, nextTick as re, cloneVNode as Zo, inject as cr, openBlock as S, createElementBlock as F, createVNode as Y, unref as V, isRef as ze, withCtx as ne, createElementVNode as B, normalizeClass as Pe, createBlock as q, renderList as Ve, toDisplayString as te, createCommentVNode as Q, withDirectives as he, mergeProps as ae, vModelCheckbox as ea, normalizeProps as pr, guardReactiveProps as fr, vModelDynamic as ta, vModelText as Xn, renderSlot as me, vModelSelect as ra, vShow as yt, createTextVNode as tt, resolveDynamicComponent as Yr } from "vue";
 import { Link as Yn, useForm as na } from "@inertiajs/inertia-vue3";
 const oa = /* @__PURE__ */ B("circle", {
   class: "opacity-25",
@@ -70,8 +70,8 @@ const oa = /* @__PURE__ */ B("circle", {
         disabled: e.loading
       }, a.$attrs), {
         default: ne(() => [
-          he(a.$slots, "default"),
-          ve(Y(vt, { class: "ml-3" }, null, 512), [
+          me(a.$slots, "default"),
+          he(Y(vt, { class: "ml-3" }, null, 512), [
             [yt, e.loading]
           ])
         ]),
@@ -84,8 +84,8 @@ const oa = /* @__PURE__ */ B("circle", {
         disabled: e.loading,
         type: e.type
       }, a.$attrs), [
-        he(a.$slots, "default"),
-        ve(Y(vt, { class: "ml-3" }, null, 512), [
+        me(a.$slots, "default"),
+        he(Y(vt, { class: "ml-3" }, null, 512), [
           [yt, e.loading]
         ])
       ], 16, ua)) : Q("", !0)
@@ -132,8 +132,8 @@ const oa = /* @__PURE__ */ B("circle", {
         disabled: e.loading
       }, a.$attrs), {
         default: ne(() => [
-          he(a.$slots, "default"),
-          ve(Y(vt, {
+          me(a.$slots, "default"),
+          he(Y(vt, {
             class: "ml-3",
             "text-class": "text-gray-400"
           }, null, 512), [
@@ -149,8 +149,8 @@ const oa = /* @__PURE__ */ B("circle", {
         disabled: e.loading,
         type: e.type
       }, a.$attrs), [
-        he(a.$slots, "default"),
-        ve(Y(vt, {
+        me(a.$slots, "default"),
+        he(Y(vt, {
           class: "ml-3",
           "text-class": "text-gray-400"
         }, null, 512), [
@@ -2606,8 +2606,8 @@ var jr = wr, Qe = kl, uu = ql, su = jr("%TypeError%"), ct = jr("%WeakMap%", !0),
   repeat: function(e) {
     return e;
   }
-}, ye = Array.isArray, Du = String.prototype.split, Lu = Array.prototype.push, zo = function(e, t) {
-  Lu.apply(e, ye(t) ? t : [t]);
+}, ve = Array.isArray, Du = String.prototype.split, Lu = Array.prototype.push, zo = function(e, t) {
+  Lu.apply(e, ve(t) ? t : [t]);
 }, Fu = Date.prototype.toISOString, Jn = Ze.default, _ = {
   addQueryPrefix: !1,
   allowDots: !1,
@@ -2637,7 +2637,7 @@ var jr = wr, Qe = kl, uu = ql, su = jr("%TypeError%"), ct = jr("%WeakMap%", !0),
     }
     typeof O.get(_t) > "u" && (ee = 0);
   }
-  if (typeof l == "function" ? E = l(r, E) : E instanceof Date ? E = c(E) : o === "comma" && ye(E) && (E = lr.maybeMap(E, function(ue) {
+  if (typeof l == "function" ? E = l(r, E) : E instanceof Date ? E = c(E) : o === "comma" && ve(E) && (E = lr.maybeMap(E, function(ue) {
     return ue instanceof Date ? c(ue) : ue;
   })), E === null) {
     if (a)
@@ -2650,7 +2650,7 @@ var jr = wr, Qe = kl, uu = ql, su = jr("%TypeError%"), ct = jr("%WeakMap%", !0),
       if (o === "comma" && m) {
         for (var d = Du.call(String(E), ","), s = "", p = 0; p < d.length; ++p)
           s += (p === 0 ? "" : ",") + g(u(d[p], _.encoder, x, "value", h));
-        return [g(v) + (n && ye(E) && d.length === 1 ? "[]" : "") + "=" + s];
+        return [g(v) + (n && ve(E) && d.length === 1 ? "[]" : "") + "=" + s];
       }
       return [g(v) + "=" + g(u(E, _.encoder, x, "value", h))];
     }
@@ -2660,23 +2660,23 @@ var jr = wr, Qe = kl, uu = ql, su = jr("%TypeError%"), ct = jr("%WeakMap%", !0),
   if (typeof E > "u")
     return b;
   var w;
-  if (o === "comma" && ye(E))
+  if (o === "comma" && ve(E))
     w = [{ value: E.length > 0 ? E.join(",") || null : void 0 }];
-  else if (ye(l))
+  else if (ve(l))
     w = l;
   else {
     var L = Object.keys(E);
     w = y ? L.sort(y) : L;
   }
-  for (var I = n && ye(E) && E.length === 1 ? r + "[]" : r, k = 0; k < w.length; ++k) {
+  for (var I = n && ve(E) && E.length === 1 ? r + "[]" : r, k = 0; k < w.length; ++k) {
     var P = w[k], W = typeof P == "object" && typeof P.value < "u" ? P.value : E[P];
     if (!(i && W === null)) {
-      var me = ye(E) ? typeof o == "function" ? o(I, P) : I : I + (f ? "." + P : "[" + P + "]");
+      var ye = ve(E) ? typeof o == "function" ? o(I, P) : I : I + (f ? "." + P : "[" + P + "]");
       T.set(t, ee);
       var be = Wo();
       be.set(_t, T), zo(b, e(
         W,
-        me,
+        ye,
         o,
         n,
         a,
@@ -2710,7 +2710,7 @@ var jr = wr, Qe = kl, uu = ql, su = jr("%TypeError%"), ct = jr("%WeakMap%", !0),
     r = e.format;
   }
   var o = Ze.formatters[r], n = _.filter;
-  return (typeof e.filter == "function" || ye(e.filter)) && (n = e.filter), {
+  return (typeof e.filter == "function" || ve(e.filter)) && (n = e.filter), {
     addQueryPrefix: typeof e.addQueryPrefix == "boolean" ? e.addQueryPrefix : _.addQueryPrefix,
     allowDots: typeof e.allowDots > "u" ? _.allowDots : !!e.allowDots,
     charset: t,
@@ -2729,7 +2729,7 @@ var jr = wr, Qe = kl, uu = ql, su = jr("%TypeError%"), ct = jr("%WeakMap%", !0),
   };
 }, Uu = function(e, t) {
   var r = e, o = Bu(t), n, a;
-  typeof o.filter == "function" ? (a = o.filter, r = a("", r)) : ye(o.filter) && (a = o.filter, n = a);
+  typeof o.filter == "function" ? (a = o.filter, r = a("", r)) : ve(o.filter) && (a = o.filter, n = a);
   var i = [];
   if (typeof r != "object" || r === null)
     return "";
@@ -3084,7 +3084,7 @@ var fs = We, ds = fs;
     }, d.resolvePreserveOption = function(s, p) {
       return typeof s == "function" ? s(p) : s === "errors" ? Object.keys(p.props.errors || {}).length > 0 : s;
     }, d.visit = function(s, p) {
-      var b = this, w = p === void 0 ? {} : p, L = w.method, I = L === void 0 ? e.Method.GET : L, k = w.data, P = k === void 0 ? {} : k, W = w.replace, me = W !== void 0 && W, be = w.preserveScroll, ue = be !== void 0 && be, at = w.preserveState, it = at !== void 0 && at, kr = w.only, lt = kr === void 0 ? [] : kr, Ir = w.headers, Rr = Ir === void 0 ? {} : Ir, Cr = w.errorBag, je = Cr === void 0 ? "" : Cr, Tr = w.forceFormData, Nr = Tr !== void 0 && Tr, Dr = w.onCancelToken, Lr = Dr === void 0 ? function() {
+      var b = this, w = p === void 0 ? {} : p, L = w.method, I = L === void 0 ? e.Method.GET : L, k = w.data, P = k === void 0 ? {} : k, W = w.replace, ye = W !== void 0 && W, be = w.preserveScroll, ue = be !== void 0 && be, at = w.preserveState, it = at !== void 0 && at, kr = w.only, lt = kr === void 0 ? [] : kr, Ir = w.headers, Rr = Ir === void 0 ? {} : Ir, Cr = w.errorBag, je = Cr === void 0 ? "" : Cr, Tr = w.forceFormData, Nr = Tr !== void 0 && Tr, Dr = w.onCancelToken, Lr = Dr === void 0 ? function() {
       } : Dr, Fr = w.onBefore, Mr = Fr === void 0 ? function() {
       } : Fr, Vr = w.onStart, Br = Vr === void 0 ? function() {
       } : Vr, Ur = w.onProgress, $r = Ur === void 0 ? function() {
@@ -3103,7 +3103,7 @@ var fs = We, ds = fs;
         var _r = g(I, Ne, P, Et), Yo = _r[1];
         Ne = h(_r[0]), P = Yo;
       }
-      var _e = { url: Ne, method: I, data: P, replace: me, preserveScroll: ue, preserveState: it, only: lt, headers: Rr, errorBag: je, forceFormData: Nr, queryStringArrayFormat: Et, cancelled: !1, completed: !1, interrupted: !1 };
+      var _e = { url: Ne, method: I, data: P, replace: ye, preserveScroll: ue, preserveState: it, only: lt, headers: Rr, errorBag: je, forceFormData: Nr, queryStringArrayFormat: Et, cancelled: !1, completed: !1, interrupted: !1 };
       if (Mr(_e) !== !1 && function(R) {
         return x("before", { cancelable: !0, detail: { visit: R } });
       }(_e)) {
@@ -3124,7 +3124,7 @@ var fs = We, ds = fs;
           var z = R.data;
           lt.length && z.component === b.page.component && (z.props = a({}, b.page.props, z.props)), ue = b.resolvePreserveOption(ue, z), (it = b.resolvePreserveOption(it, z)) && ($ = window.history.state) != null && $.rememberedState && z.component === b.page.component && (z.rememberedState = window.history.state.rememberedState);
           var At = Ne, ut = h(z.url);
-          return At.hash && !ut.hash && m(At).href === ut.href && (ut.hash = At.hash, z.url = ut.href), b.setPage(z, { visitId: Kr, replace: me, preserveScroll: ue, preserveState: it });
+          return At.hash && !ut.hash && m(At).href === ut.href && (ut.hash = At.hash, z.url = ut.href), b.setPage(z, { visitId: Kr, replace: ye, preserveScroll: ue, preserveState: it });
         }).then(function() {
           var R = b.page.props.errors || {};
           if (Object.keys(R).length > 0) {
@@ -3156,10 +3156,10 @@ var fs = We, ds = fs;
         });
       }
     }, d.setPage = function(s, p) {
-      var b = this, w = p === void 0 ? {} : p, L = w.visitId, I = L === void 0 ? this.createVisitId() : L, k = w.replace, P = k !== void 0 && k, W = w.preserveScroll, me = W !== void 0 && W, be = w.preserveState, ue = be !== void 0 && be;
+      var b = this, w = p === void 0 ? {} : p, L = w.visitId, I = L === void 0 ? this.createVisitId() : L, k = w.replace, P = k !== void 0 && k, W = w.preserveScroll, ye = W !== void 0 && W, be = w.preserveState, ue = be !== void 0 && be;
       return Promise.resolve(this.resolveComponent(s.component)).then(function(at) {
         I === b.visitId && (s.scrollRegions = s.scrollRegions || [], s.rememberedState = s.rememberedState || {}, (P = P || h(s.url).href === window.location.href) ? b.replaceState(s) : b.pushState(s), b.swapComponent({ component: at, page: s, preserveState: ue }).then(function() {
-          me || b.resetScrollPositions(), P || E(s);
+          ye || b.resetScrollPositions(), P || E(s);
         }));
       });
     }, d.pushState = function(s) {
@@ -3258,8 +3258,8 @@ var fs = We, ds = fs;
           var W = P.match(/(<title [^>]+>)(.*?)(<\/title>)/);
           return k.title = W ? "" + W[1] + d(W[2]) + W[3] : P, k;
         }
-        var me = P.match(/ inertia="[^"]+"/);
-        return me ? k[me[0]] = P : k[Object.keys(k).length] = P, k;
+        var ye = P.match(/ inertia="[^"]+"/);
+        return ye ? k[ye[0]] = P : k[Object.keys(k).length] = P, k;
       }, {});
       return Object.values(I);
     }
@@ -3296,7 +3296,7 @@ function gs(e, t, r, o, n, a) {
   return S(), F("div", vs, [
     B("div", hs, [
       B("span", bs, [
-        he(e.$slots, "default")
+        me(e.$slots, "default")
       ])
     ])
   ]);
@@ -3327,7 +3327,7 @@ const ws = /* @__PURE__ */ ms(ys, [["render", gs]]), Te = {
   props: ["error"],
   setup(e) {
     return (t, r) => e.error ? (S(), F("div", Ss, [
-      he(t.$slots, "default", {}, () => [
+      me(t.$slots, "default", {}, () => [
         tt(te(e.error), 1)
       ])
     ])) : Q("", !0);
@@ -3362,7 +3362,7 @@ const Es = { class: "relative flex items-start" }, As = { class: "flex h-5 items
     return (o, n) => (S(), F(oe, null, [
       B("div", Es, [
         B("div", As, [
-          ve(B("input", ae({
+          he(B("input", ae({
             id: o.id,
             "onUpdate:modelValue": n[0] || (n[0] = (a) => ze(r) ? r.value = a : null),
             value: e.value,
@@ -3404,7 +3404,7 @@ const Es = { class: "relative flex items-start" }, As = { class: "flex h-5 items
   setup(e) {
     return (t, r) => (S(), F("div", null, [
       B("div", Ns, [
-        he(t.$slots, "default")
+        me(t.$slots, "default")
       ]),
       e.description ? (S(), F("p", Ds, te(e.description), 1)) : Q("", !0),
       e.error ? (S(), q(Je, {
@@ -3434,7 +3434,7 @@ const qs = ["for"], Ws = { name: "Label" }, Jo = /* @__PURE__ */ Object.assign(W
       for: V(r),
       class: "block text-sm font-medium capitalize leading-5 text-gray-700"
     }, [
-      he(o.$slots, "default")
+      me(o.$slots, "default")
     ], 8, qs));
   }
 }), zs = { class: "relative mt-1 rounded-md shadow-sm" }, Gs = ["id", "placeholder", "step"], Qs = {
@@ -3476,33 +3476,36 @@ const Kt = {
     }
   },
   setup(e) {
-    return (t, r) => (S(), F("div", null, [
-      e.showLabel ? (S(), q(V(Jo), {
-        key: 0,
-        for: e.id
-      }, {
-        default: ne(() => [
-          tt(te(e.id.replaceAll("_id", "").replaceAll("_", " ")), 1)
-        ]),
-        _: 1
-      }, 8, ["for"])) : Q("", !0),
-      e.element.type ? (S(), q(Yr(e.element.type), ae({
-        key: 1,
-        key: e.id,
-        id: e.id,
-        modelValue: e.form[e.id],
-        "onUpdate:modelValue": r[0] || (r[0] = (o) => e.form[e.id] = o)
-      }, e.element), null, 16, ["id", "modelValue"])) : (S(), q(Yr(e.element), ae({
-        key: 2,
-        key: e.id,
-        id: e.id,
-        modelValue: e.form[e.id],
-        "onUpdate:modelValue": r[1] || (r[1] = (o) => e.form[e.id] = o)
-      }, t.$attrs), null, 16, ["id", "modelValue"])),
-      Y(V(Je), {
-        error: e.form.errors[e.id]
-      }, null, 8, ["error"])
-    ]));
+    return (t, r) => {
+      var o;
+      return S(), F("div", null, [
+        e.showLabel ? (S(), q(V(Jo), {
+          key: 0,
+          for: e.id
+        }, {
+          default: ne(() => [
+            tt(te(e.id.replaceAll("_id", "").replaceAll("_", " ")), 1)
+          ]),
+          _: 1
+        }, 8, ["for"])) : Q("", !0),
+        e.element.type ? (S(), q(Yr(e.element.type), ae({
+          key: 1,
+          key: e.id,
+          id: e.id,
+          modelValue: e.form[e.id],
+          "onUpdate:modelValue": r[0] || (r[0] = (n) => e.form[e.id] = n)
+        }, (o = e.element.props) != null ? o : null), null, 16, ["id", "modelValue"])) : (S(), q(Yr(e.element), ae({
+          key: 2,
+          key: e.id,
+          id: e.id,
+          modelValue: e.form[e.id],
+          "onUpdate:modelValue": r[1] || (r[1] = (n) => e.form[e.id] = n)
+        }, t.$attrs), null, 16, ["id", "modelValue"])),
+        Y(V(Je), {
+          error: e.form.errors[e.id]
+        }, null, 8, ["error"])
+      ]);
+    };
   }
 }, lc = { key: 0 }, uc = {
   key: 1,
@@ -3588,17 +3591,21 @@ const Kt = {
       }, null, 8, ["element", "label", "schema"]))), 256)),
       Y(V(ws), null, {
         default: ne(() => [
-          Y(V(ca), {
-            loading: e.schema.form.processing,
-            type: "submit"
-          }, {
-            default: ne(() => [
-              tt(te(e.submit), 1)
-            ]),
-            _: 1
-          }, 8, ["loading"])
+          me(t.$slots, "actions", {
+            form: e.schema.form
+          }, () => [
+            Y(V(ca), {
+              loading: e.schema.form.processing,
+              type: "submit"
+            }, {
+              default: ne(() => [
+                tt(te(e.submit), 1)
+              ]),
+              _: 1
+            }, 8, ["loading"])
+          ])
         ]),
-        _: 1
+        _: 3
       })
     ]));
   }
