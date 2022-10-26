@@ -35,7 +35,9 @@ const schema = useSchema({
   // image input with a preview
   avatar: {
     type: Image,
-    currentImage: usePage().props.value.auth.user.avatar,
+    props: {
+      currentImage: usePage().props.value.auth.user.avatar,
+    }
   },
   
   // basic email input
@@ -61,19 +63,23 @@ const schema = useSchema({
   team: {
     type: Select,
     value: 2,
-    options: [
-      { id: 1, name: 'Blue Team' },
-      { id: 2, name: 'Red Team' }
-    ],
-    disabled: true,
+    props: {
+      options: [
+        { id: 1, name: 'Blue Team' },
+        { id: 2, name: 'Red Team' }
+      ],
+      disabled: true,
+    }
   },
   colour: {
     type: Combobox,
     value: 'bg-blue-400',
-    options: [
-      { id: 'bg-red-400', name: 'Red 400' },
-      { id: 'bg-blue-400', name: 'Blue 400' }
-    ],
+    props: {
+      options: [
+        { id: 'bg-red-400', name: 'Red 400' },
+        { id: 'bg-blue-400', name: 'Blue 400' }
+      ],
+    }
   },
   days: {
     type: 'checkboxes',
@@ -102,6 +108,23 @@ const submit = () => schema.form.post('/')
 </template>
 ```
 
+### Customise Form Buttons
+You may use the `actions` slot that provides the underlying inertia form as a prop to customise the forms submit buttons:
+```vue
+<form @submit.prevent="submit">
+  <FormBuilder :schema="schema">
+    <template #actions="{ form }">
+      <div class="space-x-2">
+        <PrimaryButton :loading="form.processing" type="submit">
+          Save
+        </PrimaryButton>
+        <SecondaryButton type="button" @click="form.reset()">Reset</SecondaryButton>
+      </div>
+    </template>
+  </FormBuilder>
+</form>
+```
+
 ## Development
 Spin up the vite dev server with:
 ```bash
@@ -113,6 +136,9 @@ To publish a new build, run:
 ```bash
 vite build
 ```
+
+## Changelog
+See [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
 ## Security
 If you discover any security related issues, create an issue on GitHub.

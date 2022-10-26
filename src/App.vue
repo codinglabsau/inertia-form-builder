@@ -34,6 +34,28 @@
         selectAndCheckboxSchema.form.data()
       }}</pre>
     </div>
+
+    <Heading>Custom Form Actions</Heading>
+    <div class="mt-4 grid grid-cols-2">
+      <div>
+        <form @submit.prevent="submit">
+          <FormBuilder :schema="actionsSchema">
+            <template #actions="{ form }">
+              <div class="space-x-2">
+                <PrimaryButton :loading="form.processing" type="submit">
+                  Save
+                </PrimaryButton>
+                <SecondaryButton type="button" @click="form.reset()">Reset</SecondaryButton>
+              </div>
+            </template>
+          </FormBuilder>
+        </form>
+      </div>
+
+      <pre class="border bg-gray-200 p-4">{{
+          actionsSchema.form.data()
+      }}</pre>
+    </div>
   </Container>
 </template>
 
@@ -47,6 +69,9 @@ import {
   Image,
   Select,
   Text,
+  Checkbox,
+  PrimaryButton,
+  SecondaryButton
 } from "@codinglabsau/ui";
 import { FormBuilder, useSchema } from "./index.js";
 
@@ -58,7 +83,9 @@ const simpleSchema = useSchema({
 const gridSchema = useSchema({
   avatar: {
     type: Image,
-    currentImage: "https://avatars.githubusercontent.com/u/1127412?v=4",
+    props: {
+      currentImage: "https://avatars.githubusercontent.com/u/1127412?v=4"
+    },
   },
   name: {
     type: "grid",
@@ -83,12 +110,23 @@ const selectAndCheckboxSchema = useSchema({
   position_id: {
     type: Select,
     value: 2,
-    options: [
-      { id: 1, name: "Developer" },
-      { id: 2, name: "Designer" },
-      { id: 3, name: "Manager" },
-    ],
-    disabled: false,
+    props: {
+      options: [
+        { id: 1, name: "Developer" },
+        { id: 2, name: "Designer" },
+        { id: 3, name: "Manager" },
+      ],
+      disabled: false,
+    }
+  },
+  full_time: {
+    showLabel: false,
+    type: Checkbox,
+    value: true,
+    props: {
+      label: "Full Time",
+      value: null
+    }
   },
   starts_at: {
     type: Date,
@@ -106,6 +144,12 @@ const selectAndCheckboxSchema = useSchema({
     ],
     checked: [2, 3, 5],
   },
+});
+
+const actionsSchema = useSchema({
+  Address: Text,
+  Suburb: Text,
+  Country: Text,
 });
 
 const submitted = ref(false);
