@@ -9,8 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 This release introduces a breaking change that will fix an issue with schema settings being mixed with a components props and cause various bugs with input element attributes. Any props that are required by the component must now be passed via a props object for example:
 
 ```javascript
-{
-    position_id: {
+position_id: {
     type: Select,
     value: 2,
     props: {
