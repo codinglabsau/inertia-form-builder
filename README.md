@@ -137,6 +137,9 @@ To publish a new build, run:
 vite build
 ```
 
+## Changelog
+See [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+
 ## Security
 If you discover any security related issues, create an issue on GitHub.
 
