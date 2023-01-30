@@ -1,3 +1,100 @@
+<script setup>
+import { ref } from "vue";
+import {
+  Container,
+  Heading,
+  Date,
+  Email,
+  Image,
+  Select,
+  Text,
+  Checkbox,
+  PrimaryButton,
+  SecondaryButton,
+} from "@codinglabsau/ui";
+import { FormBuilder, useSchema } from "./index.js";
+
+const simpleSchema = useSchema({
+  firstname: Text,
+  surname: Text,
+});
+
+const gridSchema = useSchema({
+  avatar: {
+    type: Image,
+    props: {
+      currentImage: "https://avatars.githubusercontent.com/u/1127412?v=4",
+    },
+  },
+  name: {
+    type: "grid",
+    schema: {
+      firstname: {
+        type: Text,
+        value: "Harry",
+      },
+      surname: {
+        type: Text,
+        value: "Highpants",
+      },
+    },
+  },
+  email: {
+    type: Email,
+    value: "harry@highpants.com",
+  },
+});
+
+const selectAndCheckboxSchema = useSchema({
+  position_id: {
+    type: Select,
+    value: 2,
+    props: {
+      options: [
+        { id: 1, name: "Developer" },
+        { id: 2, name: "Designer" },
+        { id: 3, name: "Manager" },
+      ],
+      disabled: false,
+    },
+  },
+  full_time: {
+    showLabel: false,
+    type: Checkbox,
+    value: true,
+    props: {
+      label: "Full Time",
+      value: null,
+    },
+  },
+  starts_at: {
+    type: Date,
+    value: "2022-04-10",
+  },
+  days: {
+    type: "checkboxes",
+    label: "Available Days",
+    items: [
+      { label: "Monday", value: 1 },
+      { label: "Tuesday", value: 2 },
+      { label: "Wednesday", value: 3 },
+      { label: "Thursday", value: 4 },
+      { label: "Friday", value: 5 },
+    ],
+    checked: [2, 3, 5],
+  },
+});
+
+const actionsSchema = useSchema({
+  Address: Text,
+  Suburb: Text,
+  Country: Text,
+});
+
+const submitted = ref(false);
+const submit = () => alert("submitted");
+</script>
+
 <template>
   <Container>
     <Heading>Basic Form</Heading>
@@ -45,113 +142,16 @@
                 <PrimaryButton :loading="form.processing" type="submit">
                   Save
                 </PrimaryButton>
-                <SecondaryButton type="button" @click="form.reset()">Reset</SecondaryButton>
+                <SecondaryButton type="button" @click="form.reset()"
+                  >Reset
+                </SecondaryButton>
               </div>
             </template>
           </FormBuilder>
         </form>
       </div>
 
-      <pre class="border bg-gray-200 p-4">{{
-          actionsSchema.form.data()
-      }}</pre>
+      <pre class="border bg-gray-200 p-4">{{ actionsSchema.form.data() }}</pre>
     </div>
   </Container>
 </template>
-
-<script setup>
-import { ref } from "vue";
-import {
-  Container,
-  Heading,
-  Date,
-  Email,
-  Image,
-  Select,
-  Text,
-  Checkbox,
-  PrimaryButton,
-  SecondaryButton
-} from "@codinglabsau/ui";
-import { FormBuilder, useSchema } from "./index.js";
-
-const simpleSchema = useSchema({
-  firstname: Text,
-  surname: Text,
-});
-
-const gridSchema = useSchema({
-  avatar: {
-    type: Image,
-    props: {
-      currentImage: "https://avatars.githubusercontent.com/u/1127412?v=4"
-    },
-  },
-  name: {
-    type: "grid",
-    schema: {
-      firstname: {
-        type: Text,
-        value: "Harry",
-      },
-      surname: {
-        type: Text,
-        value: "Highpants",
-      },
-    },
-  },
-  email: {
-    type: Email,
-    value: "harry@highpants.com",
-  },
-});
-
-const selectAndCheckboxSchema = useSchema({
-  position_id: {
-    type: Select,
-    value: 2,
-    props: {
-      options: [
-        { id: 1, name: "Developer" },
-        { id: 2, name: "Designer" },
-        { id: 3, name: "Manager" },
-      ],
-      disabled: false,
-    }
-  },
-  full_time: {
-    showLabel: false,
-    type: Checkbox,
-    value: true,
-    props: {
-      label: "Full Time",
-      value: null
-    }
-  },
-  starts_at: {
-    type: Date,
-    value: "2022-04-10",
-  },
-  days: {
-    type: "checkboxes",
-    label: "Available Days",
-    items: [
-      { label: "Monday", value: 1 },
-      { label: "Tuesday", value: 2 },
-      { label: "Wednesday", value: 3 },
-      { label: "Thursday", value: 4 },
-      { label: "Friday", value: 5 },
-    ],
-    checked: [2, 3, 5],
-  },
-});
-
-const actionsSchema = useSchema({
-  Address: Text,
-  Suburb: Text,
-  Country: Text,
-});
-
-const submitted = ref(false);
-const submit = () => alert("submitted");
-</script>
