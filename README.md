@@ -19,7 +19,7 @@ content: [
 ## Usage
 ```vue
 <script setup>
-import { usePage } from '@inertiajs/inertia-vue3'
+import { usePage } from '@inertiajs/vue3'
 import { Container, Heading, Email, Text, Combobox, Select } from '@codinglabsau/ui'
 import { FormBuilder, useSchema } from '@codinglabsau/inertia-form-builder'
 
