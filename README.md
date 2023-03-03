@@ -11,7 +11,7 @@ Include the path to the library in your project's `tailwind.config.js` purge con
 
 ```js
 content: [
-  './node_modules/@codinglabsau/inertia-form-builder/src/**/*.{js,vue}',
+  './node_modules/@codinglabsau/inertia-form-builder/dist/*.js',
   // ...
 ]
 ```
