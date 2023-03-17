@@ -1,14 +1,14 @@
 import { useForm } from '@inertiajs/vue3'
+import type { FieldSchema, SchemaType, FieldConfig, Checkboxes, UiField, Field } from './types'
 
-const reducer = (schema) =>
+const reducer = (schema: FieldSchema) =>
   Object.keys(schema).reduce((carry, key) => {
     carry[key] = schema[key].value ?? null
+
     return carry
   }, {})
 
-export default function useSchema(...args) {
-  const schema = args[0]
-
+export default function useSchema(schema: FieldSchema): SchemaType {
   const form = useForm(
     Object.keys(schema).reduce((carry, key) => {
       // reduce nested schema objects
@@ -18,7 +18,7 @@ export default function useSchema(...args) {
 
       // special handling for checkbox arrays
       if (schema[key].type === 'checkboxes') {
-        carry[key] = schema[key].checked ?? []
+        carry[key] = (schema[key] as FieldConfig<Checkboxes>).checked ?? []
 
         return carry
       }
@@ -35,3 +35,5 @@ export default function useSchema(...args) {
     form,
   }
 }
+
+export type { FieldSchema, SchemaType, FieldConfig, Checkboxes, UiField, Field }
