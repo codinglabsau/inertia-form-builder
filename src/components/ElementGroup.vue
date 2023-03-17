@@ -1,21 +1,19 @@
-<script setup>
+<script setup lang="ts">
+import type { UiField } from './useSchema'
+import type { InertiaForm } from '@inertiajs/vue3'
 import { Error, Label } from '@codinglabsau/ui'
 
-const props = defineProps({
-  id: {
-    type: String,
-    required: true,
-  },
-  element: {
-    required: true,
-  },
-  form: {
-    required: true,
-  },
-  showLabel: {
-    default: true,
-  },
-})
+withDefaults(
+  defineProps<{
+    id: string
+    element: UiField
+    form: InertiaForm<any>
+    showLabel?: boolean
+  }>(),
+  {
+    showLabel: true,
+  }
+)
 </script>
 
 <template>

@@ -1,29 +1,22 @@
-<script setup>
+<script setup lang="ts">
 import { Checkbox, Label } from '@codinglabsau/ui'
+import type { SchemaType, Field, UiField } from './useSchema'
 import ElementGroup from './ElementGroup.vue'
 import Schema from './Schema.vue'
 
-const props = defineProps({
-  element: {
-    type: Object,
-    required: true,
-  },
-  schema: {
-    type: Object,
-    required: true,
-  },
-  label: {
-    required: true,
-  },
-})
+defineProps<{
+  element: Record<string, Field> | Field
+  schema: SchemaType
+  label: string
+}>()
 </script>
 
 <template>
   <div v-if="Array.isArray(element)">
     <Schema
-      v-for="(element, label) in element"
-      :element="element"
-      :label="label"
+      v-for="(_element, _label) in element"
+      :element="_element"
+      :label="_label.toString()"
       :schema="schema"
     />
   </div>
@@ -41,8 +34,9 @@ const props = defineProps({
 
   <template v-else-if="element.type === 'checkboxes'">
     <Label>{{ (element.label ?? label).replaceAll('_id', '').replaceAll('_', ' ') }} </Label>
+
     <ElementGroup
-      v-for="item in element.items"
+      v-for="item in (element as UiField).items"
       :id="item.label ?? item"
       :element="Checkbox"
       v-model="schema.form[label]"
@@ -57,7 +51,7 @@ const props = defineProps({
     v-else
     :key="label"
     :id="label"
-    :element="element"
+    :element="(element as UiField)"
     :form="schema.form"
     v-bind="element"
   />

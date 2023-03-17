@@ -1,5 +1,4 @@
-<script setup>
-import { ref } from 'vue'
+<script setup lang="ts">
 import {
   Container,
   Heading,
@@ -12,7 +11,7 @@ import {
   PrimaryButton,
   SecondaryButton,
 } from '@codinglabsau/ui'
-import { FormBuilder, useSchema } from './index.js'
+import { FormBuilder, useSchema } from './index'
 
 const simpleSchema = useSchema({
   firstname: Text,
@@ -55,7 +54,6 @@ const selectAndCheckboxSchema = useSchema({
         { id: 2, name: 'Designer' },
         { id: 3, name: 'Manager' },
       ],
-      disabled: false,
     },
   },
   full_time: {
@@ -91,7 +89,6 @@ const actionsSchema = useSchema({
   Country: Text,
 })
 
-const submitted = ref(false)
 const submit = () => alert('submitted')
 </script>
 

@@ -1,17 +1,17 @@
-<script setup>
+<script setup lang="ts">
 import { Actions, PrimaryButton } from '@codinglabsau/ui'
+import type { SchemaType } from './useSchema'
 import Schema from './Schema.vue'
 
-const props = defineProps({
-  schema: {
-    type: Object,
-    required: true,
-  },
-  submit: {
-    type: String,
-    default: 'Save',
-  },
-})
+withDefaults(
+  defineProps<{
+    schema: SchemaType
+    submit: string
+  }>(),
+  {
+    submit: 'Save',
+  }
+)
 </script>
 
 <template>
@@ -19,7 +19,7 @@ const props = defineProps({
     <Schema
       v-for="(element, key) in schema.schema"
       :element="element"
-      :label="key"
+      :label="key as string"
       :schema="schema"
     />
 
