@@ -24,7 +24,7 @@
     "@codinglabsau:registry": "https://npm.pkg.github.com"
   },
   "peerDependencies": {
-    "@codinglabsau/ui": "file:../ui/codinglabsau-ui-1.8.9.tgz",
+    "@codinglabsau/ui": "^1.8.8",
     "@inertiajs/vue3": "^1.0.2",
     "vue": "^3.2.0"
   },
