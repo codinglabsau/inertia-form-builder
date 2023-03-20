@@ -97,6 +97,7 @@ const submit = () => alert('submitted')
 <template>
   <Container>
     <Heading>Basic Form</Heading>
+
     <div class="mt-4 grid grid-cols-2">
       <div>
         <form @submit.prevent="submit">
@@ -108,6 +109,7 @@ const submit = () => alert('submitted')
     </div>
 
     <Heading>Pre-filled Form with Grid</Heading>
+
     <div class="mt-4 grid grid-cols-2">
       <div>
         <form @submit.prevent="submit">
@@ -119,6 +121,7 @@ const submit = () => alert('submitted')
     </div>
 
     <Heading>Select and Checkboxes</Heading>
+
     <div class="mt-4 grid grid-cols-2">
       <div>
         <form @submit.prevent="submit">
@@ -130,6 +133,7 @@ const submit = () => alert('submitted')
     </div>
 
     <Heading>Custom Form Actions</Heading>
+
     <div class="mt-4 grid grid-cols-2">
       <div>
         <form @submit.prevent="submit">
@@ -137,6 +141,7 @@ const submit = () => alert('submitted')
             <template #actions="{ form }">
               <div class="space-x-2">
                 <PrimaryButton :loading="form.processing" type="submit"> Save</PrimaryButton>
+
                 <SecondaryButton type="button" @click="form.reset()">Reset</SecondaryButton>
               </div>
             </template>
