@@ -1,5 +1,6 @@
 import FormBuilder from './components/FormBuilder.vue'
-import ElementGroup from './components/ElementGroup.vue'
 import useSchema from './components/useSchema'
+import CheckboxGroup from './components/elements/CheckboxGroup.vue'
+import Grid from './components/elements/Grid.vue'
 
-export { FormBuilder, ElementGroup, useSchema }
+export { FormBuilder, useSchema, CheckboxGroup, Grid }

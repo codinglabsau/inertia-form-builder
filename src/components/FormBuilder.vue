@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { Actions, PrimaryButton } from '@codinglabsau/ui'
-import type { SchemaType } from './useSchema'
-import Schema from './Schema.vue'
+import type { Schema } from './useSchema'
+import Element from './Element.vue'
 
 withDefaults(
   defineProps<{
-    schema: SchemaType
-    submit: string
+    schema: Schema
+    submit?: string
   }>(),
   {
     submit: 'Save',
@@ -16,17 +16,12 @@ withDefaults(
 
 <template>
   <div class="mx-auto mt-6 max-w-md space-y-6">
-    <Schema
-      v-for="(element, key) in schema.schema"
-      :element="element"
-      :label="key as string"
-      :schema="schema"
-    />
+    <Element v-for="element in schema.elements" :element="element" :form="schema.form" />
 
-    <actions>
+    <Actions>
       <slot name="actions" :form="schema.form">
         <PrimaryButton :loading="schema.form.processing" type="submit">{{ submit }}</PrimaryButton>
       </slot>
-    </actions>
+    </Actions>
   </div>
 </template>

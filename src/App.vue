@@ -12,6 +12,8 @@ import {
   SecondaryButton,
 } from '@codinglabsau/ui'
 import { FormBuilder, useSchema } from './index'
+import Grid from './components/elements/Grid.vue'
+import CheckboxGroup from './components/elements/CheckboxGroup.vue'
 
 const simpleSchema = useSchema({
   firstname: Text,
@@ -20,33 +22,33 @@ const simpleSchema = useSchema({
 
 const gridSchema = useSchema({
   avatar: {
-    type: Image,
+    component: Image,
     props: {
       currentImage: 'https://avatars.githubusercontent.com/u/1127412?v=4',
     },
   },
   name: {
-    type: 'grid',
+    component: Grid,
     schema: {
       firstname: {
-        type: Text,
+        component: Text,
         value: 'Harry',
       },
       surname: {
-        type: Text,
+        component: Text,
         value: 'Highpants',
       },
     },
   },
   email: {
-    type: Email,
+    component: Email,
     value: 'harry@highpants.com',
   },
 })
 
 const selectAndCheckboxSchema = useSchema({
   position_id: {
-    type: Select,
+    component: Select,
     value: 2,
     props: {
       options: [
@@ -58,7 +60,7 @@ const selectAndCheckboxSchema = useSchema({
   },
   full_time: {
     showLabel: false,
-    type: Checkbox,
+    component: Checkbox,
     value: true,
     props: {
       label: 'Full Time',
@@ -66,11 +68,11 @@ const selectAndCheckboxSchema = useSchema({
     },
   },
   starts_at: {
-    type: Date,
+    component: Date,
     value: '2022-04-10',
   },
   days: {
-    type: 'checkboxes',
+    component: CheckboxGroup,
     label: 'Available Days',
     items: [
       { label: 'Monday', value: 1 },
