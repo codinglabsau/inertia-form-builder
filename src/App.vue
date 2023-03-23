@@ -1,5 +1,4 @@
-<script setup>
-import { ref } from 'vue'
+<script setup lang="ts">
 import {
   Container,
   Heading,
@@ -12,7 +11,9 @@ import {
   PrimaryButton,
   SecondaryButton,
 } from '@codinglabsau/ui'
-import { FormBuilder, useSchema } from './index.js'
+import { FormBuilder, useSchema } from './index'
+import Grid from './components/elements/Grid.vue'
+import CheckboxGroup from './components/elements/CheckboxGroup.vue'
 
 const simpleSchema = useSchema({
   firstname: Text,
@@ -21,33 +22,33 @@ const simpleSchema = useSchema({
 
 const gridSchema = useSchema({
   avatar: {
-    type: Image,
+    component: Image,
     props: {
       currentImage: 'https://avatars.githubusercontent.com/u/1127412?v=4',
     },
   },
   name: {
-    type: 'grid',
+    component: Grid,
     schema: {
       firstname: {
-        type: Text,
+        component: Text,
         value: 'Harry',
       },
       surname: {
-        type: Text,
+        component: Text,
         value: 'Highpants',
       },
     },
   },
   email: {
-    type: Email,
+    component: Email,
     value: 'harry@highpants.com',
   },
 })
 
 const selectAndCheckboxSchema = useSchema({
   position_id: {
-    type: Select,
+    component: Select,
     value: 2,
     props: {
       options: [
@@ -55,12 +56,11 @@ const selectAndCheckboxSchema = useSchema({
         { id: 2, name: 'Designer' },
         { id: 3, name: 'Manager' },
       ],
-      disabled: false,
     },
   },
   full_time: {
     showLabel: false,
-    type: Checkbox,
+    component: Checkbox,
     value: true,
     props: {
       label: 'Full Time',
@@ -68,11 +68,11 @@ const selectAndCheckboxSchema = useSchema({
     },
   },
   starts_at: {
-    type: Date,
+    component: Date,
     value: '2022-04-10',
   },
   days: {
-    type: 'checkboxes',
+    component: CheckboxGroup,
     label: 'Available Days',
     items: [
       { label: 'Monday', value: 1 },
@@ -91,13 +91,13 @@ const actionsSchema = useSchema({
   Country: Text,
 })
 
-const submitted = ref(false)
 const submit = () => alert('submitted')
 </script>
 
 <template>
   <Container>
     <Heading>Basic Form</Heading>
+
     <div class="mt-4 grid grid-cols-2">
       <div>
         <form @submit.prevent="submit">
@@ -109,6 +109,7 @@ const submit = () => alert('submitted')
     </div>
 
     <Heading>Pre-filled Form with Grid</Heading>
+
     <div class="mt-4 grid grid-cols-2">
       <div>
         <form @submit.prevent="submit">
@@ -120,6 +121,7 @@ const submit = () => alert('submitted')
     </div>
 
     <Heading>Select and Checkboxes</Heading>
+
     <div class="mt-4 grid grid-cols-2">
       <div>
         <form @submit.prevent="submit">
@@ -131,6 +133,7 @@ const submit = () => alert('submitted')
     </div>
 
     <Heading>Custom Form Actions</Heading>
+
     <div class="mt-4 grid grid-cols-2">
       <div>
         <form @submit.prevent="submit">
@@ -138,6 +141,7 @@ const submit = () => alert('submitted')
             <template #actions="{ form }">
               <div class="space-x-2">
                 <PrimaryButton :loading="form.processing" type="submit"> Save</PrimaryButton>
+
                 <SecondaryButton type="button" @click="form.reset()">Reset</SecondaryButton>
               </div>
             </template>
