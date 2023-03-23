@@ -1,6 +1,6 @@
 {
   "name": "@codinglabsau/inertia-form-builder",
-  "version": "1.0.0-beta.9",
+  "version": "1.0.0",
   "type": "module",
   "files": [
     "dist"
@@ -15,19 +15,16 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "type-check": "vue-tsc --noEmit",
+    "build": "run-p format lint type-check && vite build",
+    "type-check": "vue-tsc --declaration --emitDeclarationOnly",
     "format": "prettier \"src/**/*.{js,ts,vue}\" --write",
-    "lint": "eslint \"src/**/*.{js,ts,vue}\"",
-    "lint-fix": "eslint \"src/**/*.{js,ts,vue}\" --fix",
-    "check": "run-s type-check format lint-fix"
+    "lint": "eslint \"src/**/*.{js,ts,vue}\" --fix"
   },
   "publishConfig": {
     "@codinglabsau:registry": "https://npm.pkg.github.com"
   },
   "peerDependencies": {
-    "@codinglabsau/ui": "^1.8.8",
+    "@codinglabsau/ui": "^1.10.0",
     "@inertiajs/vue3": "^1.0.2",
     "vue": "^3.2.0"
   },

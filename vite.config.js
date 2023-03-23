@@ -18,6 +18,7 @@ export default defineConfig({
     rollupOptions: {
       external: ['vue', '@inertiajs/vue3'],
     },
+    emptyOutDir: false,
   },
   plugins: [vue()],
 })
