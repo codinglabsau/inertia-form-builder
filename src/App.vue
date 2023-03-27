@@ -11,9 +11,7 @@ import {
   PrimaryButton,
   SecondaryButton,
 } from '@codinglabsau/ui'
-import { FormBuilder, useSchema } from './index'
-import Grid from './components/elements/Grid.vue'
-import CheckboxGroup from './components/elements/CheckboxGroup.vue'
+import { FormBuilder, useSchema, Grid, CheckboxGroup } from './index'
 
 const simpleSchema = useSchema({
   firstname: Text,

@@ -21,7 +21,7 @@ content: [
 <script setup>
 import { usePage } from '@inertiajs/vue3'
 import { Container, Heading, Email, Text, Combobox, Select } from '@codinglabsau/ui'
-import { FormBuilder, useSchema } from '@codinglabsau/inertia-form-builder'
+import { FormBuilder, useSchema, CheckboxGroup, Grid } from '@codinglabsau/inertia-form-builder'
 
 // example user prop to pre-fill the form
 const props = defineProps({
@@ -48,7 +48,7 @@ const schema = useSchema({
 
   // 2-column grid with 2 inputs
   name: {
-    type: 'grid',
+    type: Grid,
     schema: {
       firstname: {
         component: Text,
@@ -82,7 +82,7 @@ const schema = useSchema({
     }
   },
   days: {
-    component: 'checkboxes',
+    component: CheckboxGroup,
     label: 'Available Days',
     items: [
       { label: 'Monday', value: 1 },
