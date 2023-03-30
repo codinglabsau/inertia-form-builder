@@ -1,3 +1,5 @@
+import { theme } from '@codinglabsau/ui'
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -12,5 +14,6 @@ module.exports = {
     require('@tailwindcss/forms')({
       strategy: 'class',
     }),
+    theme()
   ],
 }

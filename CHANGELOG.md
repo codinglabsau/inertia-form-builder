@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.0] - 2023-03-30
+### Changed
+- Upgraded ui to v2.0.0
+- Updated demo app to use tailwind v3.3.0
+
+### Breaking Changes
+- Must now use the `theme()` plugin in tailwind.config.js provided by ui for styles to work, see the updated readme.
+
 ## [1.0.0-beta.6] - 2022-10-26
 
 ### Fixed
