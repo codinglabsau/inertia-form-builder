@@ -1,7 +1,7 @@
 import { theme } from '@codinglabsau/ui'
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: [
     './node_modules/@codinglabsau/ui/src/**/*.{js,vue}',
     "./index.html",
