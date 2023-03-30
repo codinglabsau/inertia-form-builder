@@ -15,6 +15,19 @@ content: [
   // ...
 ]
 ```
+include the ui plugin theme in your `tailwind.config.js` plugin configuration:
+
+```js
+import { theme } from '@codinglabsau/ui'
+
+export default{
+    // ...
+    plugins: [
+        theme()
+    ]
+}
+```
+See the [codinglabsau/ui](https://github.com/codinglabsau/ui) documentation on how to customise the theme.
 
 ## Usage
 ```vue
