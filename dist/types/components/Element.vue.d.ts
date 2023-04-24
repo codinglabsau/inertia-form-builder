@@ -1,10 +1,11 @@
-import type { Element, Form } from './useSchema';
+/** __vue_virtual_code_placeholder */
+import type { Element } from './useSchema';
 declare const _default: import("vue").DefineComponent<__VLS_TypePropsToRuntimeProps<{
     element: Element;
-    form: Form;
+    form: any;
 }>, {}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<__VLS_TypePropsToRuntimeProps<{
     element: Element;
-    form: Form;
+    form: any;
 }>>>, {}>;
 export default _default;
 type __VLS_NonUndefinedable<T> = T extends undefined ? never : T;

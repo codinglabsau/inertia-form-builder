@@ -89,6 +89,23 @@ const actionsSchema = useSchema({
   Country: Text,
 })
 
+const inputStatesSchema = useSchema({
+  ReadOnly: {
+    component: Text,
+    value: 'read only',
+    props: {
+      readonly: true,
+    },
+  },
+  Disabled: {
+    component: Text,
+    value: 'disabled',
+    props: {
+      disabled: true,
+    },
+  },
+})
+
 const submit = () => alert('submitted')
 </script>
 
@@ -148,6 +165,18 @@ const submit = () => alert('submitted')
       </div>
 
       <pre class="border bg-gray-200 p-4">{{ actionsSchema.form.data() }}</pre>
+    </div>
+
+    <Heading>Input States</Heading>
+
+    <div class="mt-4 grid grid-cols-2">
+      <div>
+        <form @submit.prevent="submit">
+          <FormBuilder :schema="inputStatesSchema" />
+        </form>
+      </div>
+
+      <pre class="border bg-gray-200 p-4">{{ inputStatesSchema.form.data() }}</pre>
     </div>
   </Container>
 </template>
