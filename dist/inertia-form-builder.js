@@ -1782,7 +1782,7 @@ const Ul = /* @__PURE__ */ Al(Nl, [["render", Hl]]), Wl = { class: "relative fle
               "onUpdate:modelValue": n[0] || (n[0] = (a) => xt(l) ? l.value = a : null),
               value: e.value,
               type: "checkbox",
-              class: "text-primary-600 focus:ring-primary-500 h-4 w-4 rounded border-gray-300",
+              class: "h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500",
               disabled: e.disabled,
               readonly: e.readonly
             }, o.$attrs), null, 16, Kl), [
