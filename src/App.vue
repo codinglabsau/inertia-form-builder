@@ -13,6 +13,7 @@ import {
 } from '@codinglabsau/ui'
 import { FormBuilder, useSchema, Grid, CheckboxGroup } from './index'
 import SimpleCustomComponent from "./demo/SimpleCustomComponent.vue"
+import MultipleFieldsetCustomComponent from "./demo/MultipleFieldsetCustomComponent.vue"
 
 const simpleSchema = useSchema({
   firstname: Text,
@@ -108,21 +109,21 @@ const inputStatesSchema = useSchema({
 })
 
 const customComponentSchema = useSchema({
-  colour: SimpleCustomComponent
+  colour: {
+    component: SimpleCustomComponent,
+    value: 'green',
+  },
 })
 
-// const customComponentSchema = {
-//   client: {
-//     component: ClientFinder,
-//     props: {
-//       client: job?.client,
-//     },
-//     fieldset: {
-//       client_id: job?.client_id,
-//       client_contact_id: job?.client_contact_id,
-//     },
-//   },
-// }
+const customComponentWithFieldsetSchema = useSchema({
+  car: {
+    component: MultipleFieldsetCustomComponent,
+    fieldset: {
+      manufacturer: 'Ferrari',
+      model: 'Enzo',
+    },
+  },
+})
 
 const submit = () => alert('submitted')
 </script>
@@ -207,6 +208,18 @@ const submit = () => alert('submitted')
       </div>
 
       <pre class="border bg-gray-200 p-4">{{ customComponentSchema.form.data() }}</pre>
+    </div>
+
+    <Heading>Custom Component with Fieldset</Heading>
+
+    <div class="mt-4 grid grid-cols-2">
+      <div>
+        <form @submit.prevent="submit">
+          <FormBuilder :schema="customComponentWithFieldsetSchema" />
+        </form>
+      </div>
+
+      <pre class="border bg-gray-200 p-4">{{ customComponentWithFieldsetSchema.form.data() }}</pre>
     </div>
   </Container>
 </template>
