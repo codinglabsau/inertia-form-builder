@@ -12,6 +12,7 @@ import {
   SecondaryButton,
 } from '@codinglabsau/ui'
 import { FormBuilder, useSchema, Grid, CheckboxGroup } from './index'
+import SimpleCustomComponent from "./demo/SimpleCustomComponent.vue"
 
 const simpleSchema = useSchema({
   firstname: Text,
@@ -84,20 +85,20 @@ const selectAndCheckboxSchema = useSchema({
 })
 
 const actionsSchema = useSchema({
-  Address: Text,
-  Suburb: Text,
-  Country: Text,
+  address: Text,
+  suburb: Text,
+  country: Text,
 })
 
 const inputStatesSchema = useSchema({
-  ReadOnly: {
+  read_only: {
     component: Text,
     value: 'read only',
     props: {
       readonly: true,
     },
   },
-  Disabled: {
+  disabled: {
     component: Text,
     value: 'disabled',
     props: {
@@ -105,6 +106,23 @@ const inputStatesSchema = useSchema({
     },
   },
 })
+
+const customComponentSchema = useSchema({
+  colour: SimpleCustomComponent
+})
+
+// const customComponentSchema = {
+//   client: {
+//     component: ClientFinder,
+//     props: {
+//       client: job?.client,
+//     },
+//     fieldset: {
+//       client_id: job?.client_id,
+//       client_contact_id: job?.client_contact_id,
+//     },
+//   },
+// }
 
 const submit = () => alert('submitted')
 </script>
@@ -177,6 +195,18 @@ const submit = () => alert('submitted')
       </div>
 
       <pre class="border bg-gray-200 p-4">{{ inputStatesSchema.form.data() }}</pre>
+    </div>
+
+    <Heading>Custom Component</Heading>
+
+    <div class="mt-4 grid grid-cols-2">
+      <div>
+        <form @submit.prevent="submit">
+          <FormBuilder :schema="customComponentSchema" />
+        </form>
+      </div>
+
+      <pre class="border bg-gray-200 p-4">{{ customComponentSchema.form.data() }}</pre>
     </div>
   </Container>
 </template>
