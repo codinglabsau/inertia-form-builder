@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import {
   Container,
   Heading,
@@ -125,6 +126,8 @@ const customComponentWithFieldsetSchema = useSchema({
   },
 })
 
+const manufacturer = ref('')
+
 const submit = () => alert('submitted')
 </script>
 
@@ -221,5 +224,7 @@ const submit = () => alert('submitted')
 
       <pre class="border bg-gray-200 p-4">{{ customComponentWithFieldsetSchema.form.data() }}</pre>
     </div>
+
+    <MultipleFieldsetCustomComponent v-model:manufacturer="manufacturer"/>
   </Container>
 </template>
