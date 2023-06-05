@@ -19,19 +19,25 @@ const inputVal = computed({
   <div class="flex items-center space-x-2">
     <div
       class="h-16 w-16 rounded-full bg-green-400 hover:cursor-pointer"
-      :class="{ 'offset-2 shadow-lg ring ring-blue-300 drop-shadow': inputVal === 'green' }"
+      :class="{
+        'shadow-lg ring ring-blue-300 drop-shadow': inputVal === 'green',
+      }"
       @click="inputVal = 'green'"
     />
 
     <div
       class="h-16 w-16 rounded-full bg-orange-400 hover:cursor-pointer"
-      :class="{ 'offset-2 shadow-lg ring ring-blue-300 drop-shadow': inputVal === 'orange' }"
+      :class="{
+        'shadow-lg ring ring-blue-300 drop-shadow': inputVal === 'orange',
+      }"
       @click="inputVal = 'orange'"
     />
 
     <div
       class="h-16 w-16 rounded-full bg-red-400 hover:cursor-pointer"
-      :class="{ 'offset-2 shadow-lg ring ring-blue-300 drop-shadow': inputVal === 'red' }"
+      :class="{
+        'shadow-lg ring ring-blue-300 drop-shadow': inputVal === 'red',
+      }"
       @click="inputVal = 'red'"
     />
   </div>
