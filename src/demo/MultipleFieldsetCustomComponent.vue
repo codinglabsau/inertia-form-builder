@@ -22,6 +22,11 @@ const model = computed({
   set: (value) => emit('update:model', value),
 })
 
+const manufacturers = [
+  { id: 'Ferrari', name: 'Ferrari' },
+  { id: 'Lamborghini', name: 'Lamborghini' },
+]
+
 const ferraris = [
   { id: 1, name: 'LaFerrari' },
   { id: 2, name: '488 Pista' },
@@ -48,11 +53,8 @@ const options = computed(() => {
 
 <template>
   <div class="flex items-center space-x-2">
-    <Select v-model="manufacturer">
-      <option value="Ferrari">Ferrari</option>
-      <option value="Lamborghini">Lamborghini</option>
-    </Select>
+    <Select v-model="manufacturer" :options="manufacturers" class="w-48" />
 
-    <Select v-model="model" :options="options" />
+    <Select v-model="model" :options="options" class="w-48" />
   </div>
 </template>
