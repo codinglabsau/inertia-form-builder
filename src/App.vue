@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import {
   Container,
   Heading,
@@ -12,6 +13,9 @@ import {
   SecondaryButton,
 } from '@codinglabsau/ui'
 import { FormBuilder, useSchema, Grid, CheckboxGroup } from './index'
+import type { Fieldset } from './components/useSchema'
+import SimpleCustomComponent from './demo/SimpleCustomComponent.vue'
+import MultipleFieldsetCustomComponent from './demo/MultipleFieldsetCustomComponent.vue'
 
 const simpleSchema = useSchema({
   firstname: Text,
@@ -57,12 +61,12 @@ const selectAndCheckboxSchema = useSchema({
     },
   },
   full_time: {
-    showLabel: false,
     component: Checkbox,
+    showLabel: false,
     value: true,
     props: {
       label: 'Full Time',
-      value: null,
+      modelValue: true,
     },
   },
   starts_at: {
@@ -84,25 +88,58 @@ const selectAndCheckboxSchema = useSchema({
 })
 
 const actionsSchema = useSchema({
-  Address: Text,
-  Suburb: Text,
-  Country: Text,
+  address: Text,
+  suburb: Text,
+  country: Text,
 })
 
 const inputStatesSchema = useSchema({
-  ReadOnly: {
+  read_only: {
     component: Text,
     value: 'read only',
     props: {
       readonly: true,
     },
   },
-  Disabled: {
+  disabled: {
     component: Text,
     value: 'disabled',
     props: {
       disabled: true,
     },
+  },
+})
+
+const customComponentSchema = useSchema({
+  colour: {
+    component: SimpleCustomComponent,
+    value: 'green',
+  },
+})
+
+const customComponentWithFieldsetSchema = useSchema({
+  car: {
+    component: MultipleFieldsetCustomComponent,
+    fieldset: {
+      manufacturer: 'Lamborghini',
+      model: 5,
+    } as Fieldset,
+  },
+})
+
+const customComponentWithMappedFieldsetSchema = useSchema({
+  car: {
+    component: MultipleFieldsetCustomComponent,
+    fieldset: {
+      proxy_manufacturer: {
+        model: 'manufacturer',
+        value: 'Ferrari',
+      },
+      proxy_model: {
+        model: 'model',
+        value: 3,
+      },
+    } as Fieldset,
   },
 })
 
@@ -177,6 +214,44 @@ const submit = () => alert('submitted')
       </div>
 
       <pre class="border bg-gray-200 p-4">{{ inputStatesSchema.form.data() }}</pre>
+    </div>
+
+    <Heading>Custom Component</Heading>
+
+    <div class="mt-4 grid grid-cols-2">
+      <div>
+        <form @submit.prevent="submit">
+          <FormBuilder :schema="customComponentSchema" />
+        </form>
+      </div>
+
+      <pre class="border bg-gray-200 p-4">{{ customComponentSchema.form.data() }}</pre>
+    </div>
+
+    <Heading>Custom Component with Fieldset</Heading>
+
+    <div class="mt-4 grid grid-cols-2">
+      <div>
+        <form @submit.prevent="submit">
+          <FormBuilder :schema="customComponentWithFieldsetSchema" />
+        </form>
+      </div>
+
+      <pre class="border bg-gray-200 p-4">{{ customComponentWithFieldsetSchema.form.data() }}</pre>
+    </div>
+
+    <Heading>Custom Component with Mapped Fieldset</Heading>
+
+    <div class="mt-4 grid grid-cols-2">
+      <div>
+        <form @submit.prevent="submit">
+          <FormBuilder :schema="customComponentWithMappedFieldsetSchema" />
+        </form>
+      </div>
+
+      <pre class="border bg-gray-200 p-4">{{
+        customComponentWithMappedFieldsetSchema.form.data()
+      }}</pre>
     </div>
   </Container>
 </template>

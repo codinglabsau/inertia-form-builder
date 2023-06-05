@@ -148,7 +148,7 @@ The local server contains a demo of all the components.
 To publish a new build:
 1. Increment the version in `package.json`
 2. Ensure all components are registered in `src/index.ts`
-3. run `npm run build`; this will format, lint and type check in parallel, and finally run `vite build`
+3. run `npm run build`; this will format + lint + type check in parallel, and then vite build
 
 ## Changelog
 See [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
