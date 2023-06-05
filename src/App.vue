@@ -13,8 +13,8 @@ import {
   SecondaryButton,
 } from '@codinglabsau/ui'
 import { FormBuilder, useSchema, Grid, CheckboxGroup } from './index'
-import SimpleCustomComponent from "./demo/SimpleCustomComponent.vue"
-import MultipleFieldsetCustomComponent from "./demo/MultipleFieldsetCustomComponent.vue"
+import SimpleCustomComponent from './demo/SimpleCustomComponent.vue'
+import MultipleFieldsetCustomComponent from './demo/MultipleFieldsetCustomComponent.vue'
 
 const simpleSchema = useSchema({
   firstname: Text,
@@ -120,13 +120,11 @@ const customComponentWithFieldsetSchema = useSchema({
   car: {
     component: MultipleFieldsetCustomComponent,
     fieldset: {
-      manufacturer: 'Ferrari',
-      model: 'Enzo',
+      manufacturer: 'Lamborghini',
+      model: 5,
     },
   },
 })
-
-const manufacturer = ref('')
 
 const submit = () => alert('submitted')
 </script>
@@ -224,7 +222,5 @@ const submit = () => alert('submitted')
 
       <pre class="border bg-gray-200 p-4">{{ customComponentWithFieldsetSchema.form.data() }}</pre>
     </div>
-
-    <MultipleFieldsetCustomComponent v-model:manufacturer="manufacturer"/>
   </Container>
 </template>

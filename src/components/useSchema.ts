@@ -134,7 +134,6 @@ export default function useSchema(elements: ElementMap): Schema {
       // special handling for fieldsets
       if (elements[key]?.fieldset) {
         Object.entries(elements[key].fieldset).forEach(([fieldsetKey, fieldsetValue]) => {
-          console.log(`${fieldsetKey}: ${fieldsetValue}`)
           carry[fieldsetKey] = fieldsetValue
         })
 

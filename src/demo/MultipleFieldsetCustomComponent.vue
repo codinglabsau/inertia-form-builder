@@ -1,36 +1,37 @@
 <script setup lang="ts">
-import { computed } from "vue"
+import { computed } from 'vue'
+import { Select } from '@codinglabsau/ui'
 
 const props = defineProps<{
-  manufacturer?: string,
-  model?: string
+  manufacturer?: string
+  model?: Number
 }>()
 
 const emit = defineEmits<{
-  (e: "update:manufacturer", value?: typeof props.manufacturer): void,
-  (e: "update:model", value?: typeof props.model): void,
+  (e: 'update:manufacturer', value?: typeof props.manufacturer): void
+  (e: 'update:model', value?: typeof props.model): void
 }>()
 
 const manufacturer = computed({
   get: () => props.manufacturer,
-  set: (value) => emit("update:manufacturer", value),
+  set: (value) => emit('update:manufacturer', value),
 })
 
 const model = computed({
   get: () => props.model,
-  set: (value) => emit("update:model", value),
+  set: (value) => emit('update:model', value),
 })
 
 const ferraris = [
-  'LaFerrari',
-  '488 Pista',
-  'Enzo',
+  { id: 1, name: 'LaFerrari' },
+  { id: 2, name: '488 Pista' },
+  { id: 3, name: 'Enzo' },
 ]
 
 const lamborghinis = [
-  'Aventador SVJ',
-  'Huracan Performante',
-  'Sian',
+  { id: 4, name: 'Aventador SVJ' },
+  { id: 5, name: 'Huracan Performante' },
+  { id: 6, name: 'Sian' },
 ]
 
 const options = computed(() => {
@@ -47,13 +48,11 @@ const options = computed(() => {
 
 <template>
   <div class="flex items-center space-x-2">
-    <select v-model="manufacturer">
+    <Select v-model="manufacturer">
       <option value="Ferrari">Ferrari</option>
       <option value="Lamborghini">Lamborghini</option>
-    </select>
+    </Select>
 
-    <select v-model="model">
-      <option v-for="option in options" :value="option">{{ option }}</option>
-    </select>
+    <Select v-model="model" :options="options" />
   </div>
 </template>
