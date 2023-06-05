@@ -1,4 +1,3 @@
-/** __vue_virtual_code_placeholder */
 declare const _default: import("vue").DefineComponent<__VLS_TypePropsToRuntimeProps<{
     modelValue: any[];
     items: any[];
@@ -9,7 +8,7 @@ declare const _default: import("vue").DefineComponent<__VLS_TypePropsToRuntimePr
     items: any[];
 }>>> & {
     "onUpdate:modelValue"?: (value: any) => any;
-}, {}>;
+}, {}, {}>;
 export default _default;
 type __VLS_NonUndefinedable<T> = T extends undefined ? never : T;
 type __VLS_TypePropsToRuntimeProps<T> = {

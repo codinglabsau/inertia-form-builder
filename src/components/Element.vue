@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Error, Label } from '@codinglabsau/ui'
-import type { Element, Form } from './useSchema'
+import type { Element, Fieldset, Form } from './useSchema'
 
 const props = defineProps<{
   element: Element
@@ -10,9 +10,11 @@ const props = defineProps<{
 
 // configure component model(s)
 const models = computed(() => {
-  if (props.element.definition?.fieldset) {
+  const fieldset = props.element.definition?.fieldset as Fieldset
+
+  if (fieldset) {
     // fieldsets have a getter foreach component model
-    return Object.entries(props.element.definition.fieldset).reduce((carry, [key, value]) => {
+    return Object.entries(fieldset).reduce((carry, [key, value]) => {
       if (value?.model) {
         carry[value.model] = props.form[value.model]
       } else {
@@ -31,9 +33,11 @@ const models = computed(() => {
 
 // configure component listener(s)
 const listeners = computed(() => {
-  if (props.element.definition?.fieldset) {
+  const fieldset = props.element.definition?.fieldset as Fieldset
+
+  if (fieldset) {
     // fieldsets update each component model seperately
-    return Object.entries(props.element.definition.fieldset).reduce((carry, [key, value]) => {
+    return Object.entries(fieldset).reduce((carry, [key, value]) => {
       if (value?.model) {
         carry[`update:${value.model}`] = (newVal) => (props.form[value.model] = newVal)
       } else {

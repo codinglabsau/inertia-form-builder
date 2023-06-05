@@ -1,11 +1,10 @@
-/** __vue_virtual_code_placeholder */
 declare const _default: import("vue").DefineComponent<__VLS_TypePropsToRuntimeProps<{
     schema: any;
     form: any;
 }>, {}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<__VLS_TypePropsToRuntimeProps<{
     schema: any;
     form: any;
-}>>>, {}>;
+}>>>, {}, {}>;
 export default _default;
 type __VLS_NonUndefinedable<T> = T extends undefined ? never : T;
 type __VLS_TypePropsToRuntimeProps<T> = {

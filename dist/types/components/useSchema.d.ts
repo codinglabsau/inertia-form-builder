@@ -13,6 +13,7 @@ type ElementConfig<T extends Component = Component> = {
     value?: any;
     label?: string;
     schema?: ElementMap;
+    fieldset?: Fieldset;
     showLabel?: boolean;
     props?: InstanceType<T>['$props'];
 } & (T extends typeof CheckboxGroup ? CheckboxesConfig : {});
@@ -24,10 +25,16 @@ type Element = {
     name: string;
     definition: ElementDefinition;
 };
+type Fieldset = {
+    [key: string]: {
+        model?: string;
+        value?: any;
+    };
+};
 type Schema = {
     elements: Element[];
     form: Form;
 };
 export declare const mapElements: (elements: ElementMap) => Element[];
 export default function useSchema(elements: ElementMap): Schema;
-export type { Schema, ElementMap, Element, Form };
+export type { Schema, ElementMap, Element, Fieldset, Form };

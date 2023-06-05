@@ -13,6 +13,7 @@ import {
   SecondaryButton,
 } from '@codinglabsau/ui'
 import { FormBuilder, useSchema, Grid, CheckboxGroup } from './index'
+import type { Fieldset } from './components/useSchema'
 import SimpleCustomComponent from './demo/SimpleCustomComponent.vue'
 import MultipleFieldsetCustomComponent from './demo/MultipleFieldsetCustomComponent.vue'
 
@@ -60,12 +61,12 @@ const selectAndCheckboxSchema = useSchema({
     },
   },
   full_time: {
-    showLabel: false,
     component: Checkbox,
+    showLabel: false,
     value: true,
     props: {
       label: 'Full Time',
-      value: null,
+      modelValue: true,
     },
   },
   starts_at: {
@@ -122,7 +123,7 @@ const customComponentWithFieldsetSchema = useSchema({
     fieldset: {
       manufacturer: 'Lamborghini',
       model: 5,
-    },
+    } as Fieldset,
   },
 })
 
@@ -138,7 +139,7 @@ const customComponentWithMappedFieldsetSchema = useSchema({
         model: 'model',
         value: 3,
       },
-    },
+    } as Fieldset,
   },
 })
 

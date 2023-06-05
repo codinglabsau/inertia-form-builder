@@ -81,6 +81,7 @@ type ElementConfig<T extends Component = Component> = {
   value?: any
   label?: string
   schema?: ElementMap
+  fieldset?: Fieldset
   showLabel?: boolean
   props?: InstanceType<T>['$props']
 } & (T extends typeof CheckboxGroup ? CheckboxesConfig : {})
@@ -90,6 +91,13 @@ type ElementDefinition = ElementConfig | Component
 type ElementMap = { [key: string]: ElementDefinition }
 
 type Element = { name: string; definition: ElementDefinition }
+
+type Fieldset = {
+  [key: string]: {
+    model?: string
+    value?: any
+  }
+}
 
 type Schema = {
   elements: Element[]
@@ -132,8 +140,10 @@ export default function useSchema(elements: ElementMap): Schema {
       }
 
       // special handling for fieldsets
-      if (elements[key]?.fieldset) {
-        Object.entries(elements[key].fieldset).forEach(([fieldsetKey, fieldsetValue]) => {
+      const fieldset = elements[key]?.fieldset as Fieldset
+
+      if (fieldset) {
+        Object.entries(fieldset).forEach(([fieldsetKey, fieldsetValue]) => {
           if (fieldsetValue?.model) {
             carry[fieldsetValue.model] = fieldsetValue.value ?? null
           } else {
@@ -157,4 +167,4 @@ export default function useSchema(elements: ElementMap): Schema {
   }
 }
 
-export type { Schema, ElementMap, Element, Form }
+export type { Schema, ElementMap, Element, Fieldset, Form }
