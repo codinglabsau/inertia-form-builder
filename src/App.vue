@@ -126,6 +126,22 @@ const customComponentWithFieldsetSchema = useSchema({
   },
 })
 
+const customComponentWithMappedFieldsetSchema = useSchema({
+  car: {
+    component: MultipleFieldsetCustomComponent,
+    fieldset: {
+      proxy_manufacturer: {
+        model: 'manufacturer',
+        value: 'Ferrari',
+      },
+      proxy_model: {
+        model: 'model',
+        value: 3,
+      },
+    },
+  },
+})
+
 const submit = () => alert('submitted')
 </script>
 
@@ -221,6 +237,20 @@ const submit = () => alert('submitted')
       </div>
 
       <pre class="border bg-gray-200 p-4">{{ customComponentWithFieldsetSchema.form.data() }}</pre>
+    </div>
+
+    <Heading>Custom Component with Mapped Fieldset</Heading>
+
+    <div class="mt-4 grid grid-cols-2">
+      <div>
+        <form @submit.prevent="submit">
+          <FormBuilder :schema="customComponentWithMappedFieldsetSchema" />
+        </form>
+      </div>
+
+      <pre class="border bg-gray-200 p-4">{{
+        customComponentWithMappedFieldsetSchema.form.data()
+      }}</pre>
     </div>
   </Container>
 </template>

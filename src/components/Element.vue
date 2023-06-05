@@ -12,8 +12,12 @@ const props = defineProps<{
 const models = computed(() => {
   if (props.element.definition?.fieldset) {
     // fieldsets have a getter foreach component model
-    return Object.keys(props.element.definition.fieldset).reduce((carry, key) => {
-      carry[key] = props.form[key]
+    return Object.entries(props.element.definition.fieldset).reduce((carry, [key, value]) => {
+      if (value?.model) {
+        carry[value.model] = props.form[value.model]
+      } else {
+        carry[key] = props.form[key]
+      }
 
       return carry
     }, {})
@@ -29,8 +33,12 @@ const models = computed(() => {
 const listeners = computed(() => {
   if (props.element.definition?.fieldset) {
     // fieldsets update each component model seperately
-    return Object.keys(props.element.definition.fieldset).reduce((carry, key) => {
-      carry[`update:${key}`] = (value) => (props.form[key] = value)
+    return Object.entries(props.element.definition.fieldset).reduce((carry, [key, value]) => {
+      if (value?.model) {
+        carry[`update:${value.model}`] = (newVal) => (props.form[value.model] = newVal)
+      } else {
+        carry[`update:${key}`] = (newVal) => (props.form[key] = newVal)
+      }
 
       return carry
     }, {})
