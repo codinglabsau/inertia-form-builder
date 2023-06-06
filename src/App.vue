@@ -94,6 +94,10 @@ const actionsSchema = useSchema({
 })
 
 const inputStatesSchema = useSchema({
+  error: {
+    component: Text,
+    value: 'bad value',
+  },
   read_only: {
     component: Text,
     value: 'read only',
@@ -109,6 +113,10 @@ const inputStatesSchema = useSchema({
     },
   },
 })
+
+inputStatesSchema.form.errors = {
+  error: 'This error field is invalid.',
+}
 
 const customComponentSchema = useSchema({
   colour: {
@@ -127,6 +135,11 @@ const customComponentWithFieldsetSchema = useSchema({
   },
 })
 
+customComponentWithFieldsetSchema.form.errors = {
+  manufacturer: 'The manufacturer field handles errors internally',
+  model: 'The model field handles errors internally',
+}
+
 const customComponentWithMappedFieldsetSchema = useSchema({
   car: {
     component: MultipleFieldsetCustomComponent,
@@ -142,6 +155,10 @@ const customComponentWithMappedFieldsetSchema = useSchema({
     } as Fieldset,
   },
 })
+
+customComponentWithMappedFieldsetSchema.form.errors = {
+  proxy_manufacturer: 'The proxy manufacturer field is too proxy.',
+}
 
 const submit = () => alert('submitted')
 </script>
@@ -192,9 +209,13 @@ const submit = () => alert('submitted')
           <FormBuilder :schema="actionsSchema">
             <template #actions="{ form }">
               <div class="space-x-2">
-                <PrimaryButton :loading="form.processing" type="submit"> Save</PrimaryButton>
+                <PrimaryButton as="button" type="submit" :loading="form.processing">
+                  Save
+                </PrimaryButton>
 
-                <SecondaryButton type="button" @click="form.reset()">Reset</SecondaryButton>
+                <SecondaryButton as="button" type="button" @click="form.reset()">
+                  Reset
+                </SecondaryButton>
               </div>
             </template>
           </FormBuilder>
@@ -249,9 +270,9 @@ const submit = () => alert('submitted')
         </form>
       </div>
 
-      <pre class="border bg-gray-200 p-4">{{
-        customComponentWithMappedFieldsetSchema.form.data()
-      }}</pre>
+      <pre class="border bg-gray-200 p-4">
+        {{ customComponentWithMappedFieldsetSchema.form.data() }}
+      </pre>
     </div>
   </Container>
 </template>

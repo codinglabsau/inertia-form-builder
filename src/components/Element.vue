@@ -31,6 +31,23 @@ const models = computed(() => {
   }
 })
 
+// configure component props, discarding props that are unexpected
+const computedProps = computed(() => {
+  let componentProps = Object.entries({
+    ...props.element.definition,
+    ...props.element.definition.props,
+    ...models.value,
+    schema: props.element.definition.schema,
+    form: props.form,
+    id: props.element.name,
+    error: errorBag.value[0] ?? null,
+  })
+
+  let expectedProps = props.element.definition.component.props
+
+  return Object.fromEntries(componentProps.filter(([key]) => expectedProps.hasOwnProperty(key)))
+})
+
 // configure component listener(s)
 const listeners = computed(() => {
   const fieldset = props.element.definition?.fieldset as Fieldset
@@ -49,29 +66,29 @@ const listeners = computed(() => {
   }
 
   // a single model component updates the value on the underlying form
-  return { 'update:model-value': (value) => (props.form[props.element.name] = value) }
+  return { 'update:modelValue': (value) => (props.form[props.element.name] = value) }
 })
 
-const getProps = () => {
-  let componentProps = Object.entries({
-    ...props.element.definition,
-    ...props.element.definition.props,
-    ...models.value,
-    schema: props.element.definition.schema,
-    form: props.form,
-    id: props.element.name,
-  })
+// calculate all the errors that apply to the component
+const errorBag = computed(() => {
+  const fieldset = props.element.definition?.fieldset as Fieldset
 
-  let expectedProps = props.element.definition.component.props
+  if (fieldset) {
+    // fieldsets could have 1 error per field
+    return Object.keys(fieldset)
+      .map((element) => props.form.errors[element])
+      .filter((error) => error)
+  }
 
-  return Object.fromEntries(componentProps.filter(([key]) => expectedProps.hasOwnProperty(key)))
-}
+  // normal fields can only have 1 error
+  return [props.form.errors[props.element.name]]
+})
 
-const getLabel = () => {
+const label = computed(() => {
   const value = props.element.definition.label ?? props.element.name
 
   return value.replaceAll('_id', '').replaceAll('_', ' ')
-}
+})
 
 const isNested = !!props.element.definition.schema
 
@@ -81,16 +98,18 @@ const showLabel = props.element.definition.showLabel ?? !isNested
 <template>
   <div>
     <Label v-if="showLabel" :for="element.name">
-      {{ getLabel() }}
+      {{ label }}
     </Label>
 
     <component
       :is="element.definition.component"
       :key="element.name"
-      v-bind="getProps()"
+      v-bind="computedProps"
       v-on="listeners"
     />
 
-    <Error :error="form.errors[element.name]" />
+    <template v-if="!computedProps.hasOwnProperty('error')">
+      <Error v-for="(error, index) in errorBag" :key="index" :error="error" />
+    </template>
   </div>
 </template>

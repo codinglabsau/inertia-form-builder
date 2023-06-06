@@ -5,6 +5,7 @@ import { Select } from '@codinglabsau/ui'
 const props = defineProps<{
   manufacturer?: string
   model?: Number
+  error?: string
 }>()
 
 const emit = defineEmits<{
@@ -52,9 +53,13 @@ const options = computed(() => {
 </script>
 
 <template>
-  <div class="flex items-center space-x-2">
-    <Select v-model="manufacturer" :options="manufacturers" class="!w-48" />
+  <div>
+    <div class="flex items-center space-x-2">
+      <Select v-model="manufacturer" :options="manufacturers" class="!w-48" />
 
-    <Select v-model="model" :options="options" class="!w-48" />
+      <Select v-model="model" :options="options" class="!w-48" />
+    </div>
+
+    <div class="mt-4 rounded bg-red-600/75 px-4 py-2 text-red-100 shadow-inner">{{ error }}</div>
   </div>
 </template>
