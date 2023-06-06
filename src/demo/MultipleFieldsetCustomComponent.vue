@@ -53,8 +53,8 @@ const options = computed(() => {
 
 <template>
   <div class="flex items-center space-x-2">
-    <Select v-model="manufacturer" :options="manufacturers" class="w-48" />
+    <Select v-model="manufacturer" :options="manufacturers" class="!w-48" />
 
-    <Select v-model="model" :options="options" class="w-48" />
+    <Select v-model="model" :options="options" class="!w-48" />
   </div>
 </template>

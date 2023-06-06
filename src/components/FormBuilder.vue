@@ -25,7 +25,9 @@ withDefaults(
 
     <Actions>
       <slot name="actions" :form="schema.form">
-        <PrimaryButton :loading="schema.form.processing" type="submit">{{ submit }}</PrimaryButton>
+        <PrimaryButton as="button" type="submit" :loading="schema.form.processing">
+          {{ submit }}
+        </PrimaryButton>
       </slot>
     </Actions>
   </div>
