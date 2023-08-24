@@ -8,6 +8,7 @@ import {
   Image,
   Select,
   Text,
+  Number,
   Checkbox,
   PrimaryButton,
   SecondaryButton,
@@ -84,6 +85,27 @@ const selectAndCheckboxSchema = useSchema({
       { label: 'Friday', value: 5 },
     ],
     checked: [2, 3, 5],
+  },
+})
+
+const visibleSchema = useSchema({
+  limit_type: {
+    component: Select,
+    value: 1,
+    props: {
+      options: [
+        { id: 1, name: 'None' },
+        { id: 2, name: 'Limited' },
+        { id: 3, name: 'Unlimited' },
+      ],
+    },
+    label: 'Change to limited to show the limit input'
+  },
+  limit: {
+    component: Number,
+    visible: (form) => {
+      return form.limit_type === 2
+    },
   },
 })
 
@@ -199,6 +221,18 @@ const submit = () => alert('submitted')
       </div>
 
       <pre class="border bg-gray-200 p-4">{{ selectAndCheckboxSchema.form.data() }}</pre>
+    </div>
+
+    <Heading>Conditionally Render Form Elements</Heading>
+
+    <div class="mt-4 grid grid-cols-2">
+      <div>
+        <form @submit.prevent="submit">
+          <FormBuilder :schema="visibleSchema" />
+        </form>
+      </div>
+
+      <pre class="border bg-gray-200 p-4">{{ visibleSchema.form.data() }}</pre>
     </div>
 
     <Heading>Custom Form Actions</Heading>
