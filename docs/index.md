@@ -3,16 +3,16 @@
 layout: home
 
 hero:
-  name: "Inertia Form Builder | A Private Package by Coding Labs"
-  text: "Documentation for Inertia Form Builder"
-  tagline: My great project tagline
+  name: "Inertia Form Builder Documentation"
+  text: "A Private Package by Coding Labs"
+  tagline: Reducing Form Markup
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: Getting Started
+      link: /getting-started
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: Examples
+      link: /examples
 
 features:
   - title: Feature A

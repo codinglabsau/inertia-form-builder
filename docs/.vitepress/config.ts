@@ -2,8 +2,8 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "Inertia Form Builder | A Private Package by Coding Labs",
-  description: "Documentation for Inertia Form Builder",
+  title: "Inertia Form Builder Documentation",
+  description: "A Private Package by Coding Labs",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -15,8 +15,8 @@ export default defineConfig({
       {
         text: 'Examples',
         items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
+          { text: 'Getting Started', link: '/getting-started' },
+          { text: 'Examples', link: '/examples' }
         ]
       }
     ],
