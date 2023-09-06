@@ -9,4 +9,7 @@ lerna-debug.log*
 
 node_modules
 
+docs/.vitepress/dist
+docs/.vitepress/cache
+
 dist/types/demo
