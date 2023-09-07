@@ -19,7 +19,13 @@ export default defineConfig({
         text: 'Getting Started',
         items: [
           { text: 'Installation', link: '/installation' },
-          { text: 'Usage', link: '/usage' }
+          { text: 'Usage', link: '/usage' },
+        ]
+      },
+      {
+        text: 'Examples',
+        items: [
+          { text: 'Attributes', link: '/attributes'}
         ]
       }
     ],
