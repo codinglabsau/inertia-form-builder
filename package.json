@@ -18,7 +18,10 @@
     "build": "run-p format lint type-check && vite build",
     "type-check": "vue-tsc --declaration --emitDeclarationOnly",
     "format": "prettier \"src/**/*.{js,ts,vue}\" --write",
-    "lint": "eslint \"src/**/*.{js,ts,vue}\" --fix"
+    "lint": "eslint \"src/**/*.{js,ts,vue}\" --fix",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "publishConfig": {
     "@codinglabsau:registry": "https://npm.pkg.github.com"
