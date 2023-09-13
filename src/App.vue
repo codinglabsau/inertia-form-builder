@@ -99,7 +99,7 @@ const visibleSchema = useSchema({
         { id: 3, name: 'Unlimited' },
       ],
     },
-    label: 'Change to limited to show the limit input'
+    label: 'Change to limited to show the limit input',
   },
   limit: {
     component: Number,

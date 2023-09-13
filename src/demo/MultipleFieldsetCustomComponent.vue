@@ -4,7 +4,7 @@ import { Select } from '@codinglabsau/ui'
 
 const props = defineProps<{
   manufacturer?: string
-  model?: Number
+  model?: any
   error?: string
 }>()
 

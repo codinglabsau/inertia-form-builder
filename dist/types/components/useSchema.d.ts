@@ -15,6 +15,7 @@ type ElementConfig<T extends Component = Component> = {
     schema?: ElementMap;
     fieldset?: Fieldset;
     showLabel?: boolean;
+    visible?: (form: Form) => boolean;
     props?: InstanceType<T>['$props'];
 } & (T extends typeof CheckboxGroup ? CheckboxesConfig : {});
 type ElementDefinition = ElementConfig | Component;

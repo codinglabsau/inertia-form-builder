@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, ref, watch} from 'vue'
+import { computed, ref, watch } from 'vue'
 import { Error, Label } from '@codinglabsau/ui'
 import type { Element, Fieldset, Form } from './useSchema'
 
@@ -98,19 +98,19 @@ const visibleFunc = ref(
   typeof props.element.definition.visible === 'function'
     ? props.element.definition.visible
     : () => true
-);
+)
 
 const visible = ref(
   typeof props.element.definition.visible === 'function'
     ? props.element.definition.visible(props.form)
     : () => true
-);
+)
 
-watch(props.form, newForm => {
+watch(props.form, (newForm) => {
   if (typeof visibleFunc.value === 'function') {
-    visible.value = visibleFunc.value(newForm);
+    visible.value = visibleFunc.value(newForm)
   }
-});
+})
 </script>
 
 <template>
