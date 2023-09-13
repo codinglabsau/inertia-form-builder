@@ -17,5 +17,17 @@ jobs:
           node-version: 16
           registry-url: https://npm.pkg.github.com/
           scope: '@codinglabsau'
+
       - run: npm ci --ignore-scripts
+
       - run: npm publish
+
+      - name: Extract Package Version
+        id: extract-version
+        run: echo "VERSION=$(awk -F '\"' '/version/{print $4}' package.json)" >> "$GITHUB_OUTPUT"
+
+      - name: Notify Slack
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"inertia-form-builder $VERSION version was tagged\"}" https://hooks.slack.com/services/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
+        env:
+          VERSION: ${{ steps.extract-version.outputs.VERSION }}

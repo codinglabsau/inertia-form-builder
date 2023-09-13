@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { Error, Label } from '@codinglabsau/ui'
 import type { Element, Fieldset, Form } from './useSchema'
 
@@ -93,10 +93,28 @@ const label = computed(() => {
 const isNested = !!props.element.definition.schema
 
 const showLabel = props.element.definition.showLabel ?? !isNested
+
+const visibleFunc = ref(
+  typeof props.element.definition.visible === 'function'
+    ? props.element.definition.visible
+    : () => true
+)
+
+const visible = ref(
+  typeof props.element.definition.visible === 'function'
+    ? props.element.definition.visible(props.form)
+    : () => true
+)
+
+watch(props.form, (newForm) => {
+  if (typeof visibleFunc.value === 'function') {
+    visible.value = visibleFunc.value(newForm)
+  }
+})
 </script>
 
 <template>
-  <div>
+  <div v-if="visible">
     <Label v-if="showLabel" :for="element.name">
       {{ label }}
     </Label>
