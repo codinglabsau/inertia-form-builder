@@ -68,6 +68,4 @@ const gridSchema = useSchema({
 
 <FormBuilder :schema="gridSchema" />
 
-::: info Form
-  <pre class="border bg-gray-200 p-4">{{ gridSchema.form.data() }}</pre>
-:::
+<pre class="border bg-gray-200 p-4">{{ gridSchema.form.data() }}</pre>

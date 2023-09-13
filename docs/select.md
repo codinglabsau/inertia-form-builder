@@ -94,6 +94,4 @@ const selectAndCheckboxSchema = useSchema({
 
 <FormBuilder :schema="selectAndCheckboxSchema" />
 
-::: info Form
-  <pre class="border bg-gray-200 p-4">{{ selectAndCheckboxSchema.form.data() }}</pre>
-:::
+<pre class="border bg-gray-200 p-4">{{ selectAndCheckboxSchema.form.data() }}</pre>

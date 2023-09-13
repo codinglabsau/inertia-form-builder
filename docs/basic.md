@@ -3,19 +3,17 @@ import { Text, Email } from '@codinglabsau/ui';
 import { FormBuilder, useSchema } from '../src/index';
 
 const simpleSchema = useSchema({
-  firstname: {
-    component: Text,
-    value: 'John',
-  },
+  firstname: Text,
   surname: {
     component: Text,
-    value: 'Smith',
-  }
-});
+    label: 'Last name',
+  },
+})
 </script>
 
 # Attributes you can pass
-For each form attribute you can pass extra attributes to help improve the look and functionality of your form.
+This is how you can define the most basic form. Simply importing the components from our UI library and simply attach that to an attribute. If you
+have a complex form name which isn't user-friendly, you simply define your attribute as an object, pass the component and define the label
 
 ## Pre-filled standard form
 ```vue
@@ -24,20 +22,17 @@ import { Text } from '@codinglabsau/ui'
 import { FormBuilder, useSchema } from '@codinglabsau/inertia-form-builder'
 
 const simpleSchema = useSchema({
-  firstname: {
-    component: Text,
-    value: 'John',
-  },
+  firstname: Text,
   surname: {
     component: Text,
-    value: 'Smith',
-  }
+    label: 'Last name',
+  },
 })
 </script>
 ```
 
 <FormBuilder :schema="simpleSchema" />
 
-::: info Form
-  <pre class="border bg-gray-200 p-4">{{ simpleSchema.form.data() }}</pre>
-:::
+## Form in real-time
+As you can see, we still reference 'Last Name' as surname.
+<pre class="border bg-gray-200 p-4">{{ simpleSchema.form.data() }}</pre>

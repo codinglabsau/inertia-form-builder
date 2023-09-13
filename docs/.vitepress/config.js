@@ -32,9 +32,10 @@ export default {
         text: "Usages",
         collapsible: true,
         items: [
-          { text: "Basic Form", link: "/basic" },
+          { text: "The Basics", link: "/basic" },
           { text: "Using the Grid", link: "/grid" },
           { text: "Select and Checkboxes", link: "/select" },
+          { text: "Visibility of attributes", link: "/visibility" },
         ],
       },
     ],
