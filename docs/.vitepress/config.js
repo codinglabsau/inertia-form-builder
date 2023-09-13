@@ -29,10 +29,12 @@ export default {
         ],
       },
       {
-        text: "Getting Started",
+        text: "Usages",
         collapsible: true,
         items: [
-          { text: "Usages", link: "/usage" },
+          { text: "Basic Form", link: "/basic" },
+          { text: "Using the Grid", link: "/grid" },
+          { text: "Select and Checkboxes", link: "/select" },
         ],
       },
     ],

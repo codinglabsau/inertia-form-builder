@@ -1,6 +1,6 @@
 <script setup>
-import { Text } from '@codinglabsau/ui'
-import { FormBuilder, useSchema } from '../src/index'
+import { Text, Email } from '@codinglabsau/ui';
+import { FormBuilder, useSchema } from '../src/index';
 
 const simpleSchema = useSchema({
   firstname: {
@@ -11,14 +11,13 @@ const simpleSchema = useSchema({
     component: Text,
     value: 'Smith',
   }
-})
+});
 </script>
 
 # Attributes you can pass
 For each form attribute you can pass extra attributes to help improve the look and functionality of your form.
 
-
-## Pre-fill
+## Pre-filled standard form
 ```vue
 <script setup>
 import { Text } from '@codinglabsau/ui'
