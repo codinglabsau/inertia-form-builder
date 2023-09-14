@@ -38,6 +38,8 @@ export default {
           { text: "Select and Checkboxes", link: "/select" },
           { text: "Visibility of attributes", link: "/visibility" },
           { text: "Custom Form Actions", link: "/actions" },
+          { text: "States", link: "/states" },
+          { text: "Custom components", link: "/custom" },
         ],
       },
     ],
