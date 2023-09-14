@@ -28,6 +28,12 @@ const simpleSchema = useSchema({
   },
 })
 </script>
+
+<template>
+  <form @submit.prevent="submit">
+    <FormBuilder :schema="simpleSchema" />
+  </form>
+</template>
 ```
 
 <FormBuilder :schema="simpleSchema" />

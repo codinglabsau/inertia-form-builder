@@ -28,7 +28,6 @@ const visibleSchema = useSchema({
 One thing that is handy in forms is to hide certain attributes until others are filled or fulfill a certain condition. Here
 we simply defined a `visible` handler and reference any attribute on the form.
 
-## Pre-filled with Grid
 ```vue
 <script setup>
 import { Select, Number } from '@codinglabsau/ui';
@@ -55,8 +54,17 @@ const visibleSchema = useSchema({
   },
 })
 </script>
+
+<template>
+  <template>
+    <form @submit.prevent="submit">
+      <FormBuilder :schema="visibleSchema" />
+    </form>
+  </template>
+</template>
 ```
 
 <FormBuilder :schema="visibleSchema" />
 
+## Form in real-time
 <pre class="border bg-gray-200 p-4">{{ visibleSchema.form.data() }}</pre>

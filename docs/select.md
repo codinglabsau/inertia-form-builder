@@ -90,6 +90,12 @@ const selectAndCheckboxSchema = useSchema({
   },
 })
 </script>
+
+<template>
+  <form @submit.prevent="submit">
+    <FormBuilder :schema="selectAndCheckboxSchema" />
+  </form>
+</template>
 ```
 
 <FormBuilder :schema="selectAndCheckboxSchema" />

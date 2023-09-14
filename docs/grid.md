@@ -64,6 +64,12 @@ const gridSchema = useSchema({
   },
 })
 </script>
+
+<template>
+  <form @submit.prevent="submit">
+    <FormBuilder :schema="gridSchema" />
+  </form>
+</template>
 ```
 
 <FormBuilder :schema="gridSchema" />
