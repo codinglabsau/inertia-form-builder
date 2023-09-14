@@ -24,7 +24,7 @@ const visibleSchema = useSchema({
 })
 </script>
 
-# Dynamically change the visibility of an attribute
+# Visibility of Attributes
 One thing that is handy in forms is to hide certain attributes until others are filled or fulfill a certain condition. Here
 we simply define a `visible` handler and reference a form element to meet a condition before showing to the user.
 

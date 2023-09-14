@@ -28,7 +28,7 @@ inputStatesSchema.form.errors = {
 }
 </script>
 
-# States of attributes
+# States
 This is a showcase of what different states look like when an error occurs in an attribute, read only or a disabled state.
 
 ```vue

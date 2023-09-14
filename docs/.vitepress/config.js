@@ -15,31 +15,25 @@ export default {
 
   themeConfig: {
     logo: "/logo.svg",
-    // Navbar Link
-    nav: [{ text: "Docs", link: "/guide" }],
-    // Social Icons
-    socialLinks: [{ icon: "github", link: "https://github.com/codinglabsau/ui" }],
-    // Sidebar
+    socialLinks: [{ icon: "github", link: "https://github.com/codinglabsau/inertia-form-builder" }],
     sidebar: [
       {
         text: "Introduction",
-        collapsible: true,
         items: [
           { text: "Installation", link: "/installation" },
         ],
       },
       {
         text: "Usages",
-        collapsible: true,
         items: [
           { text: "The Basics", link: "/basic" },
           { text: "Using the Grid", link: "/grid" },
           { text: "Select and Checkboxes", link: "/select" },
-          { text: "Visibility of attributes", link: "/visibility" },
+          { text: "Visibility of Attributes", link: "/visibility" },
           { text: "Custom Form Actions", link: "/actions" },
           { text: "States", link: "/states" },
-          { text: "Custom components", link: "/custom" },
-          { text: "More custom components", link: "/more-custom" },
+          { text: "Custom Components", link: "/custom" },
+          { text: "More Custom Components", link: "/more-custom" },
         ],
       },
     ],

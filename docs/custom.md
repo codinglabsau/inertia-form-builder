@@ -10,7 +10,7 @@ const customComponentSchema = useSchema({
 })
 </script>
 
-# Usability of custom components
+# Custom Components
 Custom components is something very powerful to use in instances where our UI package does not provide an option for
 (In that case you should look to add that to UI) or in a very specific instance to the project at hand.
 
@@ -38,7 +38,6 @@ const customComponentSchema = useSchema({
 
 ## Form in real-time
 <pre class="border bg-gray-200 p-4">{{ customComponentSchema.form.data() }}</pre>
-
 
 ## Creating your own component
 A custom component is fairly straight forward, the important part is that it takes a `modelValue` and when that is updated in the

@@ -18,9 +18,13 @@ const customComponentWithFieldsetSchema = useSchema({
     } as Fieldset,
   },
 })
+
+customComponentWithFieldsetSchema.form.errors = {
+  manufacturer: 'The manufacturer field handles errors internally',
+}
 </script>
 
-# Fieldset
+# More Custom Components - Fieldset
 A fieldset can be created and used to have specific values mapped to a specific selection of elements. In this case as
 you can switch between sport car manufacturers and the model for that manufacturer. The FieldSet type is something you define as well, heres an example:
 

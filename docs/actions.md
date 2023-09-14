@@ -9,11 +9,10 @@ const actionsSchema = useSchema({
 })
 </script>
 
-# Dynamically change the visibility of an attribute
+# Custom Form Actions
 By default, we have a `PrimaryButton` to submit our form, but we have given you the option to add to this. In this
 case we have defined a reset form action.
 
-## Pre-filled with Grid
 ```vue
 <script setup>
 import { Text, PrimaryButton, SecondaryButton } from '@codinglabsau/ui';

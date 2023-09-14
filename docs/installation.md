@@ -1,4 +1,4 @@
-# Installing the Form-Builder
+# Installation Instructions
 
 ## Install with NPM
 `npm install @codinglabsau/inertia-form-builder`
@@ -24,7 +24,7 @@ import { theme } from '@codinglabsau/ui'
 export default{
   // ...
   plugins: [
-  theme()
+    theme()
   ]
 }
 ```
