@@ -25,8 +25,7 @@ export default {
         text: "Introduction",
         collapsible: true,
         items: [
-          { text: "Installation", link: "/introduction/installation" },
-          { text: "Final note", link: "/introduction/note" },
+          { text: "Installation", link: "/installation" },
         ],
       },
       {
