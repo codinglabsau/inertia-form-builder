@@ -11,8 +11,8 @@ const customComponentSchema = useSchema({
 </script>
 
 # Usability of custom components
-Custom components is definitely something very powerful to use in instances where the UI does not provide a option for (In that case you should look to add that to UI)
-or in a very specific instance.
+Custom components is something very powerful to use in instances where our UI package does not provide an option for
+(In that case you should look to add that to UI) or in a very specific instance to the project at hand.
 
 ```vue
 <script setup>
@@ -41,7 +41,7 @@ const customComponentSchema = useSchema({
 
 
 ## Creating your own component
-A custom component is fairly straight forward, the important part is that it takes a modelValue and when that is updated in the
+A custom component is fairly straight forward, the important part is that it takes a `modelValue` and when that is updated in the
 component you need to emit that event
 ```vue
 <script setup lang="ts">

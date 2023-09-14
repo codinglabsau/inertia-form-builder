@@ -21,8 +21,17 @@ const customComponentWithFieldsetSchema = useSchema({
 </script>
 
 # Fieldset
-Can be created and used to have specific values mapped to a specific selection. In this case as
-you switch between sport car manufacturers, the model options for that manufacturer is set.
+A fieldset can be created and used to have specific values mapped to a specific selection of elements. In this case as
+you can switch between sport car manufacturers and the model for that manufacturer. The FieldSet type is something you define as well, heres an example:
+
+```js
+type Fieldset = {
+  [key: string]: {
+    model?: string
+    value?: any
+  }
+}
+```
 
 ```vue
 <script setup>
@@ -52,7 +61,7 @@ const customComponentWithFieldsetSchema = useSchema({
 ## Form in real-time
 <pre class="border bg-gray-200 p-4">{{ customComponentWithFieldsetSchema.form.data() }}</pre>
 
-## How to
+## How to define this ourselves
 This is something that you can define within your custom components. In this instance, we have a computed
 property for manufacturer to then switch between models.
 

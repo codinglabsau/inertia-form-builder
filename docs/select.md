@@ -43,7 +43,8 @@ const selectAndCheckboxSchema = useSchema({
 </script>
 
 # Using multiple choice inputs
-For each form attribute you can pass extra attributes to help improve the look and functionality of your form. If you are using our UI components
+For each form attribute you can pass extra attributes to help improve the look and functionality of your form, ie; in the instance of the checkbox
+you can hide the label and define the label for the checkbox in the props. If you are using our UI components
 check the documentation for specifics on how the options should be passed in terms of structure.
 
 ```vue

@@ -26,7 +26,7 @@ const visibleSchema = useSchema({
 
 # Dynamically change the visibility of an attribute
 One thing that is handy in forms is to hide certain attributes until others are filled or fulfill a certain condition. Here
-we simply defined a `visible` handler and reference any attribute on the form.
+we simply define a `visible` handler and reference a form element to meet a condition before showing to the user.
 
 ```vue
 <script setup>

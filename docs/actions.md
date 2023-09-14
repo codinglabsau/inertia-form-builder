@@ -10,13 +10,13 @@ const actionsSchema = useSchema({
 </script>
 
 # Dynamically change the visibility of an attribute
-One thing that is handy in forms is to hide certain attributes until others are filled or fulfill a certain condition. Here
-we simply defined a `visible` handler and reference any attribute on the form.
+By default, we have a `PrimaryButton` to submit our form, but we have given you the option to add to this. In this
+case we have defined a reset form action.
 
 ## Pre-filled with Grid
 ```vue
 <script setup>
-import { Text } from '@codinglabsau/ui';
+import { Text, PrimaryButton, SecondaryButton } from '@codinglabsau/ui';
 import { FormBuilder, useSchema } from '../src/index';
 
 const actionsSchema = useSchema({
@@ -31,6 +31,10 @@ const actionsSchema = useSchema({
     <FormBuilder :schema="actionsSchema">
       <template #actions="{ form }">
         <div class="space-x-2">
+          <PrimaryButton as="button" type="submit" :loading="form.processing">
+            Save
+          </PrimaryButton>
+
           <SecondaryButton as="button" type="button" @click="form.reset()">
             Reset
           </SecondaryButton>
@@ -44,6 +48,10 @@ const actionsSchema = useSchema({
 <FormBuilder :schema="actionsSchema">
   <template #actions="{ form }">
     <div class="space-x-2">
+
+  <PrimaryButton as="button" type="submit" :loading="form.processing">
+        Save
+      </PrimaryButton>
       <SecondaryButton as="button" type="button" @click="form.reset()">
         Reset
       </SecondaryButton>

@@ -30,8 +30,9 @@ const gridSchema = useSchema({
 </script>
 
 # Grouping elements together
-One thing that we hate is a really long form we love the ability to group related elements together to reduce this size but also help the
-user relate certain elements together. By defining our parent `component` as `Grid` then defining our schema as an object with our attributes.
+One thing that we hate is a really long form, we love the ability to group related elements together to reduce this size but also help the
+user relate certain elements together. By defining our parent `component` as `Grid` then defining our schema as an object with our attributes,
+we can customise which elements are on a grid together.
 
 ```vue
 <script setup>
