@@ -10,7 +10,7 @@ const customComponentSchema = useSchema({
 })
 </script>
 
-# States of attributes
+# Usability of custom components
 Custom components is definitely something very powerful to use in instances where the UI does not provide a option for (In that case you should look to add that to UI)
 or in a very specific instance.
 

@@ -40,6 +40,7 @@ export default {
           { text: "Custom Form Actions", link: "/actions" },
           { text: "States", link: "/states" },
           { text: "Custom components", link: "/custom" },
+          { text: "More custom components", link: "/more-custom" },
         ],
       },
     ],
