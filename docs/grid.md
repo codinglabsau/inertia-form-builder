@@ -29,10 +29,10 @@ const gridSchema = useSchema({
 })
 </script>
 
-# Attributes you can pass
-For each form attribute you can pass extra attributes to help improve the look and functionality of your form.
+# Grouping elements together
+One thing that we hate is a really long form we love the ability to group related elements together to reduce this size but also help the
+user relate certain elements together. By defining our parent `component` as `Grid` then defining our schema as an object with our attributes.
 
-## Pre-filled with Grid
 ```vue
 <script setup>
 import { Text, Email } from '@codinglabsau/ui'
@@ -68,4 +68,5 @@ const gridSchema = useSchema({
 
 <FormBuilder :schema="gridSchema" />
 
+## Form in real-time
 <pre class="border bg-gray-200 p-4">{{ gridSchema.form.data() }}</pre>

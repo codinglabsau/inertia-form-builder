@@ -24,8 +24,9 @@ const visibleSchema = useSchema({
 })
 </script>
 
-# Attributes you can pass
-For each form attribute you can pass extra attributes to help improve the look and functionality of your form.
+# Dynamically change the visibility of an attribute
+One thing that is handy in forms is to hide certain attributes until others are filled or fulfill a certain condition. Here
+we simply defined a `visible` handler and reference any attribute on the form.
 
 ## Pre-filled with Grid
 ```vue

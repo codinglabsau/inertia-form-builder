@@ -42,10 +42,10 @@ const selectAndCheckboxSchema = useSchema({
 })
 </script>
 
-# Attributes you can pass
-For each form attribute you can pass extra attributes to help improve the look and functionality of your form.
+# Using multiple choice inputs
+For each form attribute you can pass extra attributes to help improve the look and functionality of your form. If you are using our UI components
+check the documentation for specifics on how the options should be passed in terms of structure.
 
-## Pre-filled with Grid
 ```vue
 <script setup>
 import { Select, Checkbox, Date } from '@codinglabsau/ui';
@@ -94,4 +94,5 @@ const selectAndCheckboxSchema = useSchema({
 
 <FormBuilder :schema="selectAndCheckboxSchema" />
 
+## Form in real-time
 <pre class="border bg-gray-200 p-4">{{ selectAndCheckboxSchema.form.data() }}</pre>

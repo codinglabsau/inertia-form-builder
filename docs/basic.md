@@ -11,11 +11,10 @@ const simpleSchema = useSchema({
 })
 </script>
 
-# Attributes you can pass
+# The Basics
 This is how you can define the most basic form. Simply importing the components from our UI library and simply attach that to an attribute. If you
-have a complex form name which isn't user-friendly, you simply define your attribute as an object, pass the component and define the label
+have a complex form name which isn't user-friendly, you simply define your attribute as an object, set the `component` and define the `label`
 
-## Pre-filled standard form
 ```vue
 <script setup>
 import { Text } from '@codinglabsau/ui'
