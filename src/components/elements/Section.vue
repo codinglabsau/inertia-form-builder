@@ -12,9 +12,11 @@ const elements = mapElements(props.schema)
 </script>
 
 <template>
-  <div class="mx-auto mt-6 max-w-md space-y-6">
+  <div class="mt-10">
     <label>{{ heading }}</label>
-
-    <Element v-for="(element, index) in elements" :key="index" :element="element" :form="form" />
+    
+    <div class="space-y-6 mt-4">
+      <Element v-for="(element, index) in elements" :key="index" :element="element" :form="form" />
+    </div>
   </div>
 </template>

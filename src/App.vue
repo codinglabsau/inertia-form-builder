@@ -341,7 +341,7 @@ const submit = () => alert('submitted')
       </pre>
     </div>
 
-    <Heading>Form Sections</Heading>
+    <Heading>Break up form into sections</Heading>
 
     <div class="mt-4 grid grid-cols-2">
       <div>
