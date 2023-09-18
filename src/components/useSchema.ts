@@ -107,6 +107,10 @@ type Schema = {
 
 const reducer = (elements: ElementMap) =>
   Object.keys(elements).reduce((carry, key) => {
+    if (elements[key].schema) {
+      return { ...carry, ...reducer(elements[key].schema) }
+    }
+
     carry[key] = elements[key].value ?? null
 
     return carry

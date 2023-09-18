@@ -13,7 +13,7 @@ import {
   PrimaryButton,
   SecondaryButton,
 } from '@codinglabsau/ui'
-import { FormBuilder, useSchema, Grid, CheckboxGroup } from './index'
+import { FormBuilder, useSchema, Grid, CheckboxGroup, Section } from './index'
 import type { Fieldset } from './components/useSchema'
 import SimpleCustomComponent from './demo/SimpleCustomComponent.vue'
 import MultipleFieldsetCustomComponent from './demo/MultipleFieldsetCustomComponent.vue'
@@ -182,6 +182,38 @@ customComponentWithMappedFieldsetSchema.form.errors = {
   proxy_manufacturer: 'The proxy manufacturer field is too proxy.',
 }
 
+const sectionSchema = useSchema({
+  physical_attributes: {
+    component: Section,
+    heading: 'Physical Attributes',
+    schema: {
+      attributes: {
+        component: Grid,
+        schema: {
+          height: {
+            component: Text,
+          },
+          weight: {
+            component: Text,
+          },
+        },
+      },
+    },
+  },
+  contact_details: {
+    component: Section,
+    heading: 'Contact Details',
+    schema: {
+      email: {
+        component: Text,
+      },
+      phone: {
+        component: Text,
+      },
+    },
+  },
+})
+
 const submit = () => alert('submitted')
 </script>
 
@@ -306,6 +338,20 @@ const submit = () => alert('submitted')
 
       <pre class="border bg-gray-200 p-4">
         {{ customComponentWithMappedFieldsetSchema.form.data() }}
+      </pre>
+    </div>
+
+    <Heading>Break up form into sections</Heading>
+
+    <div class="mt-4 grid grid-cols-2">
+      <div>
+        <form @submit.prevent="submit">
+          <FormBuilder :schema="sectionSchema" />
+        </form>
+      </div>
+
+      <pre class="border bg-gray-200 p-4">
+        {{ sectionSchema.form.data() }}
       </pre>
     </div>
   </Container>
