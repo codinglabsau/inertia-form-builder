@@ -1,12 +1,44 @@
 <script setup>
-import { Text, Email } from '@codinglabsau/ui';
-import { FormBuilder, useSchema } from '../src/index';
+import { Text } from '@codinglabsau/ui';
+import { FormBuilder, useSchema, Grid, Section } from '../src/index';
 
 const simpleSchema = useSchema({
   firstname: Text,
   surname: {
     component: Text,
     label: 'Last name',
+  },
+});
+
+const sectionSchema = useSchema({
+  physical_attributes: {
+    component: Section,
+    heading: 'Physical Attributes',
+    schema: {
+      attributes: {
+        component: Grid,
+        schema: {
+          height: {
+            component: Text,
+          },
+          weight: {
+            component: Text,
+          },
+        },
+      },
+    },
+  },
+  contact_details: {
+    component: Section,
+    heading: 'Contact Details',
+    schema: {
+      email: {
+        component: Text,
+      },
+      phone: {
+        component: Text,
+      },
+    },
   },
 })
 </script>
@@ -41,3 +73,53 @@ const simpleSchema = useSchema({
 ## Form in real-time
 As you can see, we still reference 'Last Name' as surname.
 <pre class="border bg-gray-200 p-4">{{ simpleSchema.form.data() }}</pre>
+
+## Using Section
+This is a very handy feature to help break up long nasty forms and help the user identify which sections are related.
+
+```vue
+<script setup>
+import { Text } from '@codinglabsau/ui'
+import { FormBuilder, useSchema, Section, Grid } from '@codinglabsau/inertia-form-builder'
+
+const sectionSchema = useSchema({
+  physical_attributes: {
+    component: Section,
+    heading: 'Physical Attributes',
+    schema: {
+      attributes: {
+        component: Grid,
+        schema: {
+          height: {
+            component: Text,
+          },
+          weight: {
+            component: Text,
+          },
+        },
+      },
+    },
+  },
+  contact_details: {
+    component: Section,
+    heading: 'Contact Details',
+    schema: {
+      email: {
+        component: Text,
+      },
+      phone: {
+        component: Text,
+      },
+    },
+  },
+})
+</script>
+
+<template>
+  <form @submit.prevent="submit">
+    <FormBuilder :schema="sectionSchema" />
+  </form>
+</template>
+```
+
+<FormBuilder :schema="sectionSchema" />
