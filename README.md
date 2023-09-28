@@ -147,8 +147,10 @@ The local server contains a demo of all the components.
 
 To publish a new build:
 1. Increment the version in `package.json`
-2. Ensure all components are registered in `src/index.ts`
-3. run `npm run build`; this will format + lint + type check in parallel, and then vite build
+2. Run `npm update` to update the lock file
+3. Ensure all components are registered in `src/index.ts`
+4. Run `npm run build`; this will format, lint, type check and do a vite build
+5. Push to GitHub; the GitHub Action will publish the new build to GitHub Packages
 
 ## Changelog
 See [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
