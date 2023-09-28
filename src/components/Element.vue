@@ -92,7 +92,17 @@ const label = computed(() => {
 
 const isNested = !!props.element.definition.schema
 
-const showLabel = props.element.definition.showLabel ?? !isNested
+const showLabel = computed(() => {
+  if (props.element.definition.showLabel) {
+    return props.element.definition.showLabel
+  }
+
+  if (props.element.definition.component.name === 'Hidden') {
+    return false
+  }
+
+  return !isNested
+})
 
 const visibleFunc = ref(
   typeof props.element.definition.visible === 'function'

@@ -5,6 +5,7 @@ import {
   Heading,
   Date,
   Email,
+  Hidden,
   Image,
   Select,
   Text,
@@ -21,6 +22,10 @@ import MultipleFieldsetCustomComponent from './demo/MultipleFieldsetCustomCompon
 const simpleSchema = useSchema({
   firstname: Text,
   surname: Text,
+  secret: {
+    component: Hidden,
+    value: 'security by obscurity 😈',
+  },
 })
 
 const gridSchema = useSchema({
