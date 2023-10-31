@@ -12,7 +12,7 @@ const elements = mapElements(props.schema)
 </script>
 
 <template>
-  <div class="grid md:grid-flow-col gap-x-4 gap-y-6">
+  <div class="grid gap-x-4 gap-y-6 md:grid-flow-col">
     <Element
       v-for="(element, index) in elements"
       :key="index"
