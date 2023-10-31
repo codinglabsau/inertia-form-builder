@@ -322,7 +322,7 @@ const submit = () => alert('submitted')
 
     <Heading>Custom Component with Fieldset</Heading>
 
-    <div class="mt-4 grid grid-cols-2">
+    <div class="mt-4 grid md:grid-cols-2">
       <div>
         <form @submit.prevent="submit">
           <FormBuilder :schema="customComponentWithFieldsetSchema" />
@@ -334,7 +334,7 @@ const submit = () => alert('submitted')
 
     <Heading>Custom Component with Mapped Fieldset</Heading>
 
-    <div class="mt-4 grid grid-cols-2">
+    <div class="mt-4 grid md:grid-cols-2">
       <div>
         <form @submit.prevent="submit">
           <FormBuilder :schema="customComponentWithMappedFieldsetSchema" />
@@ -348,7 +348,7 @@ const submit = () => alert('submitted')
 
     <Heading>Break up form into sections</Heading>
 
-    <div class="mt-4 grid grid-cols-2">
+    <div class="mt-4 grid md:grid-cols-2">
       <div>
         <form @submit.prevent="submit">
           <FormBuilder :schema="sectionSchema" />
