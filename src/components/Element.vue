@@ -93,7 +93,7 @@ const label = computed(() => {
 const isNested = !!props.element.definition.schema
 
 const showLabel = computed(() => {
-  if (props.element.definition.showLabel) {
+  if (props.element.definition.showLabel !== undefined) {
     return props.element.definition.showLabel
   }
 
