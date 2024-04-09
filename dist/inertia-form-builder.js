@@ -3203,7 +3203,7 @@ const Vo = { class: "grid gap-x-4 gap-y-6 md:grid-flow-col" }, Qo = /* @__PURE__
   }
 }), zo = { class: "mt-10" }, Ho = {
   key: 0,
-  class: "mt-1 text-gray-500"
+  class: "mt-1 whitespace-pre-line text-sm leading-6 text-gray-500"
 }, Uo = { class: "mt-4 space-y-6" }, Yo = /* @__PURE__ */ R({
   __name: "Section",
   props: {

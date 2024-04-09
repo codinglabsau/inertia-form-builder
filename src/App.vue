@@ -191,7 +191,8 @@ const sectionSchema = useSchema({
   physical_attributes: {
     component: Section,
     heading: 'Physical Attributes',
-    description: 'Enter your physical attributes',
+    description:
+      'Your privacy matters! \n Your attributes will be displayed to all visitors, but only administrators can view your full details.',
     schema: {
       attributes: {
         component: Grid,
