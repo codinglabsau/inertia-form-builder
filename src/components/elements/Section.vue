@@ -15,7 +15,8 @@ const elements = mapElements(props.schema)
 <template>
   <div class="mt-10">
     <label>{{ heading }}</label>
-    <p class="text-gray-500 mt-1" v-if="description">{{ description }}</p>
+
+    <p v-if="description" class="mt-1 text-gray-500">{{ description }}</p>
 
     <div class="mt-4 space-y-6">
       <Element v-for="(element, index) in elements" :key="index" :element="element" :form="form" />

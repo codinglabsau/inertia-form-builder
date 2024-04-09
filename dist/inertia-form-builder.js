@@ -1,4 +1,4 @@
-import { defineComponent as R, computed as h, ref as w, watch as ee, provide as te, h as U, cloneVNode as Bt, reactive as Nt, onMounted as W, Fragment as ge, watchEffect as K, inject as Y, onUnmounted as ne, nextTick as J, unref as Z, getCurrentInstance as En, Teleport as In, normalizeClass as st, openBlock as L, createBlock as ae, mergeProps as he, withCtx as Ie, renderSlot as ce, toRaw as pe, createElementBlock as Q, createTextVNode as dt, toDisplayString as Te, createCommentVNode as Ee, createElementVNode as re, withDirectives as Ze, isRef as Tn, vModelCheckbox as Cn, createVNode as ze, vShow as Ot, shallowRef as jt, triggerRef as Et, onScopeDispose as Rn, resolveDynamicComponent as Pn, toHandlers as Fn, renderList as Ae } from "vue";
+import { defineComponent as R, computed as h, ref as w, watch as ee, provide as te, h as U, cloneVNode as Bt, reactive as Nt, onMounted as W, Fragment as ge, watchEffect as q, inject as Y, onUnmounted as ne, nextTick as J, unref as Z, getCurrentInstance as En, Teleport as In, normalizeClass as st, openBlock as M, createBlock as ae, mergeProps as he, withCtx as Te, renderSlot as ce, toRaw as pe, createElementBlock as K, createTextVNode as dt, toDisplayString as Se, createCommentVNode as we, createElementVNode as re, withDirectives as Ze, isRef as Tn, vModelCheckbox as Cn, createVNode as ze, vShow as Ot, shallowRef as jt, triggerRef as Et, onScopeDispose as Rn, resolveDynamicComponent as Pn, toHandlers as Fn, renderList as Ae } from "vue";
 import { Link as Dn, useForm as An } from "@inertiajs/vue3";
 const kn = /* @__PURE__ */ re("circle", {
   class: "opacity-25",
@@ -20,7 +20,7 @@ const kn = /* @__PURE__ */ re("circle", {
     textClass: { default: "text-white" }
   },
   setup(e) {
-    return (n, t) => (L(), Q("svg", {
+    return (n, t) => (M(), K("svg", {
       class: st(["h-5 w-5 animate-spin", n.textClass]),
       xmlns: "http://www.w3.org/2000/svg",
       fill: "none",
@@ -54,7 +54,7 @@ const kn = /* @__PURE__ */ re("circle", {
       "focus:outline-none",
       "focus-visible:outline-none"
     ];
-    return (l, r) => t.value === "button" ? (L(), Q("button", he({
+    return (l, r) => t.value === "button" ? (M(), K("button", he({
       key: 0,
       class: o,
       disabled: l.loading,
@@ -67,20 +67,20 @@ const kn = /* @__PURE__ */ re("circle", {
       }, null, 8, ["text-class"]), [
         [Ot, l.loading]
       ])
-    ], 16, Bn)) : l.external ? (L(), Q("a", he({
+    ], 16, Bn)) : l.external ? (M(), K("a", he({
       key: 2,
       href: l.href,
       class: o
     }, l.$attrs), [
       ce(l.$slots, "default")
-    ], 16, Nn)) : (L(), ae(Z(Dn), he({
+    ], 16, Nn)) : (M(), ae(Z(Dn), he({
       key: 1,
       as: l.as,
       href: l.href,
       disabled: l.loading,
       class: o
     }, l.$attrs), {
-      default: Ie(() => [
+      default: Te(() => [
         ce(l.$slots, "default"),
         Ze(ze(It, {
           class: "ml-3",
@@ -115,7 +115,7 @@ const kn = /* @__PURE__ */ re("circle", {
       "focus:border-primary-700",
       "active:bg-primary-700"
     ];
-    return (t, o) => (L(), ae($n, he({
+    return (t, o) => (M(), ae($n, he({
       as: t.as,
       external: t.external,
       href: t.href,
@@ -123,14 +123,14 @@ const kn = /* @__PURE__ */ re("circle", {
       type: t.type,
       class: n
     }, t.$attrs), {
-      default: Ie(() => [
+      default: Te(() => [
         ce(t.$slots, "default")
       ]),
       _: 3
     }, 16, ["as", "external", "href", "loading", "type"]));
   }
 });
-function Oe(e, n, t) {
+function Ie(e, n, t) {
   var o;
   let l = (o = t.initialDeps) != null ? o : [], r;
   return () => {
@@ -284,7 +284,7 @@ class Jn {
     }, this.notify = (t) => {
       var o, l;
       (l = (o = this.options).onChange) == null || l.call(o, this, t);
-    }, this.maybeNotify = Oe(
+    }, this.maybeNotify = Ie(
       () => (this.calculateRange(), [
         this.isScrolling,
         this.range ? this.range.startIndex : null,
@@ -322,7 +322,7 @@ class Jn {
           }, this.options.scrollingDelay));
         })
       ));
-    }, this.getSize = () => this.scrollRect[this.options.horizontal ? "width" : "height"], this.memoOptions = Oe(
+    }, this.getSize = () => this.scrollRect[this.options.horizontal ? "width" : "height"], this.memoOptions = Ie(
       () => [
         this.options.count,
         this.options.paddingStart,
@@ -351,7 +351,7 @@ class Jn {
           break;
       }
       return r.size === this.options.lanes ? Array.from(r.values()).sort((a, i) => a.end === i.end ? a.index - i.index : a.end - i.end)[0] : void 0;
-    }, this.getMeasurements = Oe(
+    }, this.getMeasurements = Ie(
       () => [this.memoOptions(), this.itemSizeCache],
       ({ count: t, paddingStart: o, scrollMargin: l, getItemKey: r }, a) => {
         const i = this.pendingMeasuredCacheIndexes.length > 0 ? Math.min(...this.pendingMeasuredCacheIndexes) : 0;
@@ -374,7 +374,7 @@ class Jn {
         key: process.env.NODE_ENV !== "production" && "getMeasurements",
         debug: () => this.options.debug
       }
-    ), this.calculateRange = Oe(
+    ), this.calculateRange = Ie(
       () => [this.getMeasurements(), this.getSize(), this.scrollOffset],
       (t, o, l) => this.range = t.length > 0 && o > 0 ? Xn({
         measurements: t,
@@ -385,7 +385,7 @@ class Jn {
         key: process.env.NODE_ENV !== "production" && "calculateRange",
         debug: () => this.options.debug
       }
-    ), this.getIndexes = Oe(
+    ), this.getIndexes = Ie(
       () => [
         this.options.rangeExtractor,
         this.calculateRange(),
@@ -427,7 +427,7 @@ class Jn {
       })), this.pendingMeasuredCacheIndexes.push(t.index), this.itemSizeCache = new Map(this.itemSizeCache.set(t.key, o)), this.notify(!1));
     }, this.measureElement = (t) => {
       !t || this._measureElement(t, void 0);
-    }, this.getVirtualItems = Oe(
+    }, this.getVirtualItems = Ie(
       () => [this.getIndexes(), this.getMeasurements()],
       (t, o) => {
         const l = [];
@@ -593,13 +593,13 @@ function x(e) {
   let t = (n = e.value.$el) != null ? n : e.value;
   return t instanceof Node ? t : null;
 }
-function q(e, n, ...t) {
+function Q(e, n, ...t) {
   if (e in n) {
     let l = n[e];
     return typeof l == "function" ? l(...t) : l;
   }
   let o = new Error(`Tried to handle "${e}" but there is no handler defined. Only defined handlers are: ${Object.keys(n).map((l) => `"${l}"`).join(", ")}.`);
-  throw Error.captureStackTrace && Error.captureStackTrace(o, q), o;
+  throw Error.captureStackTrace && Error.captureStackTrace(o, Q), o;
 }
 var ol = Object.defineProperty, rl = (e, n, t) => n in e ? ol(e, n, { enumerable: !0, configurable: !0, writable: !0, value: t }) : e[n] = t, Tt = (e, n, t) => (rl(e, typeof n != "symbol" ? n + "" : n, t), t);
 class al {
@@ -646,7 +646,7 @@ function zt(e = document.body) {
 var ct = ((e) => (e[e.Strict = 0] = "Strict", e[e.Loose = 1] = "Loose", e))(ct || {});
 function ft(e, n = 0) {
   var t;
-  return e === ((t = fe(e)) == null ? void 0 : t.body) ? !1 : q(n, { [0]() {
+  return e === ((t = fe(e)) == null ? void 0 : t.body) ? !1 : Q(n, { [0]() {
     return e.matches(et);
   }, [1]() {
     let o = e;
@@ -737,12 +737,12 @@ function Gt() {
   return Ut() || fl();
 }
 function je(e, n, t) {
-  ke.isServer || K((o) => {
+  ke.isServer || q((o) => {
     document.addEventListener(e, n, t), o(() => document.removeEventListener(e, n, t));
   });
 }
 function Wt(e, n, t) {
-  ke.isServer || K((o) => {
+  ke.isServer || q((o) => {
     window.addEventListener(e, n, t), o(() => window.removeEventListener(e, n, t));
   });
 }
@@ -787,7 +787,7 @@ function Kt(e, n) {
   let t = w(Ct(e.value.type, e.value.as));
   return W(() => {
     t.value = Ct(e.value.type, e.value.as);
-  }), K(() => {
+  }), q(() => {
     var o;
     t.value || x(n) && x(n) instanceof HTMLButtonElement && !((o = x(n)) != null && o.hasAttribute("type")) && (t.value = "button");
   }), t;
@@ -805,7 +805,7 @@ function qt() {
   } };
 }
 function Qt({ container: e, accept: n, walk: t, enabled: o }) {
-  K(() => {
+  q(() => {
     let l = e.value;
     if (!l || o !== void 0 && !o.value)
       return;
@@ -825,7 +825,7 @@ function j({ visible: e = !0, features: n = 0, ourProps: t, theirProps: o, ...l 
     return qe(i);
   if (n & 1) {
     let u = (r = a.unmount) == null || r ? 0 : 1;
-    return q(u, { [0]() {
+    return Q(u, { [0]() {
       return null;
     }, [1]() {
       return qe({ ...l, props: { ...a, hidden: !0, style: { display: "none" } } });
@@ -983,7 +983,7 @@ function ht(e) {
     throw n;
   }));
 }
-function we() {
+function Oe() {
   let e = [], n = { addEventListener(t, o, l, r) {
     return t.addEventListener(o, l, r), n.add(() => t.removeEventListener(o, l, r));
   }, requestAnimationFrame(...t) {
@@ -1009,7 +1009,7 @@ function we() {
       Object.assign(t.style, { [o]: r });
     });
   }, group(t) {
-    let o = we();
+    let o = Oe();
     return t(o), this.add(() => o.dispose());
   }, add(t) {
     return e.push(t), () => {
@@ -1044,16 +1044,16 @@ function gl(e, n) {
 }
 var yl = ((e) => (e[e.Open = 0] = "Open", e[e.Closed = 1] = "Closed", e))(yl || {}), xl = ((e) => (e[e.Single = 0] = "Single", e[e.Multi = 1] = "Multi", e))(xl || {}), wl = ((e) => (e[e.Pointer = 0] = "Pointer", e[e.Focus = 1] = "Focus", e[e.Other = 2] = "Other", e))(wl || {});
 let nn = Symbol("ComboboxContext");
-function Se(e) {
+function Ee(e) {
   let n = Y(nn, null);
   if (n === null) {
     let t = new Error(`<${e} /> is missing a parent <Combobox /> component.`);
-    throw Error.captureStackTrace && Error.captureStackTrace(t, Se), t;
+    throw Error.captureStackTrace && Error.captureStackTrace(t, Ee), t;
   }
   return n;
 }
 let ln = Symbol("VirtualContext"), Sl = R({ name: "VirtualProvider", setup(e, { slots: n }) {
-  let t = Se("VirtualProvider"), o = h(() => {
+  let t = Ee("VirtualProvider"), o = h(() => {
     let i = x(t.optionsRef);
     if (!i)
       return { start: 0, end: 0 };
@@ -1080,15 +1080,15 @@ let ln = Symbol("VirtualContext"), Sl = R({ name: "VirtualProvider", setup(e, { 
 R({ name: "Combobox", emits: { "update:modelValue": (e) => !0 }, props: { as: { type: [Object, String], default: "template" }, disabled: { type: [Boolean], default: !1 }, by: { type: [String, Function], nullable: !0, default: null }, modelValue: { type: [Object, String, Number, Boolean], default: void 0 }, defaultValue: { type: [Object, String, Number, Boolean], default: void 0 }, form: { type: String, optional: !0 }, name: { type: String, optional: !0 }, nullable: { type: Boolean, default: !1 }, multiple: { type: [Boolean], default: !1 }, immediate: { type: [Boolean], default: !1 }, virtual: { type: Object, default: null } }, inheritAttrs: !1, setup(e, { slots: n, attrs: t, emit: o }) {
   let l = w(1), r = w(null), a = w(null), i = w(null), u = w(null), s = w({ static: !1, hold: !1 }), c = w([]), f = w(null), d = w(2), v = w(!1);
   function p(g = (E) => E) {
-    let E = f.value !== null ? c.value[f.value] : null, C = g(c.value.slice()), T = C.length > 0 && C[0].dataRef.order.value !== null ? C.sort((F, z) => F.dataRef.order.value - z.dataRef.order.value) : vt(C, (F) => x(F.dataRef.domRef)), M = E ? T.indexOf(E) : null;
-    return M === -1 && (M = null), { options: T, activeOptionIndex: M };
+    let E = f.value !== null ? c.value[f.value] : null, C = g(c.value.slice()), T = C.length > 0 && C[0].dataRef.order.value !== null ? C.sort((F, z) => F.dataRef.order.value - z.dataRef.order.value) : vt(C, (F) => x(F.dataRef.domRef)), L = E ? T.indexOf(E) : null;
+    return L === -1 && (L = null), { options: T, activeOptionIndex: L };
   }
-  let m = h(() => e.multiple ? 1 : 0), O = h(() => e.nullable), [y, I] = tl(h(() => e.modelValue), (g) => o("update:modelValue", g), h(() => e.defaultValue)), N = h(() => y.value === void 0 ? q(m.value, { [1]: [], [0]: void 0 }) : y.value), S = null, A = null;
+  let m = h(() => e.multiple ? 1 : 0), O = h(() => e.nullable), [y, I] = tl(h(() => e.modelValue), (g) => o("update:modelValue", g), h(() => e.defaultValue)), N = h(() => y.value === void 0 ? Q(m.value, { [1]: [], [0]: void 0 }) : y.value), S = null, A = null;
   function P(g) {
-    return q(m.value, { [0]() {
+    return Q(m.value, { [0]() {
       return I == null ? void 0 : I(g);
     }, [1]: () => {
-      let E = pe(b.value.value).slice(), C = pe(g), T = E.findIndex((M) => b.compare(C, pe(M)));
+      let E = pe(b.value.value).slice(), C = pe(g), T = E.findIndex((L) => b.compare(C, pe(L)));
       return T === -1 ? E.push(C) : E.splice(T, 1), I == null ? void 0 : I(E);
     } });
   }
@@ -1158,8 +1158,8 @@ R({ name: "Combobox", emits: { "update:modelValue": (e) => !0 }, props: { as: { 
         let F = T.options.findIndex((z) => !z.dataRef.disabled);
         F !== -1 && (T.activeOptionIndex = F);
       }
-      let M = g === k.Specific ? E : tt({ focus: g }, { resolveItems: () => T.options, resolveActiveIndex: () => T.activeOptionIndex, resolveId: (F) => F.id, resolveDisabled: (F) => F.dataRef.disabled });
-      f.value = M, d.value = C != null ? C : 2, c.value = T.options;
+      let L = g === k.Specific ? E : tt({ focus: g }, { resolveItems: () => T.options, resolveActiveIndex: () => T.activeOptionIndex, resolveId: (F) => F.id, resolveDisabled: (F) => F.dataRef.disabled });
+      f.value = L, d.value = C != null ? C : 2, c.value = T.options;
     });
   }, selectOption(g) {
     let E = c.value.find((T) => T.id === g);
@@ -1184,10 +1184,10 @@ R({ name: "Combobox", emits: { "update:modelValue": (e) => !0 }, props: { as: { 
       return;
     }
     A && cancelAnimationFrame(A);
-    let T = p((M) => (M.push(C), M));
-    f.value === null && b.isSelected(E.value.value) && (T.activeOptionIndex = T.options.indexOf(C)), c.value = T.options, f.value = T.activeOptionIndex, d.value = 2, T.options.some((M) => !x(M.dataRef.domRef)) && (A = requestAnimationFrame(() => {
-      let M = p();
-      c.value = M.options, f.value = M.activeOptionIndex;
+    let T = p((L) => (L.push(C), L));
+    f.value === null && b.isSelected(E.value.value) && (T.activeOptionIndex = T.options.indexOf(C)), c.value = T.options, f.value = T.activeOptionIndex, d.value = 2, T.options.some((L) => !x(L.dataRef.domRef)) && (A = requestAnimationFrame(() => {
+      let L = p();
+      c.value = L.options, f.value = L.activeOptionIndex;
     }));
   }, unregisterOption(g, E) {
     if (S !== null && cancelAnimationFrame(S), E && (v.value = !0), b.virtual.value) {
@@ -1195,16 +1195,16 @@ R({ name: "Combobox", emits: { "update:modelValue": (e) => !0 }, props: { as: { 
       return;
     }
     let C = p((T) => {
-      let M = T.findIndex((F) => F.id === g);
-      return M !== -1 && T.splice(M, 1), T;
+      let L = T.findIndex((F) => F.id === g);
+      return L !== -1 && T.splice(L, 1), T;
     });
     c.value = C.options, f.value = C.activeOptionIndex, d.value = 2;
   }, isSelected(g) {
-    return q(m.value, { [0]: () => b.compare(pe(b.value.value), pe(g)), [1]: () => pe(b.value.value).some((E) => b.compare(pe(E), pe(g))) });
+    return Q(m.value, { [0]: () => b.compare(pe(b.value.value), pe(g)), [1]: () => pe(b.value.value).some((E) => b.compare(pe(E), pe(g))) });
   }, isActive(g) {
     return f.value === b.calculateIndex(g);
   } };
-  pt([a, i, u], () => b.closeCombobox(), h(() => l.value === 0)), te(nn, b), mt(h(() => q(l.value, { [0]: G.Open, [1]: G.Closed })));
+  pt([a, i, u], () => b.closeCombobox(), h(() => l.value === 0)), te(nn, b), mt(h(() => Q(l.value, { [0]: G.Open, [1]: G.Closed })));
   let V = h(() => {
     var g;
     return (g = x(a)) == null ? void 0 : g.closest("form");
@@ -1223,13 +1223,13 @@ R({ name: "Combobox", emits: { "update:modelValue": (e) => !0 }, props: { as: { 
     }, { immediate: !0 });
   }), () => {
     var g, E, C;
-    let { name: T, disabled: M, form: F, ...z } = e, ie = { open: l.value === 0, disabled: M, activeIndex: b.activeOptionIndex.value, activeOption: b.activeOptionIndex.value === null ? null : b.virtual.value ? b.virtual.value.options[(g = b.activeOptionIndex.value) != null ? g : 0] : (C = (E = b.options.value[b.activeOptionIndex.value]) == null ? void 0 : E.dataRef.value) != null ? C : null, value: N.value };
+    let { name: T, disabled: L, form: F, ...z } = e, ie = { open: l.value === 0, disabled: L, activeIndex: b.activeOptionIndex.value, activeOption: b.activeOptionIndex.value === null ? null : b.virtual.value ? b.virtual.value.options[(g = b.activeOptionIndex.value) != null ? g : 0] : (C = (E = b.options.value[b.activeOptionIndex.value]) == null ? void 0 : E.dataRef.value) != null ? C : null, value: N.value };
     return U(ge, [...T != null && N.value != null ? Zt({ [T]: N.value }).map(([ve, Be]) => U(He, vl({ features: De.Hidden, key: ve, as: "input", type: "hidden", hidden: !0, readOnly: !0, form: F, name: ve, value: Be }))) : [], j({ theirProps: { ...t, ...Me(z, ["by", "defaultValue", "immediate", "modelValue", "multiple", "nullable", "onUpdate:modelValue", "virtual"]) }, ourProps: {}, slot: ie, slots: n, attrs: t, name: "Combobox" })]);
   };
 } });
 R({ name: "ComboboxLabel", props: { as: { type: [Object, String], default: "label" }, id: { type: String, default: null } }, setup(e, { attrs: n, slots: t }) {
   var o;
-  let l = (o = e.id) != null ? o : `headlessui-combobox-label-${X()}`, r = Se("ComboboxLabel");
+  let l = (o = e.id) != null ? o : `headlessui-combobox-label-${X()}`, r = Ee("ComboboxLabel");
   function a() {
     var i;
     (i = x(r.inputRef)) == null || i.focus({ preventScroll: !0 });
@@ -1241,7 +1241,7 @@ R({ name: "ComboboxLabel", props: { as: { type: [Object, String], default: "labe
 } });
 R({ name: "ComboboxButton", props: { as: { type: [Object, String], default: "button" }, id: { type: String, default: null } }, setup(e, { attrs: n, slots: t, expose: o }) {
   var l;
-  let r = (l = e.id) != null ? l : `headlessui-combobox-button-${X()}`, a = Se("ComboboxButton");
+  let r = (l = e.id) != null ? l : `headlessui-combobox-button-${X()}`, a = Ee("ComboboxButton");
   o({ el: a.buttonRef, $el: a.buttonRef });
   function i(c) {
     a.disabled.value || (a.comboboxState.value === 0 ? a.closeCombobox() : (c.preventDefault(), a.openCombobox()), J(() => {
@@ -1284,7 +1284,7 @@ R({ name: "ComboboxButton", props: { as: { type: [Object, String], default: "but
 } });
 R({ name: "ComboboxInput", props: { as: { type: [Object, String], default: "input" }, static: { type: Boolean, default: !1 }, unmount: { type: Boolean, default: !0 }, displayValue: { type: Function }, defaultValue: { type: String, default: void 0 }, id: { type: String, default: null } }, emits: { change: (e) => !0 }, setup(e, { emit: n, attrs: t, slots: o, expose: l }) {
   var r;
-  let a = (r = e.id) != null ? r : `headlessui-combobox-input-${X()}`, i = Se("ComboboxInput"), u = h(() => fe(x(i.inputRef))), s = { value: !1 };
+  let a = (r = e.id) != null ? r : `headlessui-combobox-input-${X()}`, i = Ee("ComboboxInput"), u = h(() => fe(x(i.inputRef))), s = { value: !1 };
   l({ el: i.inputRef, $el: i.inputRef });
   function c() {
     i.change(null);
@@ -1325,7 +1325,7 @@ R({ name: "ComboboxInput", props: { as: { type: [Object, String], default: "inpu
     d.value = !0;
   }
   function p() {
-    we().nextFrame(() => {
+    Oe().nextFrame(() => {
       d.value = !1;
     });
   }
@@ -1341,9 +1341,9 @@ R({ name: "ComboboxInput", props: { as: { type: [Object, String], default: "inpu
         i.selectActiveOption(), i.mode.value === 0 && i.closeCombobox();
         break;
       case D.ArrowDown:
-        return s.value = !1, S.preventDefault(), S.stopPropagation(), q(i.comboboxState.value, { [0]: () => i.goToOption(k.Next), [1]: () => i.openCombobox() });
+        return s.value = !1, S.preventDefault(), S.stopPropagation(), Q(i.comboboxState.value, { [0]: () => i.goToOption(k.Next), [1]: () => i.openCombobox() });
       case D.ArrowUp:
-        return s.value = !1, S.preventDefault(), S.stopPropagation(), q(i.comboboxState.value, { [0]: () => i.goToOption(k.Previous), [1]: () => {
+        return s.value = !1, S.preventDefault(), S.stopPropagation(), Q(i.comboboxState.value, { [0]: () => i.goToOption(k.Previous), [1]: () => {
           i.openCombobox(), J(() => {
             i.value.value || i.goToOption(k.Last);
           });
@@ -1384,7 +1384,7 @@ R({ name: "ComboboxInput", props: { as: { type: [Object, String], default: "inpu
   function I(S) {
     var A, P, $;
     let b = (A = S.relatedTarget) != null ? A : de.find((V) => V !== S.currentTarget);
-    (P = x(i.buttonRef)) != null && P.contains(b) || ($ = x(i.optionsRef)) != null && $.contains(b) || i.disabled.value || i.immediate.value && i.comboboxState.value !== 0 && (i.openCombobox(), we().nextFrame(() => {
+    (P = x(i.buttonRef)) != null && P.contains(b) || ($ = x(i.optionsRef)) != null && $.contains(b) || i.disabled.value || i.immediate.value && i.comboboxState.value !== 0 && (i.openCombobox(), Oe().nextFrame(() => {
       i.setActivationTrigger(1);
     }));
   }
@@ -1394,15 +1394,15 @@ R({ name: "ComboboxInput", props: { as: { type: [Object, String], default: "inpu
   });
   return () => {
     var S, A, P, $, b, V, g;
-    let E = { open: i.comboboxState.value === 0 }, { displayValue: C, onChange: T, ...M } = e, F = { "aria-controls": (S = i.optionsRef.value) == null ? void 0 : S.id, "aria-expanded": i.comboboxState.value === 0, "aria-activedescendant": i.activeOptionIndex.value === null ? void 0 : i.virtual.value ? (A = i.options.value.find((z) => !i.virtual.value.disabled(z.dataRef.value) && i.compare(z.dataRef.value, i.virtual.value.options[i.activeOptionIndex.value]))) == null ? void 0 : A.id : (P = i.options.value[i.activeOptionIndex.value]) == null ? void 0 : P.id, "aria-labelledby": (V = ($ = x(i.labelRef)) == null ? void 0 : $.id) != null ? V : (b = x(i.buttonRef)) == null ? void 0 : b.id, "aria-autocomplete": "list", id: a, onCompositionstart: v, onCompositionend: p, onKeydown: m, onInput: O, onFocus: I, onBlur: y, role: "combobox", type: (g = t.type) != null ? g : "text", tabIndex: 0, ref: i.inputRef, defaultValue: N.value, disabled: i.disabled.value === !0 ? !0 : void 0 };
-    return j({ ourProps: F, theirProps: M, slot: E, attrs: t, slots: o, features: se.RenderStrategy | se.Static, name: "ComboboxInput" });
+    let E = { open: i.comboboxState.value === 0 }, { displayValue: C, onChange: T, ...L } = e, F = { "aria-controls": (S = i.optionsRef.value) == null ? void 0 : S.id, "aria-expanded": i.comboboxState.value === 0, "aria-activedescendant": i.activeOptionIndex.value === null ? void 0 : i.virtual.value ? (A = i.options.value.find((z) => !i.virtual.value.disabled(z.dataRef.value) && i.compare(z.dataRef.value, i.virtual.value.options[i.activeOptionIndex.value]))) == null ? void 0 : A.id : (P = i.options.value[i.activeOptionIndex.value]) == null ? void 0 : P.id, "aria-labelledby": (V = ($ = x(i.labelRef)) == null ? void 0 : $.id) != null ? V : (b = x(i.buttonRef)) == null ? void 0 : b.id, "aria-autocomplete": "list", id: a, onCompositionstart: v, onCompositionend: p, onKeydown: m, onInput: O, onFocus: I, onBlur: y, role: "combobox", type: (g = t.type) != null ? g : "text", tabIndex: 0, ref: i.inputRef, defaultValue: N.value, disabled: i.disabled.value === !0 ? !0 : void 0 };
+    return j({ ourProps: F, theirProps: L, slot: E, attrs: t, slots: o, features: se.RenderStrategy | se.Static, name: "ComboboxInput" });
   };
 } });
 R({ name: "ComboboxOptions", props: { as: { type: [Object, String], default: "ul" }, static: { type: Boolean, default: !1 }, unmount: { type: Boolean, default: !0 }, hold: { type: [Boolean], default: !1 } }, setup(e, { attrs: n, slots: t, expose: o }) {
-  let l = Se("ComboboxOptions"), r = `headlessui-combobox-options-${X()}`;
-  o({ el: l.optionsRef, $el: l.optionsRef }), K(() => {
+  let l = Ee("ComboboxOptions"), r = `headlessui-combobox-options-${X()}`;
+  o({ el: l.optionsRef, $el: l.optionsRef }), q(() => {
     l.optionsPropsRef.value.static = e.static;
-  }), K(() => {
+  }), q(() => {
     l.optionsPropsRef.value.hold = e.hold;
   });
   let a = Le(), i = h(() => a !== null ? (a.value & G.Open) === G.Open : l.comboboxState.value === 0);
@@ -1417,16 +1417,16 @@ R({ name: "ComboboxOptions", props: { as: { type: [Object, String], default: "ul
   };
 } });
 R({ name: "ComboboxOption", props: { as: { type: [Object, String], default: "li" }, value: { type: [Object, String, Number, Boolean] }, disabled: { type: Boolean, default: !1 }, order: { type: [Number], default: null } }, setup(e, { slots: n, attrs: t, expose: o }) {
-  let l = Se("ComboboxOption"), r = `headlessui-combobox-option-${X()}`, a = w(null);
+  let l = Ee("ComboboxOption"), r = `headlessui-combobox-option-${X()}`, a = w(null);
   o({ el: a, $el: a });
   let i = h(() => {
     var y;
     return l.virtual.value ? l.activeOptionIndex.value === l.calculateIndex(e.value) : l.activeOptionIndex.value === null ? !1 : ((y = l.options.value[l.activeOptionIndex.value]) == null ? void 0 : y.id) === r;
   }), u = h(() => l.isSelected(e.value)), s = Y(ln, null), c = h(() => ({ disabled: e.disabled, value: e.value, domRef: a, order: h(() => e.order) }));
-  W(() => l.registerOption(r, c)), ne(() => l.unregisterOption(r, i.value)), K(() => {
+  W(() => l.registerOption(r, c)), ne(() => l.unregisterOption(r, i.value)), q(() => {
     let y = x(a);
     y && (s == null || s.value.measureElement(y));
-  }), K(() => {
+  }), q(() => {
     l.comboboxState.value === 0 && i.value && (l.virtual.value || l.activationTrigger.value !== 0 && J(() => {
       var y, I;
       return (I = (y = x(a)) == null ? void 0 : y.scrollIntoView) == null ? void 0 : I.call(y, { block: "nearest" });
@@ -1469,7 +1469,7 @@ R({ name: "ComboboxOption", props: { as: { type: [Object, String], default: "li"
   };
 } });
 function on(e, n, t, o) {
-  ke.isServer || K((l) => {
+  ke.isServer || q((l) => {
     e = e != null ? e : window, e.addEventListener(n, t, o), l(() => e.removeEventListener(n, t, o));
   });
 }
@@ -1504,7 +1504,7 @@ let Ce = Object.assign(R({ name: "FocusTrap", props: { as: { type: [Object, Stri
   function s(v) {
     let p = x(l);
     !p || ((m) => m())(() => {
-      q(u.value, { [Pe.Forwards]: () => {
+      Q(u.value, { [Pe.Forwards]: () => {
         Fe(p, ue.First, { skipElements: [v.relatedTarget] });
       }, [Pe.Backwards]: () => {
         Fe(p, ue.Last, { skipElements: [v.relatedTarget] });
@@ -1523,7 +1523,7 @@ let Ce = Object.assign(R({ name: "FocusTrap", props: { as: { type: [Object, Stri
     let p = rn(e.containers);
     x(l) instanceof HTMLElement && p.add(x(l));
     let m = v.relatedTarget;
-    m instanceof HTMLElement && m.dataset.headlessuiFocusGuard !== "true" && (un(p, m) || (c.value ? Fe(x(l), q(u.value, { [Pe.Forwards]: () => ue.Next, [Pe.Backwards]: () => ue.Previous }) | ue.WrapAround, { relativeTo: v.target }) : v.target instanceof HTMLElement && be(v.target)));
+    m instanceof HTMLElement && m.dataset.headlessuiFocusGuard !== "true" && (un(p, m) || (c.value ? Fe(x(l), Q(u.value, { [Pe.Forwards]: () => ue.Next, [Pe.Backwards]: () => ue.Previous }) | ue.WrapAround, { relativeTo: v.target }) : v.target instanceof HTMLElement && be(v.target)));
   }
   return () => {
     let v = {}, p = { ref: l, onKeydown: f, onFocusout: d }, { features: m, initialFocus: O, containers: y, ...I } = e;
@@ -1544,7 +1544,7 @@ function El(e) {
 function Il({ ownerDocument: e }, n) {
   let t = El(n);
   W(() => {
-    K(() => {
+    q(() => {
       var o, l;
       n.value || ((o = e.value) == null ? void 0 : o.activeElement) === ((l = e.value) == null ? void 0 : l.body) && be(t());
     }, { flush: "post" });
@@ -1634,7 +1634,7 @@ function Dl() {
     n.microTask(() => {
       var l;
       if (window.getComputedStyle(e.documentElement).scrollBehavior !== "auto") {
-        let i = we();
+        let i = Oe();
         i.style(e.documentElement, "scrollBehavior", "auto"), n.add(() => n.microTask(() => i.dispose()));
       }
       let r = (l = window.scrollY) != null ? l : window.pageYOffset, a = null;
@@ -1687,7 +1687,7 @@ function kl(e) {
 }
 let xe = Pl(() => /* @__PURE__ */ new Map(), { PUSH(e, n) {
   var t;
-  let o = (t = this.get(e)) != null ? t : { doc: e, count: 0, d: we(), meta: /* @__PURE__ */ new Set() };
+  let o = (t = this.get(e)) != null ? t : { doc: e, count: 0, d: Oe(), meta: /* @__PURE__ */ new Set() };
   return o.count++, o.meta.add(n), this.set(e, o), this;
 }, POP(e, n) {
   let t = this.get(e);
@@ -1726,7 +1726,7 @@ function Ml(e, n, t) {
 }
 let Qe = /* @__PURE__ */ new Map(), Re = /* @__PURE__ */ new Map();
 function Pt(e, n = w(!0)) {
-  K((t) => {
+  q((t) => {
     var o;
     if (!n.value)
       return;
@@ -1837,7 +1837,7 @@ let fn = R({ name: "Portal", props: { as: { type: [Object, String], default: "di
   let o = w(null), l = h(() => fe(o)), r = _l(), a = Y(vn, null), i = w(r === !0 || a == null ? Vl(o.value) : a.resolveTarget()), u = w(!1);
   W(() => {
     u.value = !0;
-  }), K(() => {
+  }), q(() => {
     r || a != null && (i.value = a.resolveTarget());
   });
   let s = Y(ot, null), c = !1, f = En();
@@ -1913,13 +1913,13 @@ R({ name: "Dialog", inheritAttrs: !1, props: { as: { type: [Object, String], def
     return (le = Array.from((H = (_ = m.value) == null ? void 0 : _.querySelectorAll("body > *")) != null ? H : []).find((oe) => oe.id === "headlessui-portal-root" ? !1 : oe.contains(x($)) && oe instanceof HTMLElement)) != null ? le : null;
   });
   Pt(C, E);
-  let T = h(() => I.value ? !0 : y.value), M = h(() => {
+  let T = h(() => I.value ? !0 : y.value), L = h(() => {
     var _, H, le;
     return (le = Array.from((H = (_ = m.value) == null ? void 0 : _.querySelectorAll("[data-headlessui-portal]")) != null ? H : []).find((oe) => oe.contains(x($)) && oe instanceof HTMLElement)) != null ? le : null;
   });
-  Pt(M, T), Nl({ type: "Dialog", enabled: h(() => O.value === 0), element: p, onUpdate: (_, H) => {
+  Pt(L, T), Nl({ type: "Dialog", enabled: h(() => O.value === 0), element: p, onUpdate: (_, H) => {
     if (H === "Dialog")
-      return q(_, { [lt.Add]: () => f.value += 1, [lt.Remove]: () => f.value -= 1 });
+      return Q(_, { [lt.Add]: () => f.value += 1, [lt.Remove]: () => f.value -= 1 });
   } });
   let F = $l({ name: "DialogDescription", slot: h(() => ({ open: v.value })) }), z = w(null), ie = { titleId: z, panelRef: w(null), dialogState: O, setTitleId(_) {
     z.value !== _ && (z.value = _);
@@ -1939,7 +1939,7 @@ R({ name: "Dialog", inheritAttrs: !1, props: { as: { type: [Object, String], def
   return Ml(m, St, (_) => {
     var H;
     return { containers: [...(H = _.containers) != null ? H : [], P] };
-  }), K((_) => {
+  }), q((_) => {
     if (O.value !== 0)
       return;
     let H = x(p);
@@ -1954,7 +1954,7 @@ R({ name: "Dialog", inheritAttrs: !1, props: { as: { type: [Object, String], def
     le.observe(H), _(() => le.disconnect());
   }), () => {
     let { open: _, initialFocus: H, ...le } = e, oe = { ...t, ref: p, id: i, role: c.value, "aria-modal": O.value === 0 ? !0 : void 0, "aria-labelledby": z.value, "aria-describedby": F.value }, We = { open: O.value === 0 };
-    return U(nt, { force: !0 }, () => [U(fn, () => U(Hl, { target: p.value }, () => U(nt, { force: !1 }, () => U(Ce, { initialFocus: H, containers: P, features: y.value ? q(V.value, { parent: Ce.features.RestoreFocus, leaf: Ce.features.All & ~Ce.features.FocusLock }) : Ce.features.None }, () => U(A, {}, () => j({ ourProps: oe, theirProps: { ...le, ...t }, slot: We, attrs: t, slots: o, visible: O.value === 0, features: se.RenderStrategy | se.Static, name: "Dialog" })))))), U(b)]);
+    return U(nt, { force: !0 }, () => [U(fn, () => U(Hl, { target: p.value }, () => U(nt, { force: !1 }, () => U(Ce, { initialFocus: H, containers: P, features: y.value ? Q(V.value, { parent: Ce.features.RestoreFocus, leaf: Ce.features.All & ~Ce.features.FocusLock }) : Ce.features.None }, () => U(A, {}, () => j({ ourProps: oe, theirProps: { ...le, ...t }, slot: We, attrs: t, slots: o, visible: O.value === 0, features: se.RenderStrategy | se.Static, name: "Dialog" })))))), U(b)]);
   };
 } });
 R({ name: "DialogOverlay", props: { as: { type: [Object, String], default: "div" }, id: { type: String, default: null } }, setup(e, { attrs: n, slots: t }) {
@@ -2089,7 +2089,7 @@ R({ name: "Menu", props: { as: { type: [Object, String], default: "template" } }
   return pt([l, r], (d, v) => {
     var p;
     f.closeMenu(), ft(v, ct.Loose) || (d.preventDefault(), (p = x(l)) == null || p.focus());
-  }, h(() => o.value === 0)), te(pn, f), mt(h(() => q(o.value, { [0]: G.Open, [1]: G.Closed }))), () => {
+  }, h(() => o.value === 0)), te(pn, f), mt(h(() => Q(o.value, { [0]: G.Open, [1]: G.Closed }))), () => {
     let d = { open: o.value === 0, close: f.closeMenu };
     return j({ ourProps: {}, theirProps: e, slot: d, slots: n, attrs: t, name: "Menu" });
   };
@@ -2205,7 +2205,7 @@ R({ name: "MenuItem", inheritAttrs: !1, props: { as: { type: [Object, String], d
   let u = h(() => a.activeItemIndex.value !== null ? a.items.value[a.activeItemIndex.value].id === r : !1), s = Wl(i), c = h(() => ({ disabled: e.disabled, get textValue() {
     return s();
   }, domRef: i }));
-  W(() => a.registerItem(r, c)), ne(() => a.unregisterItem(r)), K(() => {
+  W(() => a.registerItem(r, c)), ne(() => a.unregisterItem(r)), q(() => {
     a.menuState.value === 0 && u.value && a.activationTrigger.value !== 0 && J(() => {
       var y, I;
       return (I = (y = x(i)) == null ? void 0 : y.scrollIntoView) == null ? void 0 : I.call(y, { block: "nearest" });
@@ -2251,7 +2251,7 @@ function Ve(e, ...n) {
 }
 var at = ((e) => (e.Finished = "finished", e.Cancelled = "cancelled", e))(at || {});
 function Jl(e, n) {
-  let t = we();
+  let t = Oe();
   if (!e)
     return t.dispose;
   let { transitionDuration: o, transitionDelay: l } = getComputedStyle(e), [r, a] = [o, l].map((i) => {
@@ -2261,7 +2261,7 @@ function Jl(e, n) {
   return r !== 0 ? t.setTimeout(() => n("finished"), r + a) : n("finished"), t.add(() => n("cancelled")), t.dispose;
 }
 function At(e, n, t, o, l, r) {
-  let a = we(), i = r !== void 0 ? Yl(r) : () => {
+  let a = Oe(), i = r !== void 0 ? Yl(r) : () => {
   };
   return Ve(e, ...l), Ye(e, ...n, ...t), a.nextFrame(() => {
     Ve(e, ...t), Ye(e, ...o), a.add(Jl(e, (u) => (Ve(e, ...o, ...n), Ye(e, ...l), i(u))));
@@ -2296,7 +2296,7 @@ function mn(e) {
   W(() => t.value = !0), ne(() => t.value = !1);
   function o(r, a = me.Hidden) {
     let i = n.value.findIndex(({ id: u }) => u === r);
-    i !== -1 && (q(a, { [me.Unmount]() {
+    i !== -1 && (Q(a, { [me.Unmount]() {
       n.value.splice(i, 1);
     }, [me.Hidden]() {
       n.value[i].state = "hidden";
@@ -2332,18 +2332,18 @@ let hn = se.RenderStrategy, no = R({ props: { as: { type: [Object, String], defa
   W(() => {
     let T = p(I);
     ne(T);
-  }), K(() => {
+  }), q(() => {
     if (f.value === me.Hidden && I) {
       if (d.value && O.value !== "visible") {
         O.value = "visible";
         return;
       }
-      q(O.value, { hidden: () => m(I), visible: () => p(I) });
+      Q(O.value, { hidden: () => m(I), visible: () => p(I) });
     }
   });
   let A = ye(e.enter), P = ye(e.enterFrom), $ = ye(e.enterTo), b = ye(e.entered), V = ye(e.leave), g = ye(e.leaveFrom), E = ye(e.leaveTo);
   W(() => {
-    K(() => {
+    q(() => {
       if (O.value === "visible") {
         let T = x(c);
         if (T instanceof Comment && T.data === "")
@@ -2352,24 +2352,24 @@ let hn = se.RenderStrategy, no = R({ props: { as: { type: [Object, String], defa
     });
   });
   function C(T) {
-    let M = y.value && !v.value, F = x(c);
-    !F || !(F instanceof HTMLElement) || M || (N.value = !0, d.value && a(), d.value || u(), T(d.value ? At(F, A, P, $, b, (z) => {
+    let L = y.value && !v.value, F = x(c);
+    !F || !(F instanceof HTMLElement) || L || (N.value = !0, d.value && a(), d.value || u(), T(d.value ? At(F, A, P, $, b, (z) => {
       N.value = !1, z === at.Finished && i();
     }) : At(F, V, g, E, b, (z) => {
       N.value = !1, z === at.Finished && (Ge(S) || (O.value = "hidden", m(I), s()));
     })));
   }
   return W(() => {
-    ee([d], (T, M, F) => {
+    ee([d], (T, L, F) => {
       C(F), y.value = !1;
     }, { immediate: !0 });
-  }), te(gt, S), mt(h(() => q(O.value, { visible: G.Open, hidden: G.Closed }) | r.value)), () => {
-    let { appear: T, show: M, enter: F, enterFrom: z, enterTo: ie, entered: ve, leave: Be, leaveFrom: St, leaveTo: _, ...H } = e, le = { ref: c }, oe = { ...H, ...v.value && d.value && ke.isServer ? { class: st([t.class, H.class, ...A, ...P]) } : {} };
+  }), te(gt, S), mt(h(() => Q(O.value, { visible: G.Open, hidden: G.Closed }) | r.value)), () => {
+    let { appear: T, show: L, enter: F, enterFrom: z, enterTo: ie, entered: ve, leave: Be, leaveFrom: St, leaveTo: _, ...H } = e, le = { ref: c }, oe = { ...H, ...v.value && d.value && ke.isServer ? { class: st([t.class, H.class, ...A, ...P]) } : {} };
     return j({ theirProps: oe, ourProps: le, slot: {}, slots: o, attrs: t, features: hn, visible: O.value === "visible", name: "TransitionChild" });
   };
 } }), lo = no, oo = R({ inheritAttrs: !1, props: { as: { type: [Object, String], default: "div" }, show: { type: [Boolean], default: null }, unmount: { type: [Boolean], default: !0 }, appear: { type: [Boolean], default: !1 }, enter: { type: [String], default: "" }, enterFrom: { type: [String], default: "" }, enterTo: { type: [String], default: "" }, entered: { type: [String], default: "" }, leave: { type: [String], default: "" }, leaveFrom: { type: [String], default: "" }, leaveTo: { type: [String], default: "" } }, emits: { beforeEnter: () => !0, afterEnter: () => !0, beforeLeave: () => !0, afterLeave: () => !0 }, setup(e, { emit: n, attrs: t, slots: o }) {
   let l = Le(), r = h(() => e.show === null && l !== null ? (l.value & G.Open) === G.Open : e.show);
-  K(() => {
+  q(() => {
     if (![!0, !1].includes(r.value))
       throw new Error('A <Transition /> is used but it is missing a `:show="true | false"` prop.');
   });
@@ -2377,7 +2377,7 @@ let hn = se.RenderStrategy, no = R({ props: { as: { type: [Object, String], defa
     a.value = "hidden";
   }), u = w(!0), s = { show: r, appear: h(() => e.appear || !u.value) };
   return W(() => {
-    K(() => {
+    q(() => {
       u.value = !1, r.value ? a.value = "visible" : Ge(i) || (a.value = "hidden");
     });
   }), te(gt, i), te(bt, s), () => {
@@ -2450,11 +2450,11 @@ const po = {
     error: {}
   },
   setup(e) {
-    return (n, t) => n.error ? (L(), Q("div", po, [
+    return (n, t) => n.error ? (M(), K("div", po, [
       ce(n.$slots, "default", {}, () => [
-        dt(Te(n.error), 1)
+        dt(Se(n.error), 1)
       ])
-    ])) : Ee("", !0);
+    ])) : we("", !0);
   }
 }), ho = { class: "w-full" }, bo = {
   key: 0,
@@ -2470,22 +2470,22 @@ const po = {
     shadow: { type: Boolean, default: !0 }
   },
   setup(e) {
-    return (n, t) => (L(), Q("div", ho, [
+    return (n, t) => (M(), K("div", ho, [
       re("div", {
         class: st(["mt-1 w-full rounded-md", { "shadow-sm": n.shadow }])
       }, [
         ce(n.$slots, "default")
       ], 2),
-      n.description ? (L(), Q("p", bo, Te(n.description), 1)) : Ee("", !0),
-      n.error ? (L(), ae(bn, {
+      n.description ? (M(), K("p", bo, Se(n.description), 1)) : we("", !0),
+      n.error ? (M(), ae(bn, {
         key: 1,
         error: n.error
-      }, null, 8, ["error"])) : Ee("", !0)
+      }, null, 8, ["error"])) : we("", !0)
     ]));
   }
 }), xo = { name: "Actions" }, wo = { class: "mt-8 border-t border-gray-200 pt-5" }, So = { class: "flex justify-end" }, Oo = { class: "inline-flex" };
 function Eo(e, n, t, o, l, r) {
-  return L(), Q("div", wo, [
+  return M(), K("div", wo, [
     re("div", So, [
       re("span", Oo, [
         ce(e.$slots, "default")
@@ -2508,8 +2508,8 @@ const Io = /* @__PURE__ */ Vn(xo, [["render", Eo]]), To = { class: "relative fle
   emits: ["update:modelValue"],
   setup(e, { emit: n }) {
     const t = vo(e, n);
-    return (o, l) => (L(), ae(yo, he(o.$props, { shadow: !1 }), {
-      default: Ie(() => [
+    return (o, l) => (M(), ae(yo, he(o.$props, { shadow: !1 }), {
+      default: Te(() => [
         re("div", To, [
           re("div", Co, [
             Ze(re("input", he({
@@ -2527,7 +2527,7 @@ const Io = /* @__PURE__ */ Vn(xo, [["render", Eo]]), To = { class: "relative fle
               re("label", {
                 for: o.id,
                 class: "block text-sm font-medium leading-5 text-gray-700"
-              }, Te(o.label), 9, Fo)
+              }, Se(o.label), 9, Fo)
             ])
           ])
         ])
@@ -2542,7 +2542,7 @@ const Io = /* @__PURE__ */ Vn(xo, [["render", Eo]]), To = { class: "relative fle
   },
   setup(e) {
     const n = e;
-    return (t, o) => (L(), Q("label", {
+    return (t, o) => (M(), K("label", {
       for: n.for,
       class: "block text-sm font-medium capitalize leading-5 text-gray-700"
     }, [
@@ -3076,40 +3076,40 @@ const No = { key: 0 }, xt = /* @__PURE__ */ R({
     );
     return ee(n.form, (f) => {
       typeof s.value == "function" && (c.value = s.value(f));
-    }), (f, d) => c.value ? (L(), Q("div", No, [
-      u.value ? (L(), ae(Z(Lo), {
+    }), (f, d) => c.value ? (M(), K("div", No, [
+      u.value ? (M(), ae(Z(Lo), {
         key: 0,
         for: f.element.name
       }, {
-        default: Ie(() => [
-          dt(Te(a.value), 1)
+        default: Te(() => [
+          dt(Se(a.value), 1)
         ]),
         _: 1
-      }, 8, ["for"])) : Ee("", !0),
-      (L(), ae(Pn(f.element.definition.component), he({
+      }, 8, ["for"])) : we("", !0),
+      (M(), ae(Pn(f.element.definition.component), he({
         key: f.element.name
       }, o.value, Fn(l.value)), null, 16)),
-      o.value.hasOwnProperty("error") ? Ee("", !0) : (L(!0), Q(ge, { key: 1 }, Ae(r.value, (v, p) => (L(), ae(Z(bn), {
+      o.value.hasOwnProperty("error") ? we("", !0) : (M(!0), K(ge, { key: 1 }, Ae(r.value, (v, p) => (M(), ae(Z(bn), {
         key: p,
         error: v
       }, null, 8, ["error"]))), 128))
-    ])) : Ee("", !0);
+    ])) : we("", !0);
   }
-}), jo = { class: "mx-auto mt-6 max-w-md space-y-6" }, Wo = /* @__PURE__ */ R({
+}), jo = { class: "mx-auto mt-6 max-w-md space-y-6" }, Ko = /* @__PURE__ */ R({
   __name: "FormBuilder",
   props: {
     schema: {},
     submit: { default: "Save" }
   },
   setup(e) {
-    return (n, t) => (L(), Q("div", jo, [
-      (L(!0), Q(ge, null, Ae(n.schema.elements, (o, l) => (L(), ae(xt, {
+    return (n, t) => (M(), K("div", jo, [
+      (M(!0), K(ge, null, Ae(n.schema.elements, (o, l) => (M(), ae(xt, {
         key: l,
         element: o,
         form: n.schema.form
       }, null, 8, ["element", "form"]))), 128)),
       ze(Z(Io), null, {
-        default: Ie(() => [
+        default: Te(() => [
           ce(n.$slots, "actions", {
             form: n.schema.form
           }, () => [
@@ -3118,8 +3118,8 @@ const No = { key: 0 }, xt = /* @__PURE__ */ R({
               type: "submit",
               loading: n.schema.form.processing
             }, {
-              default: Ie(() => [
-                dt(Te(n.submit), 1)
+              default: Te(() => [
+                dt(Se(n.submit), 1)
               ]),
               _: 1
             }, 8, ["loading"])
@@ -3143,9 +3143,9 @@ const No = { key: 0 }, xt = /* @__PURE__ */ R({
         o("update:modelValue", r);
       }
     });
-    return (r, a) => (L(!0), Q(ge, null, Ae(r.items, (i, u) => {
+    return (r, a) => (M(!0), K(ge, null, Ae(r.items, (i, u) => {
       var s, c, f;
-      return L(), ae(Z(Ao), {
+      return M(), ae(Z(Ao), {
         id: (s = i.label) != null ? s : i,
         key: u,
         modelValue: l.value,
@@ -3165,7 +3165,7 @@ const No = { key: 0 }, xt = /* @__PURE__ */ R({
     definition: o
   };
 });
-function Ko(e) {
+function qo(e) {
   const n = An(
     Object.keys(e).reduce((t, o) => {
       var r, a, i;
@@ -3185,7 +3185,7 @@ function Ko(e) {
     form: n
   };
 }
-const Vo = { class: "grid gap-x-4 gap-y-6 md:grid-flow-col" }, qo = /* @__PURE__ */ R({
+const Vo = { class: "grid gap-x-4 gap-y-6 md:grid-flow-col" }, Qo = /* @__PURE__ */ R({
   __name: "Grid",
   props: {
     schema: {},
@@ -3193,27 +3193,32 @@ const Vo = { class: "grid gap-x-4 gap-y-6 md:grid-flow-col" }, qo = /* @__PURE__
   },
   setup(e) {
     const t = wt(e.schema);
-    return (o, l) => (L(), Q("div", Vo, [
-      (L(!0), Q(ge, null, Ae(Z(t), (r, a) => (L(), ae(xt, he({
+    return (o, l) => (M(), K("div", Vo, [
+      (M(!0), K(ge, null, Ae(Z(t), (r, a) => (M(), ae(xt, he({
         key: a,
         element: r,
         form: o.form
       }, o.$attrs), null, 16, ["element", "form"]))), 128))
     ]));
   }
-}), zo = { class: "mt-10" }, Ho = { class: "mt-4 space-y-6" }, Qo = /* @__PURE__ */ R({
+}), zo = { class: "mt-10" }, Ho = {
+  key: 0,
+  class: "mt-1 text-gray-500"
+}, Uo = { class: "mt-4 space-y-6" }, Yo = /* @__PURE__ */ R({
   __name: "Section",
   props: {
     schema: {},
     form: {},
-    heading: {}
+    heading: {},
+    description: {}
   },
   setup(e) {
     const t = wt(e.schema);
-    return (o, l) => (L(), Q("div", zo, [
-      re("label", null, Te(o.heading), 1),
-      re("div", Ho, [
-        (L(!0), Q(ge, null, Ae(Z(t), (r, a) => (L(), ae(xt, {
+    return (o, l) => (M(), K("div", zo, [
+      re("label", null, Se(o.heading), 1),
+      o.description ? (M(), K("p", Ho, Se(o.description), 1)) : we("", !0),
+      re("div", Uo, [
+        (M(!0), K(ge, null, Ae(Z(t), (r, a) => (M(), ae(xt, {
           key: a,
           element: r,
           form: o.form
@@ -3224,8 +3229,8 @@ const Vo = { class: "grid gap-x-4 gap-y-6 md:grid-flow-col" }, qo = /* @__PURE__
 });
 export {
   $o as CheckboxGroup,
-  Wo as FormBuilder,
-  qo as Grid,
-  Qo as Section,
-  Ko as useSchema
+  Ko as FormBuilder,
+  Qo as Grid,
+  Yo as Section,
+  qo as useSchema
 };

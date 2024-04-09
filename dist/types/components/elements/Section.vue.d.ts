@@ -3,10 +3,12 @@ declare const _default: import("vue").DefineComponent<__VLS_TypePropsToRuntimePr
     schema: any;
     form: Form;
     heading: string;
+    description?: string;
 }>, {}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").PublicProps, Readonly<import("vue").ExtractPropTypes<__VLS_TypePropsToRuntimeProps<{
     schema: any;
     form: Form;
     heading: string;
+    description?: string;
 }>>>, {}, {}>;
 export default _default;
 type __VLS_NonUndefinedable<T> = T extends undefined ? never : T;
