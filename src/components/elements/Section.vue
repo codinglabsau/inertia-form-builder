@@ -6,6 +6,7 @@ const props = defineProps<{
   schema: any
   form: Form
   heading: string
+  description?: string
 }>()
 
 const elements = mapElements(props.schema)
@@ -14,6 +15,7 @@ const elements = mapElements(props.schema)
 <template>
   <div class="mt-10">
     <label>{{ heading }}</label>
+    <p class="text-gray-500 mt-1" v-if="description">{{ description }}</p>
 
     <div class="mt-4 space-y-6">
       <Element v-for="(element, index) in elements" :key="index" :element="element" :form="form" />

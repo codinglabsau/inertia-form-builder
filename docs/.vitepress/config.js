@@ -28,6 +28,7 @@ export default {
         items: [
           { text: "The Basics", link: "/basic" },
           { text: "Using the Grid", link: "/grid" },
+          { text: "Using the Section", link: "/section" },
           { text: "Select and Checkboxes", link: "/select" },
           { text: "Visibility of Attributes", link: "/visibility" },
           { text: "Custom Form Actions", link: "/actions" },
