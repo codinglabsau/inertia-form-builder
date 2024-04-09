@@ -191,6 +191,7 @@ const sectionSchema = useSchema({
   physical_attributes: {
     component: Section,
     heading: 'Physical Attributes',
+    description: 'Enter your physical attributes',
     schema: {
       attributes: {
         component: Grid,
