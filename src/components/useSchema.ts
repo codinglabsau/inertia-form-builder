@@ -103,6 +103,7 @@ type Fieldset = {
 type Schema = {
   elements: Element[]
   form: Form
+  prefix: string
 }
 
 const reducer = (elements: ElementMap) =>
@@ -115,6 +116,17 @@ const reducer = (elements: ElementMap) =>
 
     return carry
   }, {})
+
+const randomStringGenerator = (length: number): string => {
+  const chars = 'abcdefghijklmnopqrstuvwxyz'
+  let result = ''
+
+  for (let i = 0; i < length; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length))
+  }
+
+  return result
+}
 
 export const mapElements = (elements: ElementMap): Element[] => {
   return Object.entries(elements).map(([name, component]) => {
@@ -168,6 +180,7 @@ export default function useSchema(elements: ElementMap): Schema {
 
   return {
     elements: mapElements(elements),
+    prefix: randomStringGenerator(6),
     form,
   }
 }
