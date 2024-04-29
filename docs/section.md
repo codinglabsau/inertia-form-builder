@@ -1,14 +1,8 @@
 <script setup>
-import { Text, Email, Image } from '@codinglabsau/ui';
+import { Text, Email } from '@codinglabsau/ui';
 import { FormBuilder, useSchema, Section } from '../src/index';
 
-const gridSchema = useSchema({
-  avatar: {
-    component: Image,
-    props: {
-      currentImage: 'https://avatars.githubusercontent.com/u/1127412?v=4',
-    },
-  },
+const sectionSchema = useSchema({
   name: {
     component: Section,
     heading: 'Details',
@@ -38,17 +32,11 @@ we can separate elements by section. `Section` elements take `heading` and an op
 ```vue
 <script setup>
 import { Text, Email } from '@codinglabsau/ui'
-import { FormBuilder, useSchema, Grid } from '@codinglabsau/inertia-form-builder'
+import { FormBuilder, useSchema, Section } from '@codinglabsau/inertia-form-builder'
 
 const sectionSchema = useSchema({
-  avatar: {
-    component: Image,
-    props: {
-      currentImage: 'https://avatars.githubusercontent.com/u/1127412?v=4',
-    },
-  },
   name: {
-    component: Grid,
+    component: Section,
     schema: {
       firstname: {
         component: Text,
@@ -76,5 +64,5 @@ const sectionSchema = useSchema({
 
 <FormBuilder :schema="sectionSchema" />
 
-## Form in real-time
+## Preview
 <pre class="border bg-gray-200 p-4">{{ sectionSchema.form.data() }}</pre>
