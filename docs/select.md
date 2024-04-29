@@ -101,5 +101,5 @@ const selectAndCheckboxSchema = useSchema({
 
 <FormBuilder :schema="selectAndCheckboxSchema" />
 
-## Form in real-time
+### Preview
 <pre class="border bg-gray-200 p-4">{{ selectAndCheckboxSchema.form.data() }}</pre>

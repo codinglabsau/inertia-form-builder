@@ -71,5 +71,5 @@ inputStatesSchema.form.errors = {
 
 <FormBuilder :schema="inputStatesSchema" />
 
-## Form in real-time
+### Preview
 <pre class="border bg-gray-200 p-4">{{ inputStatesSchema.form.data() }}</pre>

@@ -75,5 +75,5 @@ const gridSchema = useSchema({
 
 <FormBuilder :schema="gridSchema" />
 
-## Form in real-time
+### Preview
 <pre class="border bg-gray-200 p-4">{{ gridSchema.form.data() }}</pre>
