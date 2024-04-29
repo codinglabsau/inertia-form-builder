@@ -13,7 +13,7 @@ content: [
 ```
 
 ::: warning
-This also requires the UI package (Theme and components)
+This also requires the Coding Labs UI package (theme and components)
 :::
 
 Include the ui plugin theme in your tailwind.config.js plugin configuration:
@@ -28,3 +28,5 @@ export default{
   ]
 }
 ```
+
+See the [codinglabsau/ui](https://github.com/codinglabsau/ui) documentation on how to customise the theme.
