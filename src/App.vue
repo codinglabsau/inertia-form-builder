@@ -28,6 +28,16 @@ const simpleSchema = useSchema({
   },
 })
 
+const simpleSchemaWithCustomId = useSchema({
+  firstname: {
+    component: Text,
+    label: 'Firstname with custom ID',
+    props: {
+      id: 'custom_firstname',
+    },
+  },
+})
+
 const gridSchema = useSchema({
   avatar: {
     component: Image,
@@ -234,6 +244,16 @@ const submit = () => alert('submitted')
       </div>
 
       <pre class="border bg-gray-200 p-4">{{ simpleSchema.form.data() }}</pre>
+    </div>
+
+    <div class="mt-4 grid grid-cols-2">
+      <div>
+        <form @submit.prevent="submit">
+          <FormBuilder :schema="simpleSchemaWithCustomId" />
+        </form>
+      </div>
+
+      <pre class="border bg-gray-200 p-4">{{ simpleSchemaWithCustomId.form.data() }}</pre>
     </div>
 
     <Heading>Pre-filled Form with Grid</Heading>
