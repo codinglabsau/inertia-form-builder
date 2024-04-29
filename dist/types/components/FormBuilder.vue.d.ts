@@ -1,4 +1,4 @@
-import type { Schema } from '@/composables/useSchema';
+import type { Schema } from '../composables/useSchema';
 declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__VLS_WithDefaults<__VLS_TypePropsToRuntimeProps<{
     schema: Schema;
     submit?: string;

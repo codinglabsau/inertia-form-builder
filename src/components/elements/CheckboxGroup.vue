@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Checkbox } from '@codinglabsau/ui'
-import type { Form } from '@/composables/useSchema'
+import type { Form } from '../../composables/useSchema'
 
 const props = defineProps<{
   form: Form

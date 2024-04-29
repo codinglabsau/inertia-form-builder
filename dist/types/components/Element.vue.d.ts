@@ -1,4 +1,4 @@
-import type { Element, Form } from '@/composables/useSchema';
+import type { Element, Form } from '../composables/useSchema';
 declare const _default: import("vue").DefineComponent<__VLS_TypePropsToRuntimeProps<{
     element: Element;
     form: Form;

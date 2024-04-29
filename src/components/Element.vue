@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { Error, Label } from '@codinglabsau/ui'
-import type { Element, Fieldset, Form } from '@/composables/useSchema'
+import type { Element, Fieldset, Form } from '../composables/useSchema'
 
 const props = defineProps<{
   element: Element
