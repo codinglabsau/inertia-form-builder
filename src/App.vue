@@ -15,7 +15,7 @@ import {
   SecondaryButton,
 } from '@codinglabsau/ui'
 import { FormBuilder, useSchema, Grid, CheckboxGroup, Section } from './index'
-import type { Fieldset } from './components/useSchema'
+import type { Fieldset } from './composables/useSchema'
 import SimpleCustomComponent from './demo/SimpleCustomComponent.vue'
 import MultipleFieldsetCustomComponent from './demo/MultipleFieldsetCustomComponent.vue'
 

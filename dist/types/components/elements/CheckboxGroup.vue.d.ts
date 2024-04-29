@@ -1,9 +1,12 @@
+import type { Form } from '@/composables/useSchema';
 declare const _default: import("vue").DefineComponent<__VLS_TypePropsToRuntimeProps<{
+    form: Form;
     modelValue: any[];
     items: any[];
 }>, {}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
     "update:modelValue": (value: any) => void;
-}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<__VLS_TypePropsToRuntimeProps<{
+}, string, import("vue").PublicProps, Readonly<import("vue").ExtractPropTypes<__VLS_TypePropsToRuntimeProps<{
+    form: Form;
     modelValue: any[];
     items: any[];
 }>>> & {

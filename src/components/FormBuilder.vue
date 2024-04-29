@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Actions, PrimaryButton } from '@codinglabsau/ui'
-import type { Schema } from './useSchema'
+import type { Schema } from '@/composables/useSchema'
 import Element from './Element.vue'
 
 withDefaults(

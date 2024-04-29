@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { Error, Label } from '@codinglabsau/ui'
-import type { Element, Fieldset, Form } from './useSchema'
+import type { Element, Fieldset, Form } from '@/composables/useSchema'
 
 const props = defineProps<{
   element: Element
@@ -34,12 +34,12 @@ const models = computed(() => {
 // configure component props, discarding props that are unexpected
 const computedProps = computed(() => {
   let componentProps = Object.entries({
+    id: `${props.form._prefix}-${props.element.name}`,
     ...props.element.definition,
     ...props.element.definition.props,
     ...models.value,
     schema: props.element.definition.schema,
     form: props.form,
-    id: props.element.name,
     error: errorBag.value[0] ?? null,
   })
 
@@ -125,7 +125,7 @@ watch(props.form, (newForm) => {
 
 <template>
   <div v-if="visible">
-    <Label v-if="showLabel" :for="element.name">
+    <Label v-if="showLabel" :for="computedProps.id as string">
       {{ label }}
     </Label>
 

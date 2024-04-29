@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { mapElements, type Form } from '../useSchema'
+import { mapElements, type Form } from '@/composables/useSchema'
 import Element from '../Element.vue'
 
 const props = defineProps<{

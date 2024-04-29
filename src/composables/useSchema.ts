@@ -32,8 +32,8 @@ import type {
   Textarea,
   Text,
 } from '@codinglabsau/ui'
-import CheckboxGroup from './elements/CheckboxGroup.vue'
-import type Grid from './elements/Grid.vue'
+import CheckboxGroup from '../components/elements/CheckboxGroup.vue'
+import type Grid from '../components/elements/Grid.vue'
 
 type Component =
   | typeof DangerButton
@@ -69,7 +69,7 @@ type Component =
   | typeof Grid
   | typeof CheckboxGroup
 
-type Form = InertiaForm<any>
+type Form = InertiaForm<any> & { _prefix: string }
 
 type CheckboxesConfig = {
   checked: Array<number | string>
@@ -103,7 +103,6 @@ type Fieldset = {
 type Schema = {
   elements: Element[]
   form: Form
-  prefix: string
 }
 
 const reducer = (elements: ElementMap) =>
@@ -142,6 +141,8 @@ export const mapElements = (elements: ElementMap): Element[] => {
 }
 
 export default function useSchema(elements: ElementMap): Schema {
+  const prefix: string = randomStringGenerator(6)
+
   const form = useForm(
     Object.keys(elements).reduce((carry, key) => {
       // reduce nested schema objects
@@ -178,9 +179,11 @@ export default function useSchema(elements: ElementMap): Schema {
     }, {})
   )
 
+  // add a "hidden" prefix input to ensure unique IDs on elements
+  form._prefix = prefix
+
   return {
     elements: mapElements(elements),
-    prefix: randomStringGenerator(6),
     form,
   }
 }
