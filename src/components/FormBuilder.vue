@@ -23,12 +23,14 @@ withDefaults(
       :form="schema.form"
     />
 
-    <Actions>
-      <slot name="actions" :form="schema.form">
-        <PrimaryButton as="button" type="submit" :loading="schema.form.processing">
-          {{ submit }}
-        </PrimaryButton>
-      </slot>
-    </Actions>
+    <slot name="actions-wrapper" :form="schema.form">
+      <Actions>
+        <slot name="actions" :form="schema.form">
+          <PrimaryButton as="button" type="submit" :loading="schema.form.processing">
+            {{ submit }}
+          </PrimaryButton>
+        </slot>
+      </Actions>
+    </slot>
   </div>
 </template>

@@ -130,6 +130,12 @@ const actionsSchema = useSchema({
   country: Text,
 })
 
+const actionsWrapperSchema = useSchema({
+  address: Text,
+  suburb: Text,
+  country: Text,
+})
+
 const inputStatesSchema = useSchema({
   error: {
     component: Text,
@@ -301,6 +307,30 @@ const submit = () => alert('submitted')
         <form @submit.prevent="submit">
           <FormBuilder :schema="actionsSchema">
             <template #actions="{ form }">
+              <div class="space-x-2">
+                <PrimaryButton as="button" type="submit" :loading="form.processing">
+                  Save
+                </PrimaryButton>
+
+                <SecondaryButton as="button" type="button" @click="form.reset()">
+                  Reset
+                </SecondaryButton>
+              </div>
+            </template>
+          </FormBuilder>
+        </form>
+      </div>
+
+      <pre class="border bg-gray-200 p-4">{{ actionsSchema.form.data() }}</pre>
+    </div>
+
+    <Heading>Custom Form Actions Wrapper</Heading>
+
+    <div class="mt-4 grid grid-cols-2">
+      <div>
+        <form @submit.prevent="submit">
+          <FormBuilder :schema="actionsWrapperSchema">
+            <template #actions-wrapper="{ form }">
               <div class="space-x-2">
                 <PrimaryButton as="button" type="submit" :loading="form.processing">
                   Save

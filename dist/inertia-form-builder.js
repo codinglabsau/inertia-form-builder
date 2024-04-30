@@ -1,5 +1,5 @@
 import { Link as In, useForm as Tn } from "@inertiajs/vue3";
-import { defineComponent as P, computed as h, ref as w, watch as ee, provide as te, h as U, cloneVNode as Bt, reactive as $t, onMounted as W, Fragment as ge, watchEffect as q, inject as Q, onUnmounted as ne, nextTick as J, unref as X, getCurrentInstance as Cn, Teleport as Pn, normalizeClass as st, openBlock as L, createBlock as ae, mergeProps as he, withCtx as Ie, renderSlot as ce, toRaw as pe, createElementBlock as K, createTextVNode as dt, toDisplayString as Se, createCommentVNode as we, createElementVNode as re, withDirectives as Xe, isRef as Rn, vModelCheckbox as Fn, createVNode as ze, vShow as Ot, shallowRef as Nt, triggerRef as Et, onScopeDispose as An, renderList as De, resolveDynamicComponent as Dn, toHandlers as Mn } from "vue";
+import { defineComponent as P, computed as h, ref as w, watch as ee, provide as te, h as U, cloneVNode as Bt, reactive as $t, onMounted as W, Fragment as ge, watchEffect as q, inject as Q, onUnmounted as ne, nextTick as J, unref as X, getCurrentInstance as Cn, Teleport as Pn, normalizeClass as st, openBlock as L, createBlock as ae, mergeProps as he, withCtx as Ie, renderSlot as se, toRaw as pe, createElementBlock as K, createTextVNode as dt, toDisplayString as Se, createCommentVNode as we, createElementVNode as re, withDirectives as Xe, isRef as Rn, vModelCheckbox as Fn, createVNode as ze, vShow as Ot, shallowRef as Nt, triggerRef as Et, onScopeDispose as An, renderList as De, resolveDynamicComponent as Dn, toHandlers as Mn } from "vue";
 const kn = /* @__PURE__ */ re("circle", {
   class: "opacity-25",
   cx: "12",
@@ -60,7 +60,7 @@ const kn = /* @__PURE__ */ re("circle", {
       disabled: l.loading,
       type: l.type
     }, l.$attrs), [
-      ce(l.$slots, "default"),
+      se(l.$slots, "default"),
       Xe(ze(It, {
         class: "ml-3",
         "text-class": l.spinnerClass
@@ -72,7 +72,7 @@ const kn = /* @__PURE__ */ re("circle", {
       href: l.href,
       class: o
     }, l.$attrs), [
-      ce(l.$slots, "default")
+      se(l.$slots, "default")
     ], 16, $n)) : (L(), ae(X(In), he({
       key: 1,
       as: l.as,
@@ -81,7 +81,7 @@ const kn = /* @__PURE__ */ re("circle", {
       class: o
     }, l.$attrs), {
       default: Ie(() => [
-        ce(l.$slots, "default"),
+        se(l.$slots, "default"),
         Xe(ze(It, {
           class: "ml-3",
           "text-class": l.spinnerClass
@@ -124,7 +124,7 @@ const kn = /* @__PURE__ */ re("circle", {
       class: n
     }, t.$attrs), {
       default: Ie(() => [
-        ce(t.$slots, "default")
+        se(t.$slots, "default")
       ]),
       _: 3
     }, 16, ["as", "external", "href", "loading", "type"]));
@@ -813,7 +813,7 @@ function Qt({ container: e, accept: n, walk: t, enabled: o }) {
       t(i.currentNode);
   });
 }
-var se = ((e) => (e[e.None = 0] = "None", e[e.RenderStrategy = 1] = "RenderStrategy", e[e.Static = 2] = "Static", e))(se || {}), me = ((e) => (e[e.Unmount = 0] = "Unmount", e[e.Hidden = 1] = "Hidden", e))(me || {});
+var de = ((e) => (e[e.None = 0] = "None", e[e.RenderStrategy = 1] = "RenderStrategy", e[e.Static = 2] = "Static", e))(de || {}), me = ((e) => (e[e.Unmount = 0] = "Unmount", e[e.Hidden = 1] = "Hidden", e))(me || {});
 function $({ visible: e = !0, features: n = 0, ourProps: t, theirProps: o, ...l }) {
   var r;
   let a = Zt(o, t), i = Object.assign(l, { props: a });
@@ -920,10 +920,10 @@ function yl(e) {
   }
   typeof window < "u" && typeof document < "u" && (document.addEventListener("DOMContentLoaded", n), n());
 }
-let de = [];
+let ce = [];
 yl(() => {
   function e(n) {
-    n.target instanceof HTMLElement && n.target !== document.body && de[0] !== n.target && (de.unshift(n.target), de = de.filter((t) => t != null && t.isConnected), de.splice(10));
+    n.target instanceof HTMLElement && n.target !== document.body && ce[0] !== n.target && (ce.unshift(n.target), ce = ce.filter((t) => t != null && t.isConnected), ce.splice(10));
   }
   window.addEventListener("click", e, { capture: !0 }), window.addEventListener("mousedown", e, { capture: !0 }), window.addEventListener("focus", e, { capture: !0 }), document.body.addEventListener("click", e, { capture: !0 }), document.body.addEventListener("mousedown", e, { capture: !0 }), document.body.addEventListener("focus", e, { capture: !0 });
 });
@@ -1373,13 +1373,13 @@ P({ name: "ComboboxInput", props: { as: { type: [Object, String], default: "inpu
   }
   function y(S) {
     var D, R, N;
-    let b = (D = S.relatedTarget) != null ? D : de.find((V) => V !== S.currentTarget);
+    let b = (D = S.relatedTarget) != null ? D : ce.find((V) => V !== S.currentTarget);
     if (s.value = !1, !((R = x(i.optionsRef)) != null && R.contains(b)) && !((N = x(i.buttonRef)) != null && N.contains(b)) && i.comboboxState.value === 0)
       return S.preventDefault(), i.mode.value === 0 && (i.nullable.value && i.value.value === null ? c() : i.activationTrigger.value !== 1 && i.selectActiveOption()), i.closeCombobox();
   }
   function I(S) {
     var D, R, N;
-    let b = (D = S.relatedTarget) != null ? D : de.find((V) => V !== S.currentTarget);
+    let b = (D = S.relatedTarget) != null ? D : ce.find((V) => V !== S.currentTarget);
     (R = x(i.buttonRef)) != null && R.contains(b) || (N = x(i.optionsRef)) != null && N.contains(b) || i.disabled.value || i.immediate.value && i.comboboxState.value !== 0 && (i.openCombobox(), Oe().nextFrame(() => {
       i.setActivationTrigger(1);
     }));
@@ -1391,7 +1391,7 @@ P({ name: "ComboboxInput", props: { as: { type: [Object, String], default: "inpu
   return () => {
     var S, D, R, N, b, V, g;
     let E = { open: i.comboboxState.value === 0 }, { displayValue: C, onChange: T, ...M } = e, F = { "aria-controls": (S = i.optionsRef.value) == null ? void 0 : S.id, "aria-expanded": i.comboboxState.value === 0, "aria-activedescendant": i.activeOptionIndex.value === null ? void 0 : i.virtual.value ? (D = i.options.value.find((z) => !i.virtual.value.disabled(z.dataRef.value) && i.compare(z.dataRef.value, i.virtual.value.options[i.activeOptionIndex.value]))) == null ? void 0 : D.id : (R = i.options.value[i.activeOptionIndex.value]) == null ? void 0 : R.id, "aria-labelledby": (V = (N = x(i.labelRef)) == null ? void 0 : N.id) != null ? V : (b = x(i.buttonRef)) == null ? void 0 : b.id, "aria-autocomplete": "list", id: a, onCompositionstart: v, onCompositionend: p, onKeydown: m, onInput: O, onFocus: I, onBlur: y, role: "combobox", type: (g = t.type) != null ? g : "text", tabIndex: 0, ref: i.inputRef, defaultValue: B.value, disabled: i.disabled.value === !0 ? !0 : void 0 };
-    return $({ ourProps: F, theirProps: M, slot: E, attrs: t, slots: o, features: se.RenderStrategy | se.Static, name: "ComboboxInput" });
+    return $({ ourProps: F, theirProps: M, slot: E, attrs: t, slots: o, features: de.RenderStrategy | de.Static, name: "ComboboxInput" });
   };
 } });
 P({ name: "ComboboxOptions", props: { as: { type: [Object, String], default: "ul" }, static: { type: Boolean, default: !1 }, unmount: { type: Boolean, default: !0 }, hold: { type: [Boolean], default: !1 } }, setup(e, { attrs: n, slots: t, expose: o }) {
@@ -1409,7 +1409,7 @@ P({ name: "ComboboxOptions", props: { as: { type: [Object, String], default: "ul
   } }), () => {
     var u, s, c;
     let f = { open: l.comboboxState.value === 0 }, d = { "aria-labelledby": (c = (u = x(l.labelRef)) == null ? void 0 : u.id) != null ? c : (s = x(l.buttonRef)) == null ? void 0 : s.id, id: r, ref: l.optionsRef, role: "listbox", "aria-multiselectable": l.mode.value === 1 ? !0 : void 0 }, v = ke(e, ["hold"]);
-    return $({ ourProps: d, theirProps: v, slot: f, attrs: n, slots: l.virtual.value && l.comboboxState.value === 0 ? { ...t, default: () => [U(Il, {}, t.default)] } : t, features: se.RenderStrategy | se.Static, visible: i.value, name: "ComboboxOptions" });
+    return $({ ourProps: d, theirProps: v, slot: f, attrs: n, slots: l.virtual.value && l.comboboxState.value === 0 ? { ...t, default: () => [U(Il, {}, t.default)] } : t, features: de.RenderStrategy | de.Static, visible: i.value, name: "ComboboxOptions" });
   };
 } });
 P({ name: "ComboboxOption", props: { as: { type: [Object, String], default: "li" }, value: { type: [Object, String, Number, Boolean] }, disabled: { type: Boolean, default: !1 }, order: { type: [Number], default: null } }, setup(e, { slots: n, attrs: t, expose: o }) {
@@ -1527,11 +1527,11 @@ let Ce = Object.assign(P({ name: "FocusTrap", props: { as: { type: [Object, Stri
   };
 } }), { features: un });
 function Cl(e) {
-  let n = w(de.slice());
+  let n = w(ce.slice());
   return ee([e], ([t], [o]) => {
     o === !0 && t === !1 ? ht(() => {
       n.value.splice(0);
-    }) : o === !1 && t === !0 && (n.value = de.slice());
+    }) : o === !1 && t === !0 && (n.value = ce.slice());
   }, { flush: "post" }), () => {
     var t;
     return (t = n.value.find((o) => o != null && o.isConnected)) != null ? t : null;
@@ -1950,7 +1950,7 @@ P({ name: "Dialog", inheritAttrs: !1, props: { as: { type: [Object, String], def
     le.observe(H), j(() => le.disconnect());
   }), () => {
     let { open: j, initialFocus: H, ...le } = e, oe = { ...t, ref: p, id: i, role: c.value, "aria-modal": O.value === 0 ? !0 : void 0, "aria-labelledby": z.value, "aria-describedby": F.value }, We = { open: O.value === 0 };
-    return U(nt, { force: !0 }, () => [U(vn, () => U(Wl, { target: p.value }, () => U(nt, { force: !1 }, () => U(Ce, { initialFocus: H, containers: R, features: y.value ? Y(V.value, { parent: Ce.features.RestoreFocus, leaf: Ce.features.All & ~Ce.features.FocusLock }) : Ce.features.None }, () => U(D, {}, () => $({ ourProps: oe, theirProps: { ...le, ...t }, slot: We, attrs: t, slots: o, visible: O.value === 0, features: se.RenderStrategy | se.Static, name: "Dialog" })))))), U(b)]);
+    return U(nt, { force: !0 }, () => [U(vn, () => U(Wl, { target: p.value }, () => U(nt, { force: !1 }, () => U(Ce, { initialFocus: H, containers: R, features: y.value ? Y(V.value, { parent: Ce.features.RestoreFocus, leaf: Ce.features.All & ~Ce.features.FocusLock }) : Ce.features.None }, () => U(D, {}, () => $({ ourProps: oe, theirProps: { ...le, ...t }, slot: We, attrs: t, slots: o, visible: O.value === 0, features: de.RenderStrategy | de.Static, name: "Dialog" })))))), U(b)]);
   };
 } });
 P({ name: "DialogOverlay", props: { as: { type: [Object, String], default: "div" }, id: { type: String, default: null } }, setup(e, { attrs: n, slots: t }) {
@@ -2191,7 +2191,7 @@ P({ name: "MenuItems", props: { as: { type: [Object, String], default: "div" }, 
   return () => {
     var d, v;
     let p = { open: a.menuState.value === 0 }, { ...m } = e, O = { "aria-activedescendant": a.activeItemIndex.value === null || (d = a.items.value[a.activeItemIndex.value]) == null ? void 0 : d.id, "aria-labelledby": (v = x(a.buttonRef)) == null ? void 0 : v.id, id: r, onKeydown: u, onKeyup: s, role: "menu", tabIndex: 0, ref: a.itemsRef };
-    return $({ ourProps: O, theirProps: m, slot: p, attrs: n, slots: t, features: se.RenderStrategy | se.Static, visible: f.value, name: "MenuItems" });
+    return $({ ourProps: O, theirProps: m, slot: p, attrs: n, slots: t, features: de.RenderStrategy | de.Static, visible: f.value, name: "MenuItems" });
   };
 } });
 P({ name: "MenuItem", inheritAttrs: !1, props: { as: { type: [Object, String], default: "template" }, disabled: { type: Boolean, default: !1 }, id: { type: String, default: null } }, setup(e, { slots: n, attrs: t, expose: o }) {
@@ -2304,7 +2304,7 @@ function hn(e) {
   }
   return { children: n, register: l, unregister: o };
 }
-let bn = se.RenderStrategy, ro = P({ props: { as: { type: [Object, String], default: "div" }, show: { type: [Boolean], default: null }, unmount: { type: [Boolean], default: !0 }, appear: { type: [Boolean], default: !1 }, enter: { type: [String], default: "" }, enterFrom: { type: [String], default: "" }, enterTo: { type: [String], default: "" }, entered: { type: [String], default: "" }, leave: { type: [String], default: "" }, leaveFrom: { type: [String], default: "" }, leaveTo: { type: [String], default: "" } }, emits: { beforeEnter: () => !0, afterEnter: () => !0, beforeLeave: () => !0, afterLeave: () => !0 }, setup(e, { emit: n, attrs: t, slots: o, expose: l }) {
+let bn = de.RenderStrategy, ro = P({ props: { as: { type: [Object, String], default: "div" }, show: { type: [Boolean], default: null }, unmount: { type: [Boolean], default: !0 }, appear: { type: [Boolean], default: !1 }, enter: { type: [String], default: "" }, enterFrom: { type: [String], default: "" }, enterTo: { type: [String], default: "" }, entered: { type: [String], default: "" }, leave: { type: [String], default: "" }, leaveFrom: { type: [String], default: "" }, leaveTo: { type: [String], default: "" } }, emits: { beforeEnter: () => !0, afterEnter: () => !0, beforeLeave: () => !0, afterLeave: () => !0 }, setup(e, { emit: n, attrs: t, slots: o, expose: l }) {
   let r = w(0);
   function a() {
     r.value |= G.Opening, n("beforeEnter");
@@ -2447,7 +2447,7 @@ const bo = {
   },
   setup(e) {
     return (n, t) => n.error ? (L(), K("div", bo, [
-      ce(n.$slots, "default", {}, () => [
+      se(n.$slots, "default", {}, () => [
         dt(Se(n.error), 1)
       ])
     ])) : we("", !0);
@@ -2470,7 +2470,7 @@ const bo = {
       re("div", {
         class: st(["mt-1 w-full rounded-md", { "shadow-sm": n.shadow }])
       }, [
-        ce(n.$slots, "default")
+        se(n.$slots, "default")
       ], 2),
       n.description ? (L(), K("p", xo, Se(n.description), 1)) : we("", !0),
       n.error ? (L(), ae(gn, {
@@ -2484,7 +2484,7 @@ function Co(e, n, t, o, l, r) {
   return L(), K("div", Eo, [
     re("div", Io, [
       re("span", To, [
-        ce(e.$slots, "default")
+        se(e.$slots, "default")
       ])
     ])
   ]);
@@ -2542,7 +2542,7 @@ const Po = /* @__PURE__ */ zn(Oo, [["render", Co]]), Ro = { class: "relative fle
       for: n.for,
       class: "block text-sm font-medium capitalize leading-5 text-gray-700"
     }, [
-      ce(t.$slots, "default")
+      se(t.$slots, "default")
     ], 8, jo));
   }
 });
@@ -3167,25 +3167,29 @@ const Ho = { key: 0 }, wt = /* @__PURE__ */ P({
         element: o,
         form: n.schema.form
       }, null, 8, ["element", "form"]))), 128)),
-      ze(X(Po), null, {
-        default: Ie(() => [
-          ce(n.$slots, "actions", {
-            form: n.schema.form
-          }, () => [
-            ze(X(Un), {
-              as: "button",
-              type: "submit",
-              loading: n.schema.form.processing
-            }, {
-              default: Ie(() => [
-                dt(Se(n.submit), 1)
-              ]),
-              _: 1
-            }, 8, ["loading"])
-          ])
-        ]),
-        _: 3
-      })
+      se(n.$slots, "actions-wrapper", {
+        form: n.schema.form
+      }, () => [
+        ze(X(Po), null, {
+          default: Ie(() => [
+            se(n.$slots, "actions", {
+              form: n.schema.form
+            }, () => [
+              ze(X(Un), {
+                as: "button",
+                type: "submit",
+                loading: n.schema.form.processing
+              }, {
+                default: Ie(() => [
+                  dt(Se(n.submit), 1)
+                ]),
+                _: 1
+              }, 8, ["loading"])
+            ])
+          ]),
+          _: 3
+        })
+      ])
     ]));
   }
 }), Go = { class: "grid gap-x-4 gap-y-6 md:grid-flow-col" }, Xo = /* @__PURE__ */ P({

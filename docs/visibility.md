@@ -31,7 +31,7 @@ we simply define a `visible` handler and reference a form element to meet a cond
 ```vue
 <script setup>
 import { Select, Number } from '@codinglabsau/ui';
-import { FormBuilder, useSchema } from '../src/index';
+import { FormBuilder, useSchema } from '@codinglabsau/inertia-form-builder';
 
 const visibleSchema = useSchema({
   limit_type: {

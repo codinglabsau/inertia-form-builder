@@ -12,6 +12,9 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<__
 }>>>, {
     submit: string;
 }, {}>, {
+    "actions-wrapper"?(_: {
+        form: any;
+    }): any;
     actions?(_: {
         form: any;
     }): any;

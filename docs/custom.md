@@ -40,7 +40,7 @@ Custom components is something very powerful to use in instances where our UI pa
 ```vue
 <script setup>
 import SimpleCustomComponent from "../src/yourcustomcomponent.vue";
-import { FormBuilder, useSchema } from '../src/index';
+import { FormBuilder, useSchema } from '@codinglabsau/inertia-form-builder';
 
 const customComponentSchema = useSchema({
   colour: {
@@ -99,7 +99,7 @@ type Fieldset = {
 ```vue
 <script setup>
 import SimpleCustomComponent from "../src/yourcustomcomponent.vue";
-import { FormBuilder, useSchema } from '../src/index';
+import { FormBuilder, useSchema } from '@codinglabsau/inertia-form-builder';
 
 const customComponentWithFieldsetSchema = useSchema({
   car: {
