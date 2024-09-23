@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch, warn } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { Error, Label } from '@codinglabsau/ui'
 import type { Element, Fieldset, Form } from '../composables/useSchema'
 
@@ -8,7 +8,20 @@ const props = defineProps<{
   form: Form
 }>()
 
+const alertTypes = ['info', 'warning', 'danger', 'success']
 
+type Alert = {
+  type: string
+  text: string
+  visible?: Function
+}
+
+const alertClasses = {
+  info: 'border-blue-400 bg-blue-50 text-blue-700',
+  warning: 'border-yellow-400 bg-yellow-50 text-yellow-700',
+  danger: 'border-red-400 bg-red-50 text-red-700',
+  success: 'border-green-400 bg-green-50 text-green-700',
+}
 
 // configure component model(s)
 const models = computed(() => {
@@ -105,21 +118,6 @@ const showLabel = computed(() => {
 
   return !isNested
 })
-
-const alertTypes = ['info', 'warning', 'danger', 'success']
-
-type Alert = {
-  type: string
-  text: string
-  visible?: Function
-}
-
-const alertClasses = {
-  info: 'border-blue-400 bg-blue-50 text-blue-700',
-  warning: 'border-yellow-400 bg-yellow-50 text-yellow-700',
-  danger: 'border-red-400 bg-red-50 text-red-700',
-  success: 'border-green-400 bg-green-50 text-green-700',
-}
 
 const alert = computed<Alert | null>(() => {
   if (props.element.definition.alert !== undefined
