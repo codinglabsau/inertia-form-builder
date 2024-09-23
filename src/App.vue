@@ -155,6 +155,42 @@ const inputStatesSchema = useSchema({
       disabled: true,
     },
   },
+  info: {
+    component: Text,
+    value: 'Info',
+    alert: {
+      type: 'info',
+      text: 'Show me the alert.',
+      visible: () => true,
+    },
+  },
+  warning: {
+    component: Text,
+    value: 'Warning',
+    alert: {
+      type: 'warning',
+      text: 'Show me the alert.',
+      visible: () => true,
+    },
+  },
+  danger: {
+    component: Text,
+    value: 'Danger',
+    alert: {
+      type: 'danger',
+      text: 'Show me the alert.',
+      visible: () => true,
+    },
+  },
+  Success: {
+    component: Text,
+    value: 'Success',
+    alert: {
+      type: 'success',
+      text: 'Show me the alert.',
+      visible: () => true,
+    },
+  },
 })
 
 inputStatesSchema.form.errors = {
