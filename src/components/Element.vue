@@ -156,7 +156,7 @@ watch(props.form, (newForm) => {
       v-on="listeners"
     />
 
-    <WarningAlert v-if="alert && alert.visible()">
+    <WarningAlert v-if="alert && alert.visible()" without-icon>
       {{ alert.text }}
       <template v-if="alert.actionHref && alert.actionText" #actions>
         <WarningAlertButton
