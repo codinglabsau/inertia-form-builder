@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+## [1.5.1] - 2024-09-23
+### Changed
+- Added a `Alert` prop to the `Element` component
+
 ## [1.5.0] - 2024-04-09
 ### Changed
 - Added a `description` prop to the `Section` component
