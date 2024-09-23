@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { Error, Label } from '@codinglabsau/ui'
+import { Error, Label, WarningAlert, WarningAlertButton } from '@codinglabsau/ui'
 import type { Element, Fieldset, Form } from '../composables/useSchema'
 
 const props = defineProps<{
@@ -8,19 +8,12 @@ const props = defineProps<{
   form: Form
 }>()
 
-const alertTypes = ['info', 'warning', 'danger', 'success']
-
 type Alert = {
-  type: string
   text: string
+  actionText?: string
+  actionHref?: string
+  externalAction?: boolean
   visible?: Function
-}
-
-const alertClasses = {
-  info: 'border-blue-400 bg-blue-50 text-blue-700',
-  warning: 'border-yellow-400 bg-yellow-50 text-yellow-700',
-  danger: 'border-red-400 bg-red-50 text-red-700',
-  success: 'border-green-400 bg-green-50 text-green-700',
 }
 
 // configure component model(s)
@@ -120,9 +113,7 @@ const showLabel = computed(() => {
 })
 
 const alert = computed<Alert | null>(() => {
-  if (props.element.definition.alert !== undefined
-    && alertTypes.includes(props.element.definition.alert.type)
-  ) {
+  if (props.element.definition.alert !== undefined) {
     const alert = props.element.definition.alert as Alert
     alert.visible = typeof alert.visible === 'function'
       ? alert.visible
@@ -165,15 +156,17 @@ watch(props.form, (newForm) => {
       v-on="listeners"
     />
 
-    <div v-if="alert && alert.visible()" class="border-l-4 p-4" :class="alertClasses[alert.type]">
-      <div class="flex">
-        <div class="ml-3">
-          <p >
-            {{ alert.text }}
-          </p>
-        </div>
-      </div>
-    </div>
+    <WarningAlert v-if="alert && alert.visible()">
+      {{ alert.text }}
+      <template v-if="alert.actionHref && alert.actionText" #actions>
+        <WarningAlertButton
+          :external="alert.externalAction"
+          :href="alert.actionHref"
+        >
+          {{ alert.actionText }}
+        </WarningAlertButton>
+      </template>
+    </WarningAlert>
 
     <template v-if="!computedProps.hasOwnProperty('error')">
       <Error v-for="(error, index) in errorBag" :key="index" :error="error" />
