@@ -1,12 +1,20 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { Error, Label } from '@codinglabsau/ui'
+import { Error, Label, WarningAlert, WarningAlertButton } from '@codinglabsau/ui'
 import type { Element, Fieldset, Form } from '../composables/useSchema'
 
 const props = defineProps<{
   element: Element
   form: Form
 }>()
+
+type Alert = {
+  text: string
+  actionText?: string
+  actionHref?: string
+  externalAction?: boolean
+  visible?: Function
+}
 
 // configure component model(s)
 const models = computed(() => {
@@ -104,6 +112,18 @@ const showLabel = computed(() => {
   return !isNested
 })
 
+const alert = computed<Alert | null>(() => {
+  if (props.element.definition.alert !== undefined) {
+    const alert = props.element.definition.alert as Alert
+    alert.visible = typeof alert.visible === 'function'
+      ? alert.visible
+      : () => true
+
+    return alert
+  }
+  return null;
+})
+
 const visibleFunc = ref(
   typeof props.element.definition.visible === 'function'
     ? props.element.definition.visible
@@ -135,6 +155,18 @@ watch(props.form, (newForm) => {
       v-bind="computedProps"
       v-on="listeners"
     />
+
+    <WarningAlert v-if="alert && alert.visible()" without-icon>
+      {{ alert.text }}
+      <template v-if="alert.actionHref && alert.actionText" #actions>
+        <WarningAlertButton
+          :external="alert.externalAction"
+          :href="alert.actionHref"
+        >
+          {{ alert.actionText }}
+        </WarningAlertButton>
+      </template>
+    </WarningAlert>
 
     <template v-if="!computedProps.hasOwnProperty('error')">
       <Error v-for="(error, index) in errorBag" :key="index" :error="error" />

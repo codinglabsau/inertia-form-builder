@@ -155,6 +155,18 @@ const inputStatesSchema = useSchema({
       disabled: true,
     },
   },
+  warning: {
+    component: Text,
+    value: 'Warning',
+    alert: {
+      type: 'warning',
+      text: 'Show me the warning.',
+      actionText: 'Click me',
+      actionHref: '/action',
+      externalAction: true,
+      visible: () => true,
+    },
+  },
 })
 
 inputStatesSchema.form.errors = {
