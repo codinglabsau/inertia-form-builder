@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import {
   Container,
   Heading,
@@ -159,7 +158,6 @@ const inputStatesSchema = useSchema({
     component: Text,
     value: 'Warning',
     alert: {
-      type: 'warning',
       text: 'Show me the warning.',
       actionText: 'Click me',
       actionHref: '/action',

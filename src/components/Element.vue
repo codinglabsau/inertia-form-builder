@@ -1,20 +1,12 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { Error, Label, WarningAlert, WarningAlertButton } from '@codinglabsau/ui'
-import type { Element, Fieldset, Form } from '../composables/useSchema'
+import type { Element, Fieldset, Form, Alert } from '../composables/useSchema'
 
 const props = defineProps<{
   element: Element
   form: Form
 }>()
-
-type Alert = {
-  text: string
-  actionText?: string
-  actionHref?: string
-  externalAction?: boolean
-  visible?: Function
-}
 
 // configure component model(s)
 const models = computed(() => {
@@ -115,13 +107,11 @@ const showLabel = computed(() => {
 const alert = computed<Alert | null>(() => {
   if (props.element.definition.alert !== undefined) {
     const alert = props.element.definition.alert as Alert
-    alert.visible = typeof alert.visible === 'function'
-      ? alert.visible
-      : () => true
+    alert.visible = typeof alert.visible === 'function' ? alert.visible : () => true
 
     return alert
   }
-  return null;
+  return null
 })
 
 const visibleFunc = ref(
@@ -159,10 +149,7 @@ watch(props.form, (newForm) => {
     <WarningAlert v-if="alert && alert.visible()" without-icon>
       {{ alert.text }}
       <template v-if="alert.actionHref && alert.actionText" #actions>
-        <WarningAlertButton
-          :external="alert.externalAction"
-          :href="alert.actionHref"
-        >
+        <WarningAlertButton :external="alert.externalAction" :href="alert.actionHref">
           {{ alert.actionText }}
         </WarningAlertButton>
       </template>

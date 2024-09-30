@@ -18,6 +18,7 @@ type ElementConfig<T extends Component = Component> = {
     fieldset?: Fieldset;
     showLabel?: boolean;
     visible?: (form: Form) => boolean;
+    alert?: Alert;
     props?: InstanceType<T>['$props'];
 } & (T extends typeof CheckboxGroup ? CheckboxesConfig : {});
 type ElementDefinition = ElementConfig | Component;
@@ -38,6 +39,13 @@ type Schema = {
     elements: Element[];
     form: Form;
 };
+type Alert = {
+    text: string;
+    actionText?: string;
+    actionHref?: string;
+    externalAction?: boolean;
+    visible?: Function;
+};
 export declare const mapElements: (elements: ElementMap) => Element[];
 export default function useSchema(elements: ElementMap): Schema;
-export type { Schema, ElementMap, Element, Fieldset, Form };
+export type { Schema, ElementMap, Element, Fieldset, Form, Alert };

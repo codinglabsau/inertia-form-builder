@@ -1,6 +1,9 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
   "compilerOptions": {
+    "importsNotUsedAsValues": "remove",
+    "preserveValueImports": false,
+    "verbatimModuleSyntax": true,
     "lib": [
       "ESNext",
       "DOM",
