@@ -123,6 +123,8 @@ const visibleSchema = useSchema({
   },
 })
 
+const emptySchema = useSchema()
+
 const actionsSchema = useSchema({
   address: Text,
   suburb: Text,
@@ -308,6 +310,18 @@ const submit = () => alert('submitted')
       </div>
 
       <pre class="border bg-gray-200 p-4">{{ visibleSchema.form.data() }}</pre>
+    </div>
+
+    <Heading>Empty Schema</Heading>
+
+    <div class="mt-4 grid grid-cols-2">
+      <div>
+        <form @submit.prevent="submit">
+          <FormBuilder :schema="emptySchema"> This is the default slot </FormBuilder>
+        </form>
+      </div>
+
+      <pre class="border bg-gray-200 p-4">{{ emptySchema.form.data() }}</pre>
     </div>
 
     <Heading>Custom Form Actions</Heading>

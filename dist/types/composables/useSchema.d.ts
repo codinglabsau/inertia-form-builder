@@ -47,5 +47,5 @@ type Alert = {
     visible?: Function;
 };
 export declare const mapElements: (elements: ElementMap) => Element[];
-export default function useSchema(elements: ElementMap): Schema;
+export default function useSchema(elements?: ElementMap): Schema;
 export type { Schema, ElementMap, Element, Fieldset, Form, Alert };

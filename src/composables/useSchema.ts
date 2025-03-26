@@ -149,7 +149,7 @@ export const mapElements = (elements: ElementMap): Element[] => {
   })
 }
 
-export default function useSchema(elements: ElementMap): Schema {
+export default function useSchema(elements: ElementMap = {}): Schema {
   const prefix: string = randomStringGenerator(6)
 
   const form = useForm(

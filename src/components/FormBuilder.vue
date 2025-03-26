@@ -16,12 +16,14 @@ withDefaults(
 
 <template>
   <div class="mx-auto mt-6 max-w-md space-y-6">
-    <Element
-      v-for="(element, index) in schema.elements"
-      :key="index"
-      :element="element"
-      :form="schema.form"
-    />
+    <slot>
+      <Element
+        v-for="(element, index) in schema.elements"
+        :key="index"
+        :element="element"
+        :form="schema.form"
+      />
+    </slot>
 
     <slot name="actions-wrapper" :form="schema.form">
       <Actions>
