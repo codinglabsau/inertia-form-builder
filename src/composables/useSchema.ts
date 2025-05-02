@@ -1,4 +1,6 @@
-import { useForm, type InertiaForm } from '@inertiajs/vue3'
+import { type InertiaForm, useForm } from '@inertiajs/vue3'
+import { useForm as usePrecogForm } from 'laravel-precognition-vue-inertia'
+import { type RequestMethod } from 'laravel-precognition'
 
 import type {
   DangerButton,
@@ -71,6 +73,8 @@ type Component =
 
 type Form = InertiaForm<any> & { _prefix: string }
 
+type PrecogForm = InertiaForm<any> & { _prefix: string }
+
 type CheckboxesConfig = {
   checked: Array<number | string>
   items: any[]
@@ -106,6 +110,11 @@ type Schema = {
   form: Form
 }
 
+type PrecogSchema = {
+  elements: Element[]
+  form: PrecogForm
+}
+
 type Alert = {
   text: string
   actionText?: string
@@ -136,6 +145,42 @@ const randomStringGenerator = (length: number): string => {
   return result
 }
 
+const prepareFields = (elements: ElementMap) => {
+  return Object.keys(elements).reduce((carry, key) => {
+    // reduce nested schema objects
+    if (elements[key].schema) {
+      return { ...carry, ...reducer(elements[key].schema) }
+    }
+
+    // special handling for checkbox arrays
+    if (elements[key].component === CheckboxGroup) {
+      carry[key] = (elements[key] as ElementConfig<typeof CheckboxGroup>).checked ?? []
+
+      return carry
+    }
+
+    // special handling for fieldsets
+    const fieldset = elements[key]?.fieldset as Fieldset
+
+    if (fieldset) {
+      Object.entries(fieldset).forEach(([fieldsetKey, fieldsetValue]) => {
+        if (fieldsetValue?.model) {
+          carry[fieldsetValue.model] = fieldsetValue.value ?? null
+        } else {
+          carry[fieldsetKey] = fieldsetValue
+        }
+      })
+
+      return carry
+    }
+
+    // default schema item with value
+    carry[key] = elements[key].value ?? null
+
+    return carry
+  }, {})
+}
+
 export const mapElements = (elements: ElementMap): Element[] => {
   return Object.entries(elements).map(([name, component]) => {
     const definition = component.hasOwnProperty('setup')
@@ -149,52 +194,29 @@ export const mapElements = (elements: ElementMap): Element[] => {
   })
 }
 
-export default function useSchema(elements: ElementMap = {}): Schema {
-  const prefix: string = randomStringGenerator(6)
-
-  const form = useForm(
-    Object.keys(elements).reduce((carry, key) => {
-      // reduce nested schema objects
-      if (elements[key].schema) {
-        return { ...carry, ...reducer(elements[key].schema) }
-      }
-
-      // special handling for checkbox arrays
-      if (elements[key].component === CheckboxGroup) {
-        carry[key] = (elements[key] as ElementConfig<typeof CheckboxGroup>).checked ?? []
-
-        return carry
-      }
-
-      // special handling for fieldsets
-      const fieldset = elements[key]?.fieldset as Fieldset
-
-      if (fieldset) {
-        Object.entries(fieldset).forEach(([fieldsetKey, fieldsetValue]) => {
-          if (fieldsetValue?.model) {
-            carry[fieldsetValue.model] = fieldsetValue.value ?? null
-          } else {
-            carry[fieldsetKey] = fieldsetValue
-          }
-        })
-
-        return carry
-      }
-
-      // default schema item with value
-      carry[key] = elements[key].value ?? null
-
-      return carry
-    }, {})
-  )
-
-  // add a "hidden" prefix input to ensure unique IDs on elements
-  form._prefix = prefix
+const prepareSchema = (form: Form, elements: ElementMap): Schema => {
+  form._prefix = randomStringGenerator(6)
 
   return {
     elements: mapElements(elements),
     form,
   }
+}
+
+export function usePrecogSchema(
+  method: RequestMethod,
+  url: string,
+  elements: ElementMap = {}
+): PrecogSchema {
+  const form = usePrecogForm(method, url, prepareFields(elements))
+
+  return prepareSchema(form, elements)
+}
+
+export default function useSchema(elements: ElementMap = {}): Schema {
+  const form = useForm(prepareFields(elements))
+
+  return prepareSchema(form, elements)
 }
 
 export type { Schema, ElementMap, Element, Fieldset, Form, Alert }
