@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { mapElements, type Form } from '../../composables/useSchema'
+import { mapElements, type Form, type SchemaOptions } from '../../composables/useSchema'
 import Element from '../Element.vue'
 
 const props = defineProps<{
   schema: any
   form: Form
+  schemaOptions: SchemaOptions
   heading: string
   description?: string
 }>()
@@ -21,7 +22,13 @@ const elements = mapElements(props.schema)
     </p>
 
     <div class="mt-4 space-y-6">
-      <Element v-for="(element, index) in elements" :key="index" :element="element" :form="form" />
+      <Element
+        v-for="(element, index) in elements"
+        :key="index"
+        :element="element"
+        :form="form"
+        :schema-options="schemaOptions"
+      />
     </div>
   </div>
 </template>

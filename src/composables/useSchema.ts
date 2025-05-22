@@ -1,5 +1,5 @@
 import { type InertiaForm, useForm } from '@inertiajs/vue3'
-import { useForm as usePrecogForm } from 'laravel-precognition-vue-inertia'
+import { useForm as usePrecognitiveForm } from 'laravel-precognition-vue-inertia'
 import { type RequestMethod } from 'laravel-precognition'
 
 import type {
@@ -73,8 +73,6 @@ type Component =
 
 type Form = InertiaForm<any> & { _prefix: string }
 
-type PrecogForm = InertiaForm<any> & { _prefix: string }
-
 type CheckboxesConfig = {
   checked: Array<number | string>
   items: any[]
@@ -90,7 +88,16 @@ type ElementConfig<T extends Component = Component> = {
   visible?: (form: Form) => boolean
   alert?: Alert
   props?: InstanceType<T>['$props']
+  precognitive?: boolean
+  precognitiveEvent?: 'update' | 'change' | 'blur' | 'focus'
 } & (T extends typeof CheckboxGroup ? CheckboxesConfig : {})
+
+type SchemaOptions = {
+  precognition?: boolean
+  fieldsArePrecognitiveByDefault?: boolean
+  method?: RequestMethod
+  url?: string
+}
 
 type ElementDefinition = ElementConfig | Component
 
@@ -108,11 +115,7 @@ type Fieldset = {
 type Schema = {
   elements: Element[]
   form: Form
-}
-
-type PrecogSchema = {
-  elements: Element[]
-  form: PrecogForm
+  options: SchemaOptions
 }
 
 type Alert = {
@@ -194,29 +197,18 @@ export const mapElements = (elements: ElementMap): Element[] => {
   })
 }
 
-const prepareSchema = (form: Form, elements: ElementMap): Schema => {
+export default function useSchema(elements: ElementMap = {}, options: SchemaOptions = {}): Schema {
+  const form = options?.precognition
+    ? usePrecognitiveForm(options.method, options.url, prepareFields(elements))
+    : useForm(prepareFields(elements))
+
   form._prefix = randomStringGenerator(6)
 
   return {
     elements: mapElements(elements),
     form,
+    options,
   }
 }
 
-export function usePrecogSchema(
-  method: RequestMethod,
-  url: string,
-  elements: ElementMap = {}
-): PrecogSchema {
-  const form = usePrecogForm(method, url, prepareFields(elements))
-
-  return prepareSchema(form, elements)
-}
-
-export default function useSchema(elements: ElementMap = {}): Schema {
-  const form = useForm(prepareFields(elements))
-
-  return prepareSchema(form, elements)
-}
-
-export type { Schema, ElementMap, Element, Fieldset, Form, Alert }
+export type { Schema, SchemaOptions, ElementMap, Element, Fieldset, Form, Alert }

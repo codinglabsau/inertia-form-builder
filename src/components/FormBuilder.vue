@@ -22,6 +22,7 @@ withDefaults(
         :key="index"
         :element="element"
         :form="schema.form"
+        :schema-options="schema.options"
       />
     </slot>
 
