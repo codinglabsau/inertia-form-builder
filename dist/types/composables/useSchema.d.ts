@@ -1,5 +1,4 @@
 import { type InertiaForm } from '@inertiajs/vue3';
-import { type RequestMethod } from 'laravel-precognition';
 import type { DangerButton, PrimaryButton, SecondaryButton, Breadcrumbs, Container, DataTable, Dropdown, DropdownItem, Heading, Notifications, Pagination, StackedList, Tabs, Toggle, Actions, Combobox, Checkbox, Date, DateRange, Email, Error, Hidden, Image, Label, Number, Password, Price, Select, Textarea, Text } from '@codinglabsau/ui';
 import CheckboxGroup from '../components/elements/CheckboxGroup.vue';
 import type Grid from '../components/elements/Grid.vue';
@@ -21,15 +20,7 @@ type ElementConfig<T extends Component = Component> = {
     visible?: (form: Form) => boolean;
     alert?: Alert;
     props?: InstanceType<T>['$props'];
-    precognitive?: boolean;
-    precognitiveEvent?: 'update' | 'change' | 'blur' | 'focus';
 } & (T extends typeof CheckboxGroup ? CheckboxesConfig : {});
-type SchemaOptions = {
-    precognition?: boolean;
-    fieldsArePrecognitiveByDefault?: boolean;
-    method?: RequestMethod;
-    url?: string;
-};
 type ElementDefinition = ElementConfig | Component;
 type ElementMap = {
     [key: string]: ElementDefinition;
@@ -47,7 +38,6 @@ type Fieldset = {
 type Schema = {
     elements: Element[];
     form: Form;
-    options: SchemaOptions;
 };
 type Alert = {
     text: string;
@@ -57,5 +47,5 @@ type Alert = {
     visible?: Function;
 };
 export declare const mapElements: (elements: ElementMap) => Element[];
-export default function useSchema(elements?: ElementMap, options?: SchemaOptions): Schema;
-export type { Schema, SchemaOptions, ElementMap, Element, Fieldset, Form, Alert };
+export default function useSchema(elements?: ElementMap): Schema;
+export type { Schema, ElementMap, Element, Fieldset, Form, Alert };

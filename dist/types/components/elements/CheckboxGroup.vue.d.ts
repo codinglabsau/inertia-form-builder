@@ -1,7 +1,6 @@
-import type { Form, SchemaOptions } from '../../composables/useSchema';
+import type { Form } from '../../composables/useSchema';
 type __VLS_Props = {
     form: Form;
-    schemaOptions: SchemaOptions;
     modelValue: any[];
     items: any[];
 };
