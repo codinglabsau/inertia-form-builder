@@ -21,12 +21,7 @@ const elements = mapElements(props.schema)
     </p>
 
     <div class="mt-4 space-y-6">
-      <Element
-        v-for="(element, index) in elements"
-        :key="index"
-        :element="element"
-        :form="form"
-      />
+      <Element v-for="(element, index) in elements" :key="index" :element="element" :form="form" />
     </div>
   </div>
 </template>
