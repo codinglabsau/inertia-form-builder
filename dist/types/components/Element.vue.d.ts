@@ -1,4 +1,4 @@
-import type { Element, Form } from '../composables/useSchema';
+import type { Element, Form } from '@/composables/useSchema';
 type __VLS_Props = {
     element: Element;
     form: Form;
