@@ -57,8 +57,7 @@ const listeners = computed(() => {
 
   const precognitive =
     props.element.definition.precognitive ??
-    (!schemaOptions.optInPrecognition) ??
-    true
+    (schemaOptions?.optInPrecognition !== true)
   const precognitiveEvent = props.element.definition.precognitiveEvent ?? 'change'
 
   const dynamicListeners = (formKey: string, modelKey: string = 'modelValue') => {
