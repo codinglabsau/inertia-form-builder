@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, ref, watch, inject } from 'vue'
 import { Error, Label, WarningAlert, WarningAlertButton } from '@codinglabsau/ui'
 import type { Alert, Element, Fieldset, Form, SchemaOptions } from '@/composables/useSchema'
 
 const props = defineProps<{
   element: Element
   form: Form
-  schemaOptions: SchemaOptions
 }>()
+
+// Inject schema options
+const schemaOptions = inject<SchemaOptions>('schemaOptions', {})
 
 // configure component model(s)
 const models = computed(() => {
@@ -55,7 +57,7 @@ const listeners = computed(() => {
 
   const precognitive =
     props.element.definition.precognitive ??
-    props.schemaOptions.fieldsArePrecognitiveByDefault ??
+    schemaOptions.fieldsArePrecognitiveByDefault ??
     true
   const precognitiveEvent = props.element.definition.precognitiveEvent ?? 'update'
 
@@ -163,7 +165,6 @@ watch(props.form, (newForm) => {
     <component
       :is="element.definition.component"
       :key="element.name"
-      :schema-options="schemaOptions"
       v-bind="computedProps"
       v-on="listeners"
     />

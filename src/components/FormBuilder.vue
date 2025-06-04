@@ -2,8 +2,9 @@
 import { Actions, PrimaryButton } from '@codinglabsau/ui'
 import type { Schema } from '../composables/useSchema'
 import Element from './Element.vue'
+import { provide, watch, ref } from 'vue'
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     schema: Schema
     submit?: string
@@ -12,6 +13,8 @@ withDefaults(
     submit: 'Save',
   }
 )
+
+provide('schemaOptions', props.schema.options)
 </script>
 
 <template>
@@ -22,7 +25,6 @@ withDefaults(
         :key="index"
         :element="element"
         :form="schema.form"
-        :schema-options="schema.options"
       />
     </slot>
 
