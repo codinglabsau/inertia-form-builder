@@ -54,6 +54,5 @@
     "vitepress": "^1.2.0",
     "vue": "^3.2.37",
     "vue-tsc": "^2.1.6"
-  },
-  "relativeDependencies": {}
+  }
 }
