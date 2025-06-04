@@ -32,6 +32,7 @@ export default {
           { text: 'Custom Form Actions', link: '/actions' },
           { text: 'States', link: '/states' },
           { text: 'Custom Components', link: '/custom' },
+          { text: 'Precognition', link: '/precognition' },
         ],
       },
     ],

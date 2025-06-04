@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, ref, watch, inject } from 'vue'
 import { Error, Label, WarningAlert, WarningAlertButton } from '@codinglabsau/ui'
-import type { Element, Fieldset, Form, Alert } from '../composables/useSchema'
+import type { Alert, Element, Fieldset, Form, SchemaOptions } from '@/composables/useSchema'
 
 const props = defineProps<{
   element: Element
   form: Form
 }>()
+
+// Inject schema options
+const schemaOptions = inject<SchemaOptions>('schemaOptions', {})
 
 // configure component model(s)
 const models = computed(() => {
@@ -52,21 +55,40 @@ const computedProps = computed(() => {
 const listeners = computed(() => {
   const fieldset = props.element.definition?.fieldset as Fieldset
 
-  if (fieldset) {
-    // fieldsets update each component model seperately
-    return Object.entries(fieldset).reduce((carry, [key, value]) => {
-      if (value?.model) {
-        carry[`update:${value.model}`] = (newVal) => (props.form[value.model] = newVal)
-      } else {
-        carry[`update:${key}`] = (newVal) => (props.form[key] = newVal)
-      }
+  const precognitive =
+    props.element.definition.precognitive ??
+    (schemaOptions?.optInPrecognition !== true)
+  const precognitiveEvent = props.element.definition.precognitiveEvent ?? 'change'
 
-      return carry
+  const dynamicListeners = (formKey: string, modelKey: string = 'modelValue') => {
+    return {
+      [`update:${modelKey}`]: (newVal) => {
+        props.form[formKey] = newVal
+
+        if (precognitive && precognitiveEvent === 'update') {
+          props.form.validate(formKey)
+        }
+      },
+      ...(precognitive && precognitiveEvent !== 'update'
+        ? { [precognitiveEvent]: () => props.form.validate(formKey) }
+        : {}),
+    }
+  }
+
+  if (fieldset) {
+    // fieldsets update each component model separately
+    return Object.entries(fieldset).reduce((carry, [key, value]) => {
+      const fieldKey = value?.model ?? key
+
+      return {
+        ...carry,
+        ...dynamicListeners(fieldKey, fieldKey),
+      }
     }, {})
   }
 
   // a single model component updates the value on the underlying form
-  return { 'update:modelValue': (value) => (props.form[props.element.name] = value) }
+  return dynamicListeners(props.element.name)
 })
 
 // calculate all the errors that apply to the component

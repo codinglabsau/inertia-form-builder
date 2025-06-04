@@ -1,4 +1,6 @@
-import { useForm, type InertiaForm } from '@inertiajs/vue3'
+import { type InertiaForm, useForm } from '@inertiajs/vue3'
+import { useForm as usePrecognitiveForm } from 'laravel-precognition-vue-inertia'
+import { type RequestMethod } from 'laravel-precognition'
 
 import type {
   DangerButton,
@@ -86,7 +88,16 @@ type ElementConfig<T extends Component = Component> = {
   visible?: (form: Form) => boolean
   alert?: Alert
   props?: InstanceType<T>['$props']
+  precognitive?: boolean
+  precognitiveEvent?: 'update' | 'change' | 'blur' | 'focus'
 } & (T extends typeof CheckboxGroup ? CheckboxesConfig : {})
+
+type SchemaOptions = {
+  precognition?: boolean
+  optInPrecognition?: boolean
+  method?: RequestMethod
+  url?: string
+}
 
 type ElementDefinition = ElementConfig | Component
 
@@ -104,6 +115,7 @@ type Fieldset = {
 type Schema = {
   elements: Element[]
   form: Form
+  options: SchemaOptions
 }
 
 type Alert = {
@@ -136,6 +148,42 @@ const randomStringGenerator = (length: number): string => {
   return result
 }
 
+const prepareFields = (elements: ElementMap) => {
+  return Object.keys(elements).reduce((carry, key) => {
+    // reduce nested schema objects
+    if (elements[key].schema) {
+      return { ...carry, ...reducer(elements[key].schema) }
+    }
+
+    // special handling for checkbox arrays
+    if (elements[key].component === CheckboxGroup) {
+      carry[key] = (elements[key] as ElementConfig<typeof CheckboxGroup>).checked ?? []
+
+      return carry
+    }
+
+    // special handling for fieldsets
+    const fieldset = elements[key]?.fieldset as Fieldset
+
+    if (fieldset) {
+      Object.entries(fieldset).forEach(([fieldsetKey, fieldsetValue]) => {
+        if (fieldsetValue?.model) {
+          carry[fieldsetValue.model] = fieldsetValue.value ?? null
+        } else {
+          carry[fieldsetKey] = fieldsetValue
+        }
+      })
+
+      return carry
+    }
+
+    // default schema item with value
+    carry[key] = elements[key].value ?? null
+
+    return carry
+  }, {})
+}
+
 export const mapElements = (elements: ElementMap): Element[] => {
   return Object.entries(elements).map(([name, component]) => {
     const definition = component.hasOwnProperty('setup')
@@ -149,52 +197,18 @@ export const mapElements = (elements: ElementMap): Element[] => {
   })
 }
 
-export default function useSchema(elements: ElementMap = {}): Schema {
-  const prefix: string = randomStringGenerator(6)
+export default function useSchema(elements: ElementMap = {}, options: SchemaOptions = {}): Schema {
+  const form = options?.precognition
+    ? usePrecognitiveForm(options.method, options.url, prepareFields(elements))
+    : useForm(prepareFields(elements))
 
-  const form = useForm(
-    Object.keys(elements).reduce((carry, key) => {
-      // reduce nested schema objects
-      if (elements[key].schema) {
-        return { ...carry, ...reducer(elements[key].schema) }
-      }
-
-      // special handling for checkbox arrays
-      if (elements[key].component === CheckboxGroup) {
-        carry[key] = (elements[key] as ElementConfig<typeof CheckboxGroup>).checked ?? []
-
-        return carry
-      }
-
-      // special handling for fieldsets
-      const fieldset = elements[key]?.fieldset as Fieldset
-
-      if (fieldset) {
-        Object.entries(fieldset).forEach(([fieldsetKey, fieldsetValue]) => {
-          if (fieldsetValue?.model) {
-            carry[fieldsetValue.model] = fieldsetValue.value ?? null
-          } else {
-            carry[fieldsetKey] = fieldsetValue
-          }
-        })
-
-        return carry
-      }
-
-      // default schema item with value
-      carry[key] = elements[key].value ?? null
-
-      return carry
-    }, {})
-  )
-
-  // add a "hidden" prefix input to ensure unique IDs on elements
-  form._prefix = prefix
+  form._prefix = randomStringGenerator(6)
 
   return {
     elements: mapElements(elements),
     form,
+    options,
   }
 }
 
-export type { Schema, ElementMap, Element, Fieldset, Form, Alert }
+export type { Schema, SchemaOptions, ElementMap, Element, Fieldset, Form, Alert }
