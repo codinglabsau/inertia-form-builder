@@ -56,9 +56,9 @@ const listeners = computed(() => {
   const fieldset = props.element.definition?.fieldset as Fieldset
 
   const precognitive =
-    props.element.definition.precognitive ?? // Attempt to use element definition
-    (schemaOptions.optInPrecognition ? false : true) ?? // If no element definition, attempt to use global setting (inverted logic)
-    true // default to all fields being precognitive
+    props.element.definition.precognitive ??
+    (!schemaOptions.optInPrecognition) ??
+    true
   const precognitiveEvent = props.element.definition.precognitiveEvent ?? 'change'
 
   const dynamicListeners = (formKey: string, modelKey: string = 'modelValue') => {
