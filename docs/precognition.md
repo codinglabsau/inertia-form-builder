@@ -60,9 +60,9 @@ const submit = () => {
 
 ## 2. Advanced Usage
 
-### 2.1 `fieldsArePrecognitiveByDefault`
+### 2.1 `optInPrecognition`
 
-By default, all fields are precognitive unless configured otherwise. The `fieldsArePrecognitiveByDefault` option allows
+By default, all fields are precognitive unless configured otherwise. The `optInPrecognition` option allows
 you to **invert** this behavior — making precognition _opt-in_ rather than _opt-out_.
 
 This is useful for large forms where only a few fields should trigger real-time validation.
@@ -84,7 +84,7 @@ const schema = useSchema(
     precognition: true,
     method: 'post',
     url: '/contacts',
-    fieldsArePrecognitiveByDefault: false, // Only fields marked precognitive: true will be reactive
+    optInPrecognition: true, // Only fields marked precognitive: true will be reactive
   }
 )
 ```
@@ -112,8 +112,7 @@ const schema = useSchema(
 
 ### 2.3 `precognitiveEvent`: Control When Validation Triggers
 
-By default, a precognitive field will trigger validation when the `update` event fires — this usually means whenever the
-`v-model` binding changes. However, you can override this behavior using the `precognitiveEvent` option.
+By default, a precognitive field will trigger validation when the `change` event fires — this is the native DOM change event. However, you can override this behavior using the `precognitiveEvent` option.
 
 ```js
 const schema = useSchema({
@@ -135,23 +134,26 @@ const schema = useSchema({
   summary: {
     component: Text,
     value: '',
-    precognitiveEvent: 'update', // Default: validate on model change
+    precognitiveEvent: 'update', // Validate on v-model update (update:modelValue)
   },
 })
 ```
 
-> **Important:** These are **Vue events**, not raw DOM events. If you're using a custom component, it must emit the
-> specified event in order for precognition to be triggered. For example, a custom input component should emit `blur`,
-> `change`, `focus`, or `update:modelValue` depending on what you're using.
+> **Important:** When using precognition, it's crucial to understand the difference between event types:
+>
+> - **DOM Events** (`change`, `blur`, `focus`): These are native browser events that come directly from HTML elements.
+> - **Vue Model Event** (`update`): This is the `update:modelValue` event emitted when a v-model value changes.
+>
+> If you're using a custom component, it must emit the specified event for precognition to be triggered.
 
 #### Supported Events
 
 | Event    | Description                                                                  |
 | -------- | ---------------------------------------------------------------------------- |
-| `update` | Default. Triggers when the `v-model` value is updated (`update:modelValue`). |
-| `blur`   | Triggers when the input loses focus (if emitted by the component).           |
-| `focus`  | Triggers when the input gains focus (if emitted by the component).           |
-| `change` | Triggers when the value is committed (typical of native input `change`).     |
+| `change` | Default. Triggers when the value is committed (native DOM `change` event).   |
+| `update` | Triggers when the `v-model` value is updated (`update:modelValue`).          |
+| `blur`   | Triggers when the input loses focus (native DOM event).                      |
+| `focus`  | Triggers when the input gains focus (native DOM event).                      |
 
 If you're using `precognitiveEvent: 'blur'` but your component doesn't emit a `blur` event, validation will **not** run.
 You must ensure your custom components propagate those events for this feature to work.
@@ -183,19 +185,19 @@ schema.form.setValidationTimeout(1000) // 1 second delay before triggering valid
 
 ### Schema-level options
 
-| Option                           | Type      | Default | Description                                                                                                             |
-| -------------------------------- | --------- | ------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `precognition`                   | `boolean` | `false` | Enables precognition support for the form.                                                                              |
-| `method`                         | `string`  | `null`  | The HTTP method used when sending precognitive requests (`'get'`, `'post'`, `'patch'`, `'put'`, `'delete'`).            |
-| `url`                            | `string`  | `null`  | The endpoint the form should be validated against.                                                                      |
-| `fieldsArePrecognitiveByDefault` | `boolean` | `true`  | Whether all fields should be precognitive by default. Set to `false` to manually opt-in fields via their schema config. |
+| Option                | Type      | Default | Description                                                                                                             |
+| --------------------- | --------- | ------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `precognition`        | `boolean` | `false` | Enables precognition support for the form.                                                                              |
+| `method`              | `string`  | `null`  | The HTTP method used when sending precognitive requests (`'get'`, `'post'`, `'patch'`, `'put'`, `'delete'`).            |
+| `url`                 | `string`  | `null`  | The endpoint the form should be validated against.                                                                      |
+| `optInPrecognition` | `boolean` | `false`  | When set to `true`, fields are NOT precognitive by default. You must manually opt-in fields via their schema config. |
 
-### Field-level options
+### Element-level options
 
 | Option              | Type      | Default    | Description                                                                                                |
 | ------------------- | --------- | ---------- | ---------------------------------------------------------------------------------------------------------- |
-| `precognitive`      | `boolean` | `true`     | Enables/disables precognition for a specific field. Overrides the global `fieldsArePrecognitiveByDefault`. |
-| `precognitiveEvent` | `string`  | `'update'` | The event that triggers validation. Accepts `'update'`, `'change'`, `'blur'`, `'focus'`.                   |
+| `precognitive`      | `boolean` | `true`     | Enables/disables precognition for a specific field. Overrides the global `optInPrecognition` setting. |
+| `precognitiveEvent` | `string`  | `'change'` | The event that triggers validation. Accepts `'change'`, `'update'`, `'blur'`, `'focus'`.                   |
 
 ---
 

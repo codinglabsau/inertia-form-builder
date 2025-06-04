@@ -94,7 +94,7 @@ type ElementConfig<T extends Component = Component> = {
 
 type SchemaOptions = {
   precognition?: boolean
-  fieldsArePrecognitiveByDefault?: boolean
+  optInPrecognition?: boolean
   method?: RequestMethod
   url?: string
 }
