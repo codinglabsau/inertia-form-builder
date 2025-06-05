@@ -6518,7 +6518,7 @@ const zm = { key: 0 }, jr = /* @__PURE__ */ M({
       return Object.fromEntries(p.filter(([m]) => h.hasOwnProperty(m)));
     }), a = A(() => {
       var y, w, P;
-      const p = (y = t.element.definition) == null ? void 0 : y.fieldset, h = (w = t.element.definition.precognitive) != null ? w : (n == null ? void 0 : n.optInPrecognition) !== !0, v = (P = t.element.definition.precognitiveEvent) != null ? P : "change", m = ($, O = "modelValue") => ({
+      const p = (y = t.element.definition) == null ? void 0 : y.fieldset, h = (n == null ? void 0 : n.precognition) === !0 && ((w = t.element.definition.precognitive) != null ? w : (n == null ? void 0 : n.optInPrecognition) !== !0), v = (P = t.element.definition.precognitiveEvent) != null ? P : "change", m = ($, O = "modelValue") => ({
         [`update:${O}`]: (C) => {
           t.form[$] = C, h && v === "update" && t.form.validate($);
         },
