@@ -1,3 +1,4 @@
+import { type Ref } from 'vue';
 import { type InertiaForm } from '@inertiajs/vue3';
 import { type RequestMethod } from 'laravel-precognition';
 import type { DangerButton, PrimaryButton, SecondaryButton, Breadcrumbs, Container, DataTable, Dropdown, DropdownItem, Heading, Notifications, Pagination, StackedList, Tabs, Toggle, Actions, Combobox, Checkbox, Date, DateRange, Email, Error, Hidden, Image, Label, Number, Password, Price, Select, Textarea, Text } from '@codinglabsau/ui';
@@ -57,5 +58,5 @@ type Alert = {
     visible?: Function;
 };
 export declare const mapElements: (elements: ElementMap) => Element[];
-export default function useSchema(elements?: ElementMap, options?: SchemaOptions): Schema;
+export default function useSchema(elements?: ElementMap | Ref<ElementMap> | (() => ElementMap), options?: SchemaOptions): Schema;
 export type { Schema, SchemaOptions, ElementMap, Element, Fieldset, Form, Alert };

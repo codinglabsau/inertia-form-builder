@@ -1,24 +1,29 @@
-name: Publish
+name: Release
 
 on:
-  push:
+  release:
+    types: [published]
     branches:
       - main
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   publish-gpr:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       NPM_TOKEN: ${{secrets.NPM_TOKEN_FOR_PUBLISHING_WITH_PRIVATE_DEPS}}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 22
           registry-url: https://npm.pkg.github.com/
           scope: '@codinglabsau'
 
-      - run: npm ci --ignore-scripts
+      - run: npm ci
 
       - run: npm publish
 
@@ -28,7 +33,7 @@ jobs:
 
       - name: Notify Slack
         run: |
-          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"inertia-form-builder $VERSION version was tagged\"}" $SLACK_WEBHOOK
+          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"inertia-form-builder $VERSION version was published\"}" $SLACK_WEBHOOK
         env:
           VERSION: ${{ steps.extract-version.outputs.VERSION }}
           SLACK_WEBHOOK: ${{ secrets.CODINGLABS_SLACK_WEBHOOK }}
