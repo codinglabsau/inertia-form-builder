@@ -281,13 +281,13 @@ const submit = () => alert('submitted')
           <FormBuilder :schema="reactiveSchema">
             <template #actions="{ form }">
               <div class="space-x-2">
-                <PrimaryButton as="button" type="submit" :loading="form.processing">
-                  Save
-                </PrimaryButton>
-
                 <SecondaryButton as="button" type="button" @click="reactivePlaceholder++">
                   Update placeholder
                 </SecondaryButton>
+
+                <PrimaryButton as="button" type="submit" :loading="form.processing">
+                  Save
+                </PrimaryButton>
               </div>
             </template>
           </FormBuilder>
