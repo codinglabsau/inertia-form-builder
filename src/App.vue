@@ -278,10 +278,20 @@ const submit = () => alert('submitted')
     <div class="mt-4 grid grid-cols-2">
       <div>
         <form @submit.prevent="submit">
-          <FormBuilder :schema="reactiveSchema" />
-        </form>
+          <FormBuilder :schema="reactiveSchema">
+            <template #actions="{ form }">
+              <div class="space-x-2">
+                <PrimaryButton as="button" type="submit" :loading="form.processing">
+                  Save
+                </PrimaryButton>
 
-        <button @click="reactivePlaceholder++">Update</button>
+                <SecondaryButton as="button" type="button" @click="reactivePlaceholder++">
+                  Update placeholder
+                </SecondaryButton>
+              </div>
+            </template>
+          </FormBuilder>
+        </form>
       </div>
 
       <pre class="border bg-gray-200 p-4">{{ reactiveSchema.form.data() }}</pre>
