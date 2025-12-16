@@ -19,7 +19,10 @@ export default {
     sidebar: [
       {
         text: 'Introduction',
-        items: [{ text: 'Installation', link: '/installation' }],
+        items: [
+          { text: 'Installation', link: '/installation' },
+          { text: 'Contribution Guide', link: '/contribution-guide' },
+        ],
       },
       {
         text: 'Usage',

@@ -54,10 +54,7 @@ const sectionSchema = useSchema({
 
 # The Basics
 
-This is how you can define the most basic form. Simply importing the components from our UI library and simply attach
-that to an attribute. If you
-have a complex form name which isn't user-friendly, you simply define your attribute as an object, set the `component`
-and define the `label`
+Import input components that utilise v-model, or use a UI component library to build a form schema.
 
 ```vue
 <script setup>
@@ -71,6 +68,8 @@ and define the `label`
       label: 'Last name',
     },
   })
+
+  const submit = (schema) => console.log(schema.form)
 </script>
 
 <template>
@@ -84,7 +83,8 @@ and define the `label`
 
 ### Preview
 
-As you can see, we still reference 'Last Name' as surname.
+As you can see, the object key determines the input name.
+
 <pre class="border bg-gray-200 p-4">{{ simpleSchema.form.data() }}</pre>
 
 ## Labels
@@ -126,9 +126,18 @@ By default, any props specified in the `props` section are forwarded to the form
 The ID attribute of each element is generated automatically, based on a form-wide prefix combined with the element name. We do not recommend overridding the ID prop to ensure each input has a unique ID on the page, including when multiple forms are present.
 :::
 
+## Reactivity
+When passing a schema as a plain object, the form will not be reactive to changes in props. To make the form reactive, pass it as a function instead:
+
+```js
+const schema = useSchema(() => ({
+  firstname: Text,
+}))
+```
+
 ## Using Section
 
-This is a very handy feature to help break up long nasty forms and help the user identify which sections are related.
+Sections can be used to help break up long forms.
 
 ```vue
 

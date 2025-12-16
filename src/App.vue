@@ -212,15 +212,14 @@ const customComponentWithMappedFieldsetSchema = useSchema({
 })
 
 customComponentWithMappedFieldsetSchema.form.errors = {
-  proxy_manufacturer: 'The proxy manufacturer field is too proxy.',
+  proxy_manufacturer: 'The proxy manufacturer field handles errors internally.',
 }
 
 const sectionSchema = useSchema({
   physical_attributes: {
     component: Section,
     heading: 'Physical Attributes',
-    description:
-      'Your privacy matters! \n Your attributes will be displayed to all visitors, but only administrators can view your full details.',
+    description: 'Your privacy matters! \n Your password will be displayed to all visitors.',
     schema: {
       attributes: {
         component: Grid,
