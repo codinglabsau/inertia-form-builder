@@ -1,3 +1,4 @@
+import { computed, isRef, reactive, markRaw, type Ref } from 'vue'
 import { type InertiaForm, useForm } from '@inertiajs/vue3'
 import { useForm as usePrecognitiveForm } from 'laravel-precognition-vue-inertia'
 import { type RequestMethod } from 'laravel-precognition'
@@ -184,11 +185,35 @@ const prepareFields = (elements: ElementMap) => {
   }, {})
 }
 
+// Ensure component constructors are not made reactive anywhere in the map (recursively)
+const normalizeDefinition = (entry: ElementDefinition): ElementDefinition => {
+  // Bare component case
+  if ((entry as any)?.hasOwnProperty?.('setup')) {
+    return { component: markRaw(entry as Component) }
+  }
+
+  // Full element config
+  const cfg = entry as ElementConfig
+  const normalized: ElementConfig = {
+    ...cfg,
+    component: markRaw(cfg.component as Component),
+  }
+
+  if (cfg.schema) {
+    // Recursively normalize nested schemas in-place on a shallow clone
+    const next: ElementMap = {}
+    for (const [k, v] of Object.entries(cfg.schema)) {
+      next[k] = normalizeDefinition(v) as ElementDefinition
+    }
+    normalized.schema = next as ElementMap
+  }
+
+  return normalized
+}
+
 export const mapElements = (elements: ElementMap): Element[] => {
-  return Object.entries(elements).map(([name, component]) => {
-    const definition = component.hasOwnProperty('setup')
-      ? { component: component as Component }
-      : component
+  return Object.entries(elements).map(([name, entry]) => {
+    const definition = normalizeDefinition(entry)
 
     return {
       name,
@@ -197,18 +222,41 @@ export const mapElements = (elements: ElementMap): Element[] => {
   })
 }
 
-export default function useSchema(elements: ElementMap = {}, options: SchemaOptions = {}): Schema {
+export default function useSchema(
+  elements: ElementMap | Ref<ElementMap> | (() => ElementMap) = {},
+  options: SchemaOptions = {}
+): Schema {
+  // Resolve the current ElementMap. If a function/computed/ref is provided,
+  // this computed will track its dependencies and update reactively.
+  const resolvedElements = computed<ElementMap>(() => {
+    if (typeof elements === 'function') {
+      return (elements as () => ElementMap)()
+    }
+
+    if (isRef(elements)) {
+      return (elements as Ref<ElementMap>).value
+    }
+
+    return elements as ElementMap
+  })
+
+  // Initialize the form only once to avoid breaking changes to form state.
   const form = options?.precognition
-    ? usePrecognitiveForm(options.method, options.url, prepareFields(elements))
-    : useForm(prepareFields(elements))
+    ? usePrecognitiveForm(options.method, options.url, prepareFields(resolvedElements.value))
+    : useForm(prepareFields(resolvedElements.value))
 
   form._prefix = randomStringGenerator(6)
 
-  return {
-    elements: mapElements(elements),
+  // Expose a reactive elements property without changing the existing API shape.
+  // Using reactive() ensures refs inside are unwrapped for template usage.
+  return reactive<Schema>({
+    get elements() {
+      // map every time in case the provided schema changes reactively
+      return mapElements(resolvedElements.value)
+    },
     form,
     options,
-  }
+  })
 }
 
 export type { Schema, SchemaOptions, ElementMap, Element, Fieldset, Form, Alert }

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import {
   Container,
   Heading,
@@ -26,6 +27,15 @@ const simpleSchema = useSchema({
     value: 'security by obscurity 😈',
   },
 })
+
+const reactivePlaceholder = ref(1)
+
+const reactiveSchema = useSchema(() => ({
+  reactive: {
+    component: Text,
+    placeholder: reactivePlaceholder.value,
+  },
+}))
 
 const simpleSchemaWithCustomId = useSchema({
   firstname: {
@@ -212,15 +222,14 @@ const customComponentWithMappedFieldsetSchema = useSchema({
 })
 
 customComponentWithMappedFieldsetSchema.form.errors = {
-  proxy_manufacturer: 'The proxy manufacturer field is too proxy.',
+  proxy_manufacturer: 'The proxy manufacturer field handles errors internally.',
 }
 
 const sectionSchema = useSchema({
   physical_attributes: {
     component: Section,
     heading: 'Physical Attributes',
-    description:
-      'Your privacy matters! \n Your attributes will be displayed to all visitors, but only administrators can view your full details.',
+    description: 'Your privacy matters! \n Your password will be displayed to all visitors.',
     schema: {
       attributes: {
         component: Grid,
@@ -264,6 +273,18 @@ const submit = () => alert('submitted')
       </div>
 
       <pre class="border bg-gray-200 p-4">{{ simpleSchema.form.data() }}</pre>
+    </div>
+
+    <div class="mt-4 grid grid-cols-2">
+      <div>
+        <form @submit.prevent="submit">
+          <FormBuilder :schema="reactiveSchema" />
+        </form>
+
+        <button @click="reactivePlaceholder++">Update</button>
+      </div>
+
+      <pre class="border bg-gray-200 p-4">{{ reactiveSchema.form.data() }}</pre>
     </div>
 
     <div class="mt-4 grid grid-cols-2">
