@@ -39,7 +39,9 @@ const sidebarOpen = ref(false)
         <div class="flex items-center space-x-2">
           <img src="/logo.svg" alt="Coding Labs" class="w-6" />
 
-          <div class="text-xl font-semibold tracking-tight">Inertia Form Builder</div>
+          <div class="text-xl font-semibold tracking-tight whitespace-nowrap">
+            Inertia Form Builder
+          </div>
         </div>
       </RouterLink>
 
