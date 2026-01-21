@@ -47,9 +47,7 @@ const submit = () => alert('submitted')
           </CardContent>
         </Card>
 
-        <pre class="overflow-auto rounded-lg border bg-muted p-4 text-sm">{{
-          simpleSchema.form.data()
-        }}</pre>
+        <pre>{{ simpleSchema.form.data() }}</pre>
       </div>
     </section>
 
@@ -69,9 +67,7 @@ const submit = () => alert('submitted')
           </CardContent>
         </Card>
 
-        <pre class="overflow-auto rounded-lg border bg-muted p-4 text-sm">{{
-          simpleSchemaWithCustomId.form.data()
-        }}</pre>
+        <pre>{{ simpleSchemaWithCustomId.form.data() }}</pre>
       </div>
     </section>
 
@@ -98,7 +94,7 @@ const submit = () => alert('submitted')
         the form element.
       </p>
 
-      <pre class="mt-4 overflow-auto rounded-lg border bg-muted p-4 text-sm"><code>const schema = useSchema({
+      <pre><code>const schema = useSchema({
   firstname: {
     component: Input,
     props: {
@@ -116,7 +112,7 @@ const submit = () => alert('submitted')
         To make the schema reactive to prop changes, pass it as a function:
       </p>
 
-      <pre class="mt-4 overflow-auto rounded-lg border bg-muted p-4 text-sm"><code>const schema = useSchema(() => ({
+      <pre><code>const schema = useSchema(() => ({
   firstname: Input,
 }))</code></pre>
     </section>

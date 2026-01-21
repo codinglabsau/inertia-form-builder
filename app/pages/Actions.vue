@@ -35,7 +35,7 @@ const submit = () => alert('submitted')
         Use the <code class="rounded bg-muted px-1">#actions</code> slot to add custom buttons.
       </p>
 
-      <pre class="mt-4 overflow-auto rounded-lg border bg-muted p-4 text-sm"><code>&lt;FormBuilder :schema="schema"&gt;
+      <pre><code>&lt;FormBuilder :schema="schema"&gt;
   &lt;template #actions="{ form }"&gt;
     &lt;div class="flex gap-2"&gt;
       &lt;Button type="submit" :loading="form.processing"&gt;Save&lt;/Button&gt;
@@ -61,9 +61,7 @@ const submit = () => alert('submitted')
           </CardContent>
         </Card>
 
-        <pre class="overflow-auto rounded-lg border bg-muted p-4 text-sm">{{
-          actionsSchema.form.data()
-        }}</pre>
+        <pre>{{ actionsSchema.form.data() }}</pre>
       </div>
     </section>
 
@@ -92,9 +90,7 @@ const submit = () => alert('submitted')
           </CardContent>
         </Card>
 
-        <pre class="overflow-auto rounded-lg border bg-muted p-4 text-sm">{{
-          actionsWrapperSchema.form.data()
-        }}</pre>
+        <pre>{{ actionsWrapperSchema.form.data() }}</pre>
       </div>
     </section>
   </div>

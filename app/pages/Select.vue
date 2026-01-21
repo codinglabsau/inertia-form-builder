@@ -1,6 +1,13 @@
 <script setup lang="ts">
 // @ts-ignore - gooey types use unresolved path aliases
-import { Heading, Checkbox, Input, Select as SelectInput, Card, CardContent } from '@codinglabsau/gooey'
+import {
+  Heading,
+  Checkbox,
+  Input,
+  Select as SelectInput,
+  Card,
+  CardContent,
+} from '@codinglabsau/gooey'
 import { FormBuilder, useSchema, CheckboxGroup } from '../../src/index'
 
 const selectAndCheckboxSchema = useSchema({
@@ -53,7 +60,7 @@ const submit = () => alert('submitted')
       Various input types including select dropdowns and checkbox groups.
     </p>
 
-    <pre class="overflow-auto rounded-lg border bg-muted p-4 text-sm"><code>import { Select, Checkbox, Input } from '@codinglabsau/gooey'
+    <pre><code>import { Select, Checkbox, Input } from '@codinglabsau/gooey'
 import { FormBuilder, useSchema, CheckboxGroup } from '@codinglabsau/inertia-form-builder'
 
 const schema = useSchema({
@@ -94,9 +101,7 @@ const schema = useSchema({
         </CardContent>
       </Card>
 
-      <pre class="overflow-auto rounded-lg border bg-muted p-4 text-sm">{{
-        selectAndCheckboxSchema.form.data()
-      }}</pre>
+      <pre>{{ selectAndCheckboxSchema.form.data() }}</pre>
     </div>
   </div>
 </template>

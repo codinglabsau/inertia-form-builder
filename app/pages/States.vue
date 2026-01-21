@@ -50,7 +50,7 @@ const submit = () => alert('submitted')
       Demonstrate error states, readonly, disabled, and alert messages.
     </p>
 
-    <pre class="overflow-auto rounded-lg border bg-muted p-4 text-sm"><code>const schema = useSchema({
+    <pre><code>const schema = useSchema({
   error: {
     component: Input,
     value: 'bad value',
@@ -91,9 +91,7 @@ schema.form.errors = {
         </CardContent>
       </Card>
 
-      <pre class="overflow-auto rounded-lg border bg-muted p-4 text-sm">{{
-        inputStatesSchema.form.data()
-      }}</pre>
+      <pre>{{ inputStatesSchema.form.data() }}</pre>
     </div>
   </div>
 </template>

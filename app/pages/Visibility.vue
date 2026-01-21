@@ -41,7 +41,7 @@ const submit = () => alert('submitted')
         Fields can be conditionally shown based on other field values.
       </p>
 
-      <pre class="mt-4 overflow-auto rounded-lg border bg-muted p-4 text-sm"><code>const schema = useSchema({
+      <pre><code>const schema = useSchema({
   limit_type: {
     component: Select,
     value: 1,
@@ -69,9 +69,7 @@ const submit = () => alert('submitted')
           </CardContent>
         </Card>
 
-        <pre class="overflow-auto rounded-lg border bg-muted p-4 text-sm">{{
-          visibleSchema.form.data()
-        }}</pre>
+        <pre>{{ visibleSchema.form.data() }}</pre>
       </div>
     </section>
 
@@ -91,9 +89,7 @@ const submit = () => alert('submitted')
           </CardContent>
         </Card>
 
-        <pre class="overflow-auto rounded-lg border bg-muted p-4 text-sm">{{
-          emptySchema.form.data()
-        }}</pre>
+        <pre>{{ emptySchema.form.data() }}</pre>
       </div>
     </section>
   </div>

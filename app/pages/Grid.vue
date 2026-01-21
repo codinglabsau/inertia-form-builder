@@ -35,7 +35,7 @@ const submit = () => alert('submitted')
 
     <p class="text-muted-foreground">Use the Grid component to arrange fields in columns.</p>
 
-    <pre class="overflow-auto rounded-lg border bg-muted p-4 text-sm"><code>import { FormBuilder, useSchema, Grid } from '@codinglabsau/inertia-form-builder'
+    <pre><code>import { FormBuilder, useSchema, Grid } from '@codinglabsau/inertia-form-builder'
 
 const gridSchema = useSchema({
   name: {
@@ -66,9 +66,7 @@ const gridSchema = useSchema({
         </CardContent>
       </Card>
 
-      <pre class="overflow-auto rounded-lg border bg-muted p-4 text-sm">{{
-        gridSchema.form.data()
-      }}</pre>
+      <pre>{{ gridSchema.form.data() }}</pre>
     </div>
   </div>
 </template>

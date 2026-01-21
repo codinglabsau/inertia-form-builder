@@ -58,7 +58,7 @@ const submit = () => alert('submitted')
 
       <p class="mt-2 text-muted-foreground">Use your own Vue components within the form schema.</p>
 
-      <pre class="mt-4 overflow-auto rounded-lg border bg-muted p-4 text-sm"><code>import SimpleCustomComponent from './SimpleCustomComponent.vue'
+      <pre><code>import SimpleCustomComponent from './SimpleCustomComponent.vue'
 
 const schema = useSchema({
   colour: {
@@ -76,18 +76,17 @@ const schema = useSchema({
           </CardContent>
         </Card>
 
-        <pre class="overflow-auto rounded-lg border bg-muted p-4 text-sm">{{
-          customComponentSchema.form.data()
-        }}</pre>
+        <pre>{{ customComponentSchema.form.data() }}</pre>
       </div>
 
       <div class="mt-6 rounded-lg border bg-muted p-4">
         <p class="font-medium">Creating a Custom Component</p>
         <p class="mt-2 text-sm text-muted-foreground">
-          Custom components must accept <code class="rounded bg-background px-1">modelValue</code>
-          and emit <code class="rounded bg-background px-1">update:modelValue</code>:
+          Custom components must accept
+          <code class="rounded bg-background px-1">modelValue</code> and emit
+          <code class="rounded bg-background px-1">update:modelValue</code>:
         </p>
-        <pre class="mt-4 overflow-auto rounded-lg border bg-background p-4 text-sm"><code>&lt;script setup lang="ts"&gt;
+        <pre><code>&lt;script setup lang="ts"&gt;
 import { computed } from 'vue'
 
 const props = defineProps&lt;{
@@ -113,7 +112,7 @@ const inputVal = computed({
         Components that manage multiple form fields using fieldsets.
       </p>
 
-      <pre class="mt-4 overflow-auto rounded-lg border bg-muted p-4 text-sm"><code>const schema = useSchema({
+      <pre><code>const schema = useSchema({
   car: {
     component: MultipleFieldsetCustomComponent,
     fieldset: {
@@ -132,20 +131,16 @@ const inputVal = computed({
           </CardContent>
         </Card>
 
-        <pre class="overflow-auto rounded-lg border bg-muted p-4 text-sm">{{
-          customComponentWithFieldsetSchema.form.data()
-        }}</pre>
+        <pre>{{ customComponentWithFieldsetSchema.form.data() }}</pre>
       </div>
     </section>
 
     <section>
       <Heading as="h2" class="text-xl">Mapped Fieldsets</Heading>
 
-      <p class="mt-2 text-muted-foreground">
-        Map fieldset keys to different form model names.
-      </p>
+      <p class="mt-2 text-muted-foreground">Map fieldset keys to different form model names.</p>
 
-      <pre class="mt-4 overflow-auto rounded-lg border bg-muted p-4 text-sm"><code>const schema = useSchema({
+      <pre><code>const schema = useSchema({
   car: {
     component: MultipleFieldsetCustomComponent,
     fieldset: {
@@ -170,9 +165,7 @@ const inputVal = computed({
           </CardContent>
         </Card>
 
-        <pre class="overflow-auto rounded-lg border bg-muted p-4 text-sm">{{
-          customComponentWithMappedFieldsetSchema.form.data()
-        }}</pre>
+        <pre>{{ customComponentWithMappedFieldsetSchema.form.data() }}</pre>
       </div>
     </section>
   </div>

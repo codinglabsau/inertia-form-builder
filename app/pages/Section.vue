@@ -47,7 +47,7 @@ const submit = () => alert('submitted')
       Group related fields into sections with headings and descriptions.
     </p>
 
-    <pre class="overflow-auto rounded-lg border bg-muted p-4 text-sm"><code>import { FormBuilder, useSchema, Section, Grid } from '@codinglabsau/inertia-form-builder'
+    <pre><code>import { FormBuilder, useSchema, Section, Grid } from '@codinglabsau/inertia-form-builder'
 
 const sectionSchema = useSchema({
   physical_attributes: {
@@ -83,9 +83,7 @@ const sectionSchema = useSchema({
         </CardContent>
       </Card>
 
-      <pre class="overflow-auto rounded-lg border bg-muted p-4 text-sm">{{
-        sectionSchema.form.data()
-      }}</pre>
+      <pre>{{ sectionSchema.form.data() }}</pre>
     </div>
   </div>
 </template>
