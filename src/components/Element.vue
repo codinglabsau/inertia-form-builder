@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch, inject } from 'vue'
-// @ts-expect-error - gooey types use unresolved path aliases
+// @ts-ignore - gooey types use unresolved path aliases
 import { FieldError, Label, Alert, AlertDescription, Button } from '@codinglabsau/gooey'
 import type {
   Alert as AlertType,

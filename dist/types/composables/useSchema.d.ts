@@ -1,9 +1,9 @@
 import { type InertiaForm } from '@inertiajs/vue3';
 import { type RequestMethod } from 'laravel-precognition';
-import type { DangerButton, PrimaryButton, SecondaryButton, Breadcrumbs, Container, DataTable, Dropdown, DropdownItem, Heading, Notifications, Pagination, StackedList, Tabs, Toggle, Actions, Combobox, Checkbox, Date, DateRange, Email, Error, Hidden, Image, Label, Number, Password, Price, Select, Textarea, Text } from '@codinglabsau/ui';
+import type { DefineComponent } from 'vue';
 import CheckboxGroup from '../components/elements/CheckboxGroup.vue';
 import type Grid from '../components/elements/Grid.vue';
-type Component = typeof DangerButton | typeof PrimaryButton | typeof SecondaryButton | typeof Breadcrumbs | typeof Container | typeof DataTable | typeof Dropdown | typeof DropdownItem | typeof Heading | typeof Notifications | typeof Pagination | typeof StackedList | typeof Tabs | typeof Toggle | typeof Actions | typeof Combobox | typeof Checkbox | typeof Date | typeof DateRange | typeof Email | typeof Error | typeof Hidden | typeof Image | typeof Label | typeof Number | typeof Password | typeof Price | typeof Select | typeof Textarea | typeof Text | typeof Grid | typeof CheckboxGroup;
+type Component = DefineComponent<any, any, any> | typeof Grid | typeof CheckboxGroup;
 type Form = InertiaForm<any> & {
     _prefix: string;
 };
@@ -20,7 +20,7 @@ type ElementConfig<T extends Component = Component> = {
     showLabel?: boolean;
     visible?: (form: Form) => boolean;
     alert?: Alert;
-    props?: InstanceType<T>['$props'];
+    props?: Record<string, any>;
     precognitive?: boolean;
     precognitiveEvent?: 'update' | 'change' | 'blur' | 'focus';
 } & (T extends typeof CheckboxGroup ? CheckboxesConfig : {});

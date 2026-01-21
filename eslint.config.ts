@@ -57,6 +57,7 @@ export default tseslint.config(
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-empty-object-type': 'off',
       '@typescript-eslint/no-unsafe-function-type': 'off',
+      '@typescript-eslint/ban-ts-comment': 'off',
       'no-console': ['warn'],
       'no-prototype-builtins': 'off',
     },

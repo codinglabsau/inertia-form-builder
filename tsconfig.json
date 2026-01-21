@@ -20,5 +20,6 @@
     "allowSyntheticDefaultImports": true,
     "jsx": "preserve"
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue", "app/**/*.ts", "app/**/*.vue"]
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"],
+  "exclude": ["node_modules", "dist"]
 }

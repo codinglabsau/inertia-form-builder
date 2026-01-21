@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-// @ts-expect-error - gooey types use unresolved path aliases
+// @ts-ignore - gooey types use unresolved path aliases
 import { Select } from '@codinglabsau/gooey'
 
 const props = defineProps<{

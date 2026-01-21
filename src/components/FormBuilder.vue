@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// @ts-expect-error - gooey types use unresolved path aliases
+// @ts-ignore - gooey types use unresolved path aliases
 import { Button } from '@codinglabsau/gooey'
 import type { Schema } from '../composables/useSchema'
 import Element from './Element.vue'
