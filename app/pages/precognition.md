@@ -18,7 +18,7 @@ including submission — should be done through `schema.form.submit()`.
 
 ```vue
 <script setup>
-import { Text } from '@codinglabsau/ui'
+import { Text } from '@codinglabsau/gooey'
 import { FormBuilder, useSchema } from '@codinglabsau/inertia-form-builder'
 
 const schema = useSchema(

@@ -1,38 +1,61 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
 // @ts-ignore - gooey types use unresolved path aliases
 import { Button } from '@codinglabsau/gooey'
 
-const sections = [
-  { id: 'basic-form', label: 'Basic Form' },
-  { id: 'grid-layout', label: 'Grid Layout' },
-  { id: 'select-checkboxes', label: 'Select & Checkboxes' },
-  { id: 'conditional-fields', label: 'Conditional Fields' },
-  { id: 'custom-actions', label: 'Custom Actions' },
-  { id: 'input-states', label: 'Input States' },
-  { id: 'custom-components', label: 'Custom Components' },
-  { id: 'fieldsets', label: 'Fieldsets' },
-  { id: 'sections', label: 'Form Sections' },
+const introLinks = [
+  { to: '/', label: 'Home' },
+  { to: '/installation', label: 'Installation' },
+  { to: '/contribution-guide', label: 'Contribution Guide' },
 ]
 
-const scrollTo = (id: string) => {
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-}
+const usageLinks = [
+  { to: '/basics', label: 'The Basics' },
+  { to: '/grid', label: 'Grid' },
+  { to: '/section', label: 'Section' },
+  { to: '/select', label: 'Select & Checkboxes' },
+  { to: '/visibility', label: 'Visibility' },
+  { to: '/actions', label: 'Actions' },
+  { to: '/states', label: 'States' },
+  { to: '/custom', label: 'Custom Components' },
+  { to: '/precognition', label: 'Precognition' },
+]
 </script>
 
 <template>
   <nav class="space-y-1 py-4">
     <div class="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-      Examples
+      Introduction
     </div>
 
     <Button
-      v-for="section in sections"
-      :key="section.id"
+      v-for="link in introLinks"
+      :key="link.to"
       variant="ghost"
       class="w-full justify-start"
-      @click="scrollTo(section.id)"
+      as-child
     >
-      {{ section.label }}
+      <RouterLink :to="link.to">
+        {{ link.label }}
+      </RouterLink>
+    </Button>
+
+    <div
+      class="mt-4 px-3 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground"
+    >
+      Usage
+    </div>
+
+    <Button
+      v-for="link in usageLinks"
+      :key="link.to"
+      variant="ghost"
+      class="w-full justify-start"
+      as-child
+    >
+      <RouterLink :to="link.to">
+        {{ link.label }}
+      </RouterLink>
     </Button>
   </nav>
 </template>

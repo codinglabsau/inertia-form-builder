@@ -12,16 +12,14 @@ content: [
 ]
 ```
 
-::: warning
-This also requires the Coding Labs UI package (theme and components)
-:::
+> **Warning:** This also requires the Coding Labs gooey package (theme and components)
 
 Include the ui plugin theme in your tailwind.config.js plugin configuration:
 
 ```js
-import { theme } from '@codinglabsau/ui'
+import { theme } from '@codinglabsau/gooey'
 
-export default{
+export default {
   // ...
   plugins: [
     theme()
@@ -29,4 +27,4 @@ export default{
 }
 ```
 
-See the [codinglabsau/ui](https://github.com/codinglabsau/ui) documentation on how to customise the theme.
+See the [codinglabsau/gooey](https://github.com/codinglabsau/gooey) documentation on how to customise the theme.
