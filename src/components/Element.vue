@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch, inject } from 'vue'
+import { computed, ref, watchEffect, inject } from 'vue'
 // @ts-ignore - gooey types use unresolved path aliases
 import { FieldError, Label, Alert, AlertDescription, Button } from '@codinglabsau/gooey'
 import type {
@@ -18,149 +18,170 @@ const props = defineProps<{
 // Inject schema options
 const schemaOptions = inject<SchemaOptions>('schemaOptions', {})
 
-// configure component model(s)
+// Parse fieldset once and reuse across models, listeners, and errorBag
+const parsedFieldset = computed(() => {
+  const fieldset = props.element.definition?.fieldset as Fieldset
+  if (!fieldset) return null
+
+  const fields: Array<{ key: string; formKey: string }> = []
+  for (const [key, value] of Object.entries(fieldset)) {
+    const formKey = value && typeof value === 'object' && value.model ? value.model : key
+    fields.push({ key, formKey })
+  }
+  return fields
+})
+
+// Configure component model(s)
 const models = computed(() => {
-  const fieldset = props.element.definition?.fieldset as Fieldset
-
+  const fieldset = parsedFieldset.value
   if (fieldset) {
-    // fieldsets have a getter foreach component model
-    return Object.entries(fieldset).reduce((carry, [key, value]) => {
-      if (value?.model) {
-        carry[value.model] = props.form[value.model]
-      } else {
-        carry[key] = props.form[key]
-      }
-
-      return carry
-    }, {})
+    const result: Record<string, any> = {}
+    for (const { key, formKey } of fieldset) {
+      result[formKey] = props.form[formKey]
+    }
+    return result
   }
 
-  // a single model component binds modelValue to the prop value
-  return {
-    modelValue: props.form[props.element.name],
-  }
+  // Single model component
+  return { modelValue: props.form[props.element.name] }
 })
 
-// configure component props, discarding props that are unexpected
+// Configure component props - build iteratively, only include expected props
 const computedProps = computed(() => {
-  let componentProps = Object.entries({
-    id: `${props.form._prefix}-${props.element.name}`,
-    ...props.element.definition,
-    ...props.element.definition.props,
-    ...models.value,
-    schema: props.element.definition.schema,
-    form: props.form,
-    error: errorBag.value[0] ?? null,
-  })
+  const definition = props.element.definition
+  const expectedProps = definition.component?.props
+  if (!expectedProps) return {}
 
-  let expectedProps = props.element.definition.component.props
+  const result: Record<string, any> = {}
 
-  return Object.fromEntries(componentProps.filter(([key]) => expectedProps.hasOwnProperty(key)))
+  // Only add props that the component expects
+  const addIfExpected = (key: string, value: any) => {
+    if (expectedProps.hasOwnProperty(key)) {
+      result[key] = value
+    }
+  }
+
+  // Core props
+  addIfExpected('id', `${props.form._prefix}-${props.element.name}`)
+  addIfExpected('form', props.form)
+  addIfExpected('schema', definition.schema)
+  addIfExpected('error', errorBag.value[0] ?? null)
+
+  // Props from definition
+  if (definition.props) {
+    for (const [key, value] of Object.entries(definition.props)) {
+      addIfExpected(key, value)
+    }
+  }
+
+  // Element-level props (label, items for CheckboxGroup, etc.)
+  for (const key of Object.keys(definition)) {
+    if (
+      key !== 'component' &&
+      key !== 'props' &&
+      key !== 'visible' &&
+      key !== 'alert' &&
+      key !== 'fieldset' &&
+      key !== 'schema' &&
+      key !== 'showLabel' &&
+      key !== 'precognitive' &&
+      key !== 'precognitiveEvent'
+    ) {
+      addIfExpected(key, definition[key])
+    }
+  }
+
+  // Model values
+  for (const [key, value] of Object.entries(models.value)) {
+    addIfExpected(key, value)
+  }
+
+  return result
 })
 
-// configure component listener(s)
+// Configure component listener(s)
 const listeners = computed(() => {
-  const fieldset = props.element.definition?.fieldset as Fieldset
-
+  const fieldset = parsedFieldset.value
   const precognitive =
     schemaOptions?.precognition === true &&
     (props.element.definition.precognitive ?? schemaOptions?.optInPrecognition !== true)
   const precognitiveEvent = props.element.definition.precognitiveEvent ?? 'change'
 
-  const dynamicListeners = (formKey: string, modelKey: string = 'modelValue') => {
-    return {
-      [`update:${modelKey}`]: (newVal) => {
+  const createListeners = (formKey: string, modelKey: string = 'modelValue') => {
+    const result: Record<string, any> = {
+      [`update:${modelKey}`]: (newVal: any) => {
         props.form[formKey] = newVal
-
         if (precognitive && precognitiveEvent === 'update') {
           props.form.validate(formKey)
         }
       },
-      ...(precognitive && precognitiveEvent !== 'update'
-        ? { [precognitiveEvent]: () => props.form.validate(formKey) }
-        : {}),
     }
+
+    if (precognitive && precognitiveEvent !== 'update') {
+      result[precognitiveEvent] = () => props.form.validate(formKey)
+    }
+
+    return result
   }
 
   if (fieldset) {
-    // fieldsets update each component model separately
-    return Object.entries(fieldset).reduce((carry, [key, value]) => {
-      const fieldKey = value?.model ?? key
-
-      return {
-        ...carry,
-        ...dynamicListeners(fieldKey, fieldKey),
-      }
-    }, {})
+    const result: Record<string, any> = {}
+    for (const { formKey } of fieldset) {
+      Object.assign(result, createListeners(formKey, formKey))
+    }
+    return result
   }
 
-  // a single model component updates the value on the underlying form
-  return dynamicListeners(props.element.name)
+  return createListeners(props.element.name)
 })
 
-// calculate all the errors that apply to the component
+// Calculate errors for the component
 const errorBag = computed(() => {
-  const fieldset = props.element.definition?.fieldset as Fieldset
-
+  const fieldset = parsedFieldset.value
   if (fieldset) {
-    // fieldsets could have 1 error per field
-    return Object.keys(fieldset)
-      .map((element) => props.form.errors[element])
-      .filter((error) => error)
+    return fieldset.map(({ formKey }) => props.form.errors[formKey]).filter((error) => error)
   }
-
-  // normal fields can only have 1 error
   return [props.form.errors[props.element.name]]
 })
 
 const label = computed(() => {
   const value = props.element.definition.label ?? props.element.name
-
   return value.replaceAll('_id', '').replaceAll('_', ' ')
 })
 
-const isNested = !!props.element.definition.schema
+const isNested = computed(() => !!props.element.definition.schema)
 
 const showLabel = computed(() => {
   if (props.element.definition.showLabel !== undefined) {
     return props.element.definition.showLabel
   }
-
-  // Check for hidden input type
   if (props.element.definition.props?.type === 'hidden') {
     return false
   }
-
-  return !isNested
+  return !isNested.value
 })
 
 const alert = computed<AlertType | null>(() => {
   if (props.element.definition.alert !== undefined) {
-    const alert = props.element.definition.alert as AlertType
-    alert.visible = typeof alert.visible === 'function' ? alert.visible : () => true
-
-    return alert
+    const alertDef = props.element.definition.alert as AlertType
+    return {
+      ...alertDef,
+      visible: typeof alertDef.visible === 'function' ? alertDef.visible : () => true,
+    }
   }
   return null
 })
 
-const visibleFunc = ref(
-  typeof props.element.definition.visible === 'function'
-    ? props.element.definition.visible
-    : () => true,
-)
+// Visibility: store the visibility function and compute visibility reactively
+const visibilityFn = props.element.definition.visible
+const visible = ref(typeof visibilityFn === 'function' ? visibilityFn(props.form) : true)
 
-const visible = ref(
-  typeof props.element.definition.visible === 'function'
-    ? props.element.definition.visible(props.form)
-    : () => true,
-)
-
-watch(props.form, (newForm) => {
-  if (typeof visibleFunc.value === 'function') {
-    visible.value = visibleFunc.value(newForm)
-  }
-})
+// Use watchEffect for targeted reactivity - only re-runs when accessed form properties change
+if (typeof visibilityFn === 'function') {
+  watchEffect(() => {
+    visible.value = visibilityFn(props.form)
+  })
+}
 </script>
 
 <template>

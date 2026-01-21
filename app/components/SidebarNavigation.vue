@@ -15,6 +15,7 @@ const usageLinks = [
   { to: '/section', label: 'Section' },
   { to: '/select', label: 'Select & Checkboxes' },
   { to: '/visibility', label: 'Visibility' },
+  { to: '/reactivity', label: 'Reactivity' },
   { to: '/actions', label: 'Actions' },
   { to: '/states', label: 'States' },
   { to: '/custom', label: 'Custom Components' },

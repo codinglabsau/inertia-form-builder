@@ -15,6 +15,7 @@ import Visibility from '../pages/Visibility.vue'
 import Actions from '../pages/Actions.vue'
 import States from '../pages/States.vue'
 import Custom from '../pages/Custom.vue'
+import Reactivity from '../pages/Reactivity.vue'
 
 const routes = [
   { path: '/', component: Home },
@@ -25,6 +26,7 @@ const routes = [
   { path: '/section', component: Section },
   { path: '/select', component: Select },
   { path: '/visibility', component: Visibility },
+  { path: '/reactivity', component: Reactivity },
   { path: '/actions', component: Actions },
   { path: '/states', component: States },
   { path: '/custom', component: Custom },

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { mapElements, type Form } from '../../composables/useSchema'
 import Element from '../Element.vue'
 
@@ -9,7 +10,8 @@ const props = defineProps<{
   description?: string
 }>()
 
-const elements = mapElements(props.schema)
+// Make elements reactive
+const elements = computed(() => mapElements(props.schema))
 </script>
 
 <template>
@@ -21,7 +23,7 @@ const elements = mapElements(props.schema)
     </p>
 
     <div class="mt-4 space-y-6">
-      <Element v-for="(element, index) in elements" :key="index" :element="element" :form="form" />
+      <Element v-for="element in elements" :key="element.name" :element="element" :form="form" />
     </div>
   </div>
 </template>

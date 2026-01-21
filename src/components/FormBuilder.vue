@@ -1,9 +1,9 @@
 <script setup lang="ts">
 // @ts-ignore - gooey types use unresolved path aliases
 import { Button } from '@codinglabsau/gooey'
-import type { Schema } from '../composables/useSchema'
+import type { Schema, Element as ElementType } from '../composables/useSchema'
 import Element from './Element.vue'
-import { provide } from 'vue'
+import { provide, computed } from 'vue'
 
 const props = withDefaults(
   defineProps<{
@@ -16,14 +16,21 @@ const props = withDefaults(
 )
 
 provide('schemaOptions', props.schema.options)
+
+// Extract elements for template - handles both computed ref (v2) and array (legacy)
+const elements = computed<ElementType[]>(() => {
+  const els = props.schema.elements
+  // Handle both ComputedRef and plain array for BC
+  return 'value' in els ? els.value : els
+})
 </script>
 
 <template>
   <div class="mx-auto mt-6 max-w-md space-y-6">
     <slot>
       <Element
-        v-for="(element, index) in schema.elements"
-        :key="index"
+        v-for="element in elements"
+        :key="element.name"
         :element="element"
         :form="schema.form"
       />

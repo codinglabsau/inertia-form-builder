@@ -81,11 +81,14 @@ const schema = useSchema({
 
       <div class="mt-6 rounded-lg border bg-muted p-4">
         <p class="font-medium">Creating a Custom Component</p>
+
         <p class="mt-2 text-sm text-muted-foreground">
           Custom components must accept
-          <code class="rounded bg-background px-1">modelValue</code> and emit
+          <code class="rounded bg-background px-1">modelValue</code>
+ and emit
           <code class="rounded bg-background px-1">update:modelValue</code>:
         </p>
+
         <pre><code>&lt;script setup lang="ts"&gt;
 import { computed } from 'vue'
 
