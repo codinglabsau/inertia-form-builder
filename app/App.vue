@@ -19,6 +19,7 @@ import {
   SheetTrigger,
 } from '@codinglabsau/gooey'
 
+import Logo from './components/Logo.vue'
 import SidebarNavigation from './components/SidebarNavigation.vue'
 
 const mode = useColorMode()
@@ -37,7 +38,7 @@ const sidebarOpen = ref(false)
     <Header>
       <RouterLink to="/" class="hidden lg:block">
         <div class="flex items-center space-x-2">
-          <img src="/logo.svg" alt="Coding Labs" class="w-6" />
+          <Logo alt="Inertia Form Builder" class="w-6" />
 
           <div class="text-xl font-semibold tracking-tight whitespace-nowrap">
             Inertia Form Builder
@@ -64,7 +65,7 @@ const sidebarOpen = ref(false)
           <SheetContent side="left" class="w-72 p-0">
             <div class="flex h-14 items-center border-b px-4">
               <div class="flex items-center space-x-2">
-                <img src="/logo.svg" alt="Coding Labs" class="w-6" />
+                <Logo alt="Inertia Form Builder" class="w-6" />
 
                 <div class="font-semibold">Inertia Form Builder</div>
               </div>
