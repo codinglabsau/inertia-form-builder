@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { Checkbox } from '@codinglabsau/ui'
+// @ts-expect-error - gooey types use unresolved path aliases
+import { Checkbox, Label } from '@codinglabsau/gooey'
 import type { Form } from '../../composables/useSchema'
 
 const props = defineProps<{
@@ -13,23 +14,30 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: any): void
 }>()
 
-const internalValue = computed({
-  get: () => {
-    return props.modelValue
-  },
-  set: (value) => {
-    emit('update:modelValue', value)
-  },
-})
+const isChecked = (itemValue: any) => {
+  return props.modelValue.includes(itemValue)
+}
+
+const toggleValue = (itemValue: any, checked: boolean) => {
+  const newValue = checked
+    ? [...props.modelValue, itemValue]
+    : props.modelValue.filter((v) => v !== itemValue)
+  emit('update:modelValue', newValue)
+}
 </script>
 
 <template>
-  <Checkbox
-    v-for="(item, index) in items"
-    :id="`${props.form._prefix}-${item.label ?? item}`"
-    :key="index"
-    v-model="internalValue"
-    :value="item.value ?? item"
-    :label="item.label ?? item"
-  />
+  <div class="space-y-2">
+    <div v-for="(item, index) in items" :key="index" class="flex items-center gap-2">
+      <Checkbox
+        :id="`${props.form._prefix}-${item.label ?? item}`"
+        :checked="isChecked(item.value ?? item)"
+        @update:checked="toggleValue(item.value ?? item, $event)"
+      />
+
+      <Label :for="`${props.form._prefix}-${item.label ?? item}`" class="cursor-pointer">
+        {{ item.label ?? item }}
+      </Label>
+    </div>
+  </div>
 </template>

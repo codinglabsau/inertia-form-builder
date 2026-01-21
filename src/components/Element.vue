@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import { computed, ref, watch, inject } from 'vue'
-import { Error, Label, WarningAlert, WarningAlertButton } from '@codinglabsau/ui'
-import type { Alert, Element, Fieldset, Form, SchemaOptions } from '@/composables/useSchema'
+// @ts-expect-error - gooey types use unresolved path aliases
+import { FieldError, Label, Alert, AlertDescription, Button } from '@codinglabsau/gooey'
+import type {
+  Alert as AlertType,
+  Element,
+  Fieldset,
+  Form,
+  SchemaOptions,
+} from '@/composables/useSchema'
 
 const props = defineProps<{
   element: Element
@@ -119,16 +126,17 @@ const showLabel = computed(() => {
     return props.element.definition.showLabel
   }
 
-  if (props.element.definition.component.name === 'Hidden') {
+  // Check for hidden input type
+  if (props.element.definition.props?.type === 'hidden') {
     return false
   }
 
   return !isNested
 })
 
-const alert = computed<Alert | null>(() => {
+const alert = computed<AlertType | null>(() => {
   if (props.element.definition.alert !== undefined) {
-    const alert = props.element.definition.alert as Alert
+    const alert = props.element.definition.alert as AlertType
     alert.visible = typeof alert.visible === 'function' ? alert.visible : () => true
 
     return alert
@@ -139,13 +147,13 @@ const alert = computed<Alert | null>(() => {
 const visibleFunc = ref(
   typeof props.element.definition.visible === 'function'
     ? props.element.definition.visible
-    : () => true
+    : () => true,
 )
 
 const visible = ref(
   typeof props.element.definition.visible === 'function'
     ? props.element.definition.visible(props.form)
-    : () => true
+    : () => true,
 )
 
 watch(props.form, (newForm) => {
@@ -157,7 +165,7 @@ watch(props.form, (newForm) => {
 
 <template>
   <div v-if="visible">
-    <Label v-if="showLabel" :for="computedProps.id as string">
+    <Label v-if="showLabel" :for="computedProps.id as string" class="mb-1 block capitalize">
       {{ label }}
     </Label>
 
@@ -168,17 +176,24 @@ watch(props.form, (newForm) => {
       v-on="listeners"
     />
 
-    <WarningAlert v-if="alert && alert.visible()" without-icon>
-      {{ alert.text }}
-      <template v-if="alert.actionHref && alert.actionText" #actions>
-        <WarningAlertButton :external="alert.externalAction" :href="alert.actionHref">
+    <Alert v-if="alert && alert.visible()" variant="warning" class="mt-2">
+      <AlertDescription class="flex items-center justify-between">
+        {{ alert.text }}
+        <Button
+          v-if="alert.actionHref && alert.actionText"
+          as="a"
+          :href="alert.actionHref"
+          :target="alert.externalAction ? '_blank' : undefined"
+          variant="outline"
+          size="sm"
+        >
           {{ alert.actionText }}
-        </WarningAlertButton>
-      </template>
-    </WarningAlert>
+        </Button>
+      </AlertDescription>
+    </Alert>
 
     <template v-if="!computedProps.hasOwnProperty('error')">
-      <Error v-for="(error, index) in errorBag" :key="index" :error="error" />
+      <FieldError v-for="(error, index) in errorBag" :key="index" :error="error" />
     </template>
   </div>
 </template>

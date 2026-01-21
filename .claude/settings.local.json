@@ -1,4 +1,10 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(npm run build:*)",
+      "Skill(wrap)"
+    ]
+  },
   "hooks": {
     "Notification": [
       {

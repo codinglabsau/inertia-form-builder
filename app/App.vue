@@ -1,35 +1,27 @@
 <script setup lang="ts">
-import {
-  Container,
-  Heading,
-  Date,
-  Email,
-  Hidden,
-  Image,
-  Select,
-  Text,
-  Number,
-  Checkbox,
-  PrimaryButton,
-  SecondaryButton,
-} from '@codinglabsau/ui'
-import { FormBuilder, useSchema, Grid, CheckboxGroup, Section } from './index'
-import type { Fieldset } from './composables/useSchema'
-import SimpleCustomComponent from './demo/SimpleCustomComponent.vue'
-import MultipleFieldsetCustomComponent from './demo/MultipleFieldsetCustomComponent.vue'
+// @ts-expect-error - gooey types use unresolved path aliases
+import { Button, Checkbox, Heading, Input, Select } from '@codinglabsau/gooey'
+import { FormBuilder, useSchema, Grid, CheckboxGroup, Section } from '../src/index'
+import type { Fieldset } from '../src/composables/useSchema'
+import SimpleCustomComponent from './components/SimpleCustomComponent.vue'
+import MultipleFieldsetCustomComponent from './components/MultipleFieldsetCustomComponent.vue'
 
 const simpleSchema = useSchema({
-  firstname: Text,
-  surname: Text,
+  firstname: Input,
+  surname: Input,
   secret: {
-    component: Hidden,
-    value: 'security by obscurity 😈',
+    component: Input,
+    value: 'security by obscurity',
+    props: {
+      type: 'hidden',
+    },
+    showLabel: false,
   },
 })
 
 const simpleSchemaWithCustomId = useSchema({
   firstname: {
-    component: Text,
+    component: Input,
     label: 'Firstname with custom ID',
     props: {
       id: 'custom_firstname',
@@ -38,28 +30,25 @@ const simpleSchemaWithCustomId = useSchema({
 })
 
 const gridSchema = useSchema({
-  avatar: {
-    component: Image,
-    props: {
-      currentImage: 'https://avatars.githubusercontent.com/u/1127412?v=4',
-    },
-  },
   name: {
     component: Grid,
     schema: {
       firstname: {
-        component: Text,
+        component: Input,
         value: 'Harry',
       },
       surname: {
-        component: Text,
+        component: Input,
         value: 'Highpants',
       },
     },
   },
   email: {
-    component: Email,
+    component: Input,
     value: 'harry@highpants.com',
+    props: {
+      type: 'email',
+    },
   },
 })
 
@@ -69,9 +58,9 @@ const selectAndCheckboxSchema = useSchema({
     value: 2,
     props: {
       options: [
-        { id: 1, name: 'Developer' },
-        { id: 2, name: 'Designer' },
-        { id: 3, name: 'Manager' },
+        { value: 1, label: 'Developer' },
+        { value: 2, label: 'Designer' },
+        { value: 3, label: 'Manager' },
       ],
     },
   },
@@ -79,14 +68,14 @@ const selectAndCheckboxSchema = useSchema({
     component: Checkbox,
     showLabel: false,
     value: true,
-    props: {
-      label: 'Full Time',
-      modelValue: true,
-    },
+    label: 'Full Time',
   },
   starts_at: {
-    component: Date,
+    component: Input,
     value: '2022-04-10',
+    props: {
+      type: 'date',
+    },
   },
   days: {
     component: CheckboxGroup,
@@ -108,15 +97,18 @@ const visibleSchema = useSchema({
     value: 1,
     props: {
       options: [
-        { id: 1, name: 'None' },
-        { id: 2, name: 'Limited' },
-        { id: 3, name: 'Unlimited' },
+        { value: 1, label: 'None' },
+        { value: 2, label: 'Limited' },
+        { value: 3, label: 'Unlimited' },
       ],
     },
     label: 'Change to limited to show the limit input',
   },
   limit: {
-    component: Number,
+    component: Input,
+    props: {
+      type: 'number',
+    },
     visible: (form) => {
       return form.limit_type === 2
     },
@@ -126,38 +118,38 @@ const visibleSchema = useSchema({
 const emptySchema = useSchema()
 
 const actionsSchema = useSchema({
-  address: Text,
-  suburb: Text,
-  country: Text,
+  address: Input,
+  suburb: Input,
+  country: Input,
 })
 
 const actionsWrapperSchema = useSchema({
-  address: Text,
-  suburb: Text,
-  country: Text,
+  address: Input,
+  suburb: Input,
+  country: Input,
 })
 
 const inputStatesSchema = useSchema({
   error: {
-    component: Text,
+    component: Input,
     value: 'bad value',
   },
   read_only: {
-    component: Text,
+    component: Input,
     value: 'read only',
     props: {
       readonly: true,
     },
   },
   disabled: {
-    component: Text,
+    component: Input,
     value: 'disabled',
     props: {
       disabled: true,
     },
   },
   warning: {
-    component: Text,
+    component: Input,
     value: 'Warning',
     alert: {
       text: 'Show me the warning.',
@@ -225,10 +217,10 @@ const sectionSchema = useSchema({
         component: Grid,
         schema: {
           height: {
-            component: Text,
+            component: Input,
           },
           weight: {
-            component: Text,
+            component: Input,
           },
         },
       },
@@ -239,10 +231,10 @@ const sectionSchema = useSchema({
     heading: 'Contact Details',
     schema: {
       email: {
-        component: Text,
+        component: Input,
       },
       phone: {
-        component: Text,
+        component: Input,
       },
     },
   },
@@ -252,7 +244,7 @@ const submit = () => alert('submitted')
 </script>
 
 <template>
-  <Container>
+  <div class="container mx-auto px-4 py-8">
     <Heading>Basic Form</Heading>
 
     <div class="mt-4 grid grid-cols-2">
@@ -331,13 +323,9 @@ const submit = () => alert('submitted')
           <FormBuilder :schema="actionsSchema">
             <template #actions="{ form }">
               <div class="space-x-2">
-                <PrimaryButton as="button" type="submit" :loading="form.processing">
-                  Save
-                </PrimaryButton>
+                <Button type="submit" :loading="form.processing"> Save </Button>
 
-                <SecondaryButton as="button" type="button" @click="form.reset()">
-                  Reset
-                </SecondaryButton>
+                <Button type="button" variant="outline" @click="form.reset()"> Reset </Button>
               </div>
             </template>
           </FormBuilder>
@@ -355,13 +343,9 @@ const submit = () => alert('submitted')
           <FormBuilder :schema="actionsWrapperSchema">
             <template #actions-wrapper="{ form }">
               <div class="space-x-2">
-                <PrimaryButton as="button" type="submit" :loading="form.processing">
-                  Save
-                </PrimaryButton>
+                <Button type="submit" :loading="form.processing"> Save </Button>
 
-                <SecondaryButton as="button" type="button" @click="form.reset()">
-                  Reset
-                </SecondaryButton>
+                <Button type="button" variant="outline" @click="form.reset()"> Reset </Button>
               </div>
             </template>
           </FormBuilder>
@@ -434,5 +418,5 @@ const submit = () => alert('submitted')
         {{ sectionSchema.form.data() }}
       </pre>
     </div>
-  </Container>
+  </div>
 </template>

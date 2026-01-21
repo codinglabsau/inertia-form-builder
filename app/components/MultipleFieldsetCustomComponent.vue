@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { Select } from '@codinglabsau/ui'
+// @ts-expect-error - gooey types use unresolved path aliases
+import { Select } from '@codinglabsau/gooey'
 
 const props = defineProps<{
   manufacturer?: string
@@ -24,20 +25,20 @@ const model = computed({
 })
 
 const manufacturers = [
-  { id: 'Ferrari', name: 'Ferrari' },
-  { id: 'Lamborghini', name: 'Lamborghini' },
+  { value: 'Ferrari', label: 'Ferrari' },
+  { value: 'Lamborghini', label: 'Lamborghini' },
 ]
 
 const ferraris = [
-  { id: 1, name: 'LaFerrari' },
-  { id: 2, name: '488 Pista' },
-  { id: 3, name: 'Enzo' },
+  { value: 1, label: 'LaFerrari' },
+  { value: 2, label: '488 Pista' },
+  { value: 3, label: 'Enzo' },
 ]
 
 const lamborghinis = [
-  { id: 4, name: 'Aventador SVJ' },
-  { id: 5, name: 'Huracan Performante' },
-  { id: 6, name: 'Sian' },
+  { value: 4, label: 'Aventador SVJ' },
+  { value: 5, label: 'Huracan Performante' },
+  { value: 6, label: 'Sian' },
 ]
 
 const options = computed(() => {
@@ -55,9 +56,9 @@ const options = computed(() => {
 <template>
   <div>
     <div class="flex items-center space-x-2">
-      <Select v-model="manufacturer" :options="manufacturers" class="!w-48" />
+      <Select v-model="manufacturer" :options="manufacturers" class="w-48" />
 
-      <Select v-model="model" :options="options" class="!w-48" />
+      <Select v-model="model" :options="options" class="w-48" />
     </div>
 
     <div class="mt-4 rounded bg-red-600/75 px-4 py-2 text-red-100 shadow-inner">{{ error }}</div>

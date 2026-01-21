@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { Actions, PrimaryButton } from '@codinglabsau/ui'
+// @ts-expect-error - gooey types use unresolved path aliases
+import { Button } from '@codinglabsau/gooey'
 import type { Schema } from '../composables/useSchema'
 import Element from './Element.vue'
-import { provide, watch, ref } from 'vue'
+import { provide } from 'vue'
 
 const props = withDefaults(
   defineProps<{
@@ -11,7 +12,7 @@ const props = withDefaults(
   }>(),
   {
     submit: 'Save',
-  }
+  },
 )
 
 provide('schemaOptions', props.schema.options)
@@ -29,13 +30,13 @@ provide('schemaOptions', props.schema.options)
     </slot>
 
     <slot name="actions-wrapper" :form="schema.form">
-      <Actions>
+      <div class="flex justify-end gap-2">
         <slot name="actions" :form="schema.form">
-          <PrimaryButton as="button" type="submit" :loading="schema.form.processing">
+          <Button type="submit" :loading="schema.form.processing">
             {{ submit }}
-          </PrimaryButton>
+          </Button>
         </slot>
-      </Actions>
+      </div>
     </slot>
   </div>
 </template>
