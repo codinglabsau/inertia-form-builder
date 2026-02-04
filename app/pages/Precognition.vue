@@ -3,23 +3,17 @@
 import { Heading } from '@codinglabsau/gooey'
 import CodeBlock from '../components/CodeBlock.vue'
 
+/* eslint-disable no-useless-escape */
 const basicUsageCode = `<script setup>
 import { Text } from '@codinglabsau/gooey'
 import { FormBuilder, useSchema } from '@codinglabsau/inertia-form-builder'
 
-const schema = useSchema(
-  {
-    name: {
-      component: Text,
-      value: '',
-    },
+const schema = useSchema('post', '/users', {
+  name: {
+    component: Text,
+    value: '',
   },
-  {
-    precognition: true,
-    method: 'post',
-    url: '/users',
-  },
-)
+})
 
 const submit = () => {
   schema.form.submit({
@@ -36,42 +30,20 @@ const submit = () => {
   </form>
 </template>`
 
-const optInCode = `const schema = useSchema(
-  {
-    email: {
-      component: Text,
-      value: '',
-      precognitive: true, // Explicitly opt-in
-    },
-    notes: {
-      component: Textarea,
-      value: '', // Excluded by default
-    },
+const optOutCode = `const schema = useSchema('post', '/projects', {
+  title: {
+    component: Text,
+    value: '',
+    // Validates via precognition (default)
   },
-  {
-    precognition: true,
-    method: 'post',
-    url: '/contacts',
-    optInPrecognition: true, // Only precognitive: true fields validate
+  description: {
+    component: Textarea,
+    value: '',
+    precognitive: false, // Opt out this specific field
   },
-)`
+})`
 
-const optOutCode = `const schema = useSchema(
-  {
-    description: {
-      component: Textarea,
-      value: '',
-      precognitive: false, // Opt out this specific field
-    },
-  },
-  {
-    precognition: true,
-    method: 'post',
-    url: '/projects',
-  },
-)`
-
-const eventCode = `const schema = useSchema({
+const eventCode = `const schema = useSchema('post', '/users', {
   title: {
     component: Text,
     value: '',
@@ -122,13 +94,9 @@ const debounceCode = `schema.form.setValidationTimeout(1000) // 1 second delay`
         <Heading as="h2" class="text-xl">Basic Usage</Heading>
 
         <p class="mt-2 text-muted-foreground">
-          The only required options are
-          <code class="rounded bg-muted px-1">precognition</code>
-          ,
-          <code class="rounded bg-muted px-1">method</code>
-          , and
-          <code class="rounded bg-muted px-1">url</code>
-          . Once enabled,
+          Pass the HTTP method and URL as the first two arguments to
+          <code class="rounded bg-muted px-1">useSchema</code>
+          to activate precognition. The
           <code class="rounded bg-muted px-1">schema.form</code> is a precognition-aware form
           instance. All interaction including submission should be done through
           <code class="rounded bg-muted px-1">schema.form.submit()</code>.
@@ -154,27 +122,12 @@ const debounceCode = `schema.form.setValidationTimeout(1000) // 1 second delay`
 
     <section class="space-y-6">
       <div>
-        <Heading as="h2" class="text-xl">Opt-In Mode</Heading>
-
-        <p class="mt-2 text-muted-foreground">
-          By default, all fields are precognitive. Set
-          <code class="rounded bg-muted px-1">optInPrecognition: true</code>
-          to invert this &mdash; only fields marked
-          <code class="rounded bg-muted px-1">precognitive: true</code> will trigger real-time
-          validation.
-        </p>
-      </div>
-
-      <CodeBlock :code="optInCode" />
-    </section>
-
-    <section class="space-y-6">
-      <div>
         <Heading as="h2" class="text-xl">Per-Field Opt-Out</Heading>
 
         <p class="mt-2 text-muted-foreground">
-          Selectively disable precognition for individual fields without changing the global
-          default.
+          All fields are precognitive by default. Set
+          <code class="rounded bg-muted px-1">precognitive: false</code>
+          on individual fields to exclude them from real-time validation.
         </p>
       </div>
 
@@ -267,79 +220,6 @@ const debounceCode = `schema.form.setValidationTimeout(1000) // 1 second delay`
       </div>
 
       <div>
-        <Heading as="h3" class="text-lg">Schema-level options</Heading>
-
-        <div class="mt-4 overflow-x-auto rounded-lg border">
-          <table class="w-full text-sm">
-            <thead class="border-b bg-muted">
-              <tr>
-                <th class="px-4 py-3 text-left font-medium">Option</th>
-
-                <th class="px-4 py-3 text-left font-medium">Type</th>
-
-                <th class="px-4 py-3 text-left font-medium">Default</th>
-
-                <th class="px-4 py-3 text-left font-medium">Description</th>
-              </tr>
-            </thead>
-
-            <tbody class="divide-y">
-              <tr>
-                <td class="px-4 py-3"><code class="rounded bg-muted px-1">precognition</code></td>
-
-                <td class="px-4 py-3 text-muted-foreground">boolean</td>
-
-                <td class="px-4 py-3 text-muted-foreground">false</td>
-
-                <td class="px-4 py-3 text-muted-foreground">
-                  Enables precognition support for the form.
-                </td>
-              </tr>
-
-              <tr>
-                <td class="px-4 py-3"><code class="rounded bg-muted px-1">method</code></td>
-
-                <td class="px-4 py-3 text-muted-foreground">string</td>
-
-                <td class="px-4 py-3 text-muted-foreground">null</td>
-
-                <td class="px-4 py-3 text-muted-foreground">
-                  HTTP method for precognitive requests.
-                </td>
-              </tr>
-
-              <tr>
-                <td class="px-4 py-3"><code class="rounded bg-muted px-1">url</code></td>
-
-                <td class="px-4 py-3 text-muted-foreground">string</td>
-
-                <td class="px-4 py-3 text-muted-foreground">null</td>
-
-                <td class="px-4 py-3 text-muted-foreground">
-                  The endpoint the form validates against.
-                </td>
-              </tr>
-
-              <tr>
-                <td class="px-4 py-3">
-                  <code class="rounded bg-muted px-1">optInPrecognition</code>
-                </td>
-
-                <td class="px-4 py-3 text-muted-foreground">boolean</td>
-
-                <td class="px-4 py-3 text-muted-foreground">false</td>
-
-                <td class="px-4 py-3 text-muted-foreground">
-                  When true, fields must opt-in via
-                  <code class="rounded bg-muted px-1">precognitive: true</code>.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div>
         <Heading as="h3" class="text-lg">Element-level options</Heading>
 
         <div class="mt-4 overflow-x-auto rounded-lg border">
@@ -367,7 +247,8 @@ const debounceCode = `schema.form.setValidationTimeout(1000) // 1 second delay`
                 <td class="px-4 py-3 text-muted-foreground">true</td>
 
                 <td class="px-4 py-3 text-muted-foreground">
-                  Enables/disables precognition for a specific field.
+                  Set to <code class="rounded bg-muted px-1">false</code> to exclude a field from
+                  real-time validation.
                 </td>
               </tr>
 

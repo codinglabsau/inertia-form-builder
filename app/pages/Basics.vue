@@ -41,6 +41,7 @@ const labelsSchema = useSchema({
   },
 })
 
+/* eslint-disable no-useless-escape */
 const simpleCode = `<script setup>
 import { Input } from '@codinglabsau/gooey'
 import { FormBuilder, useSchema } from '@codinglabsau/inertia-form-builder'

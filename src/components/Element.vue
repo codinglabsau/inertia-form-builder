@@ -1,22 +1,13 @@
 <script setup lang="ts">
-import { computed, ref, watchEffect, inject } from 'vue'
+import { computed, ref, watchEffect } from 'vue'
 // @ts-ignore - gooey types use unresolved path aliases
 import { FieldError, Label, Alert, AlertDescription, Button } from '@codinglabsau/gooey'
-import type {
-  Alert as AlertType,
-  Element,
-  Fieldset,
-  Form,
-  SchemaOptions,
-} from '@/composables/useSchema'
+import type { Alert as AlertType, Element, Fieldset, Form } from '@/composables/useSchema'
 
 const props = defineProps<{
   element: Element
   form: Form
 }>()
-
-// Inject schema options
-const schemaOptions = inject<SchemaOptions>('schemaOptions', {})
 
 // Parse fieldset once and reuse across models, listeners, and errorBag
 const parsedFieldset = computed(() => {
@@ -104,9 +95,8 @@ const computedProps = computed(() => {
 // Configure component listener(s)
 const listeners = computed(() => {
   const fieldset = parsedFieldset.value
-  const precognitive =
-    schemaOptions?.precognition === true &&
-    (props.element.definition.precognitive ?? schemaOptions?.optInPrecognition !== true)
+  const isPrecognition = typeof props.form.validate === 'function'
+  const precognitive = isPrecognition && props.element.definition.precognitive !== false
   const precognitiveEvent = props.element.definition.precognitiveEvent ?? 'change'
 
   const createListeners = (formKey: string, modelKey: string = 'modelValue') => {

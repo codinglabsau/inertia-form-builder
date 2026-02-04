@@ -34,15 +34,7 @@ const schema = useSchema(elements)`
 const schemaReturnCode = `const schema = useSchema(elements)
 
 schema.elements  // ComputedRef<Element[]> — mapped element definitions
-schema.form      // InertiaForm — form instance with auto-generated _prefix
-schema.options   // SchemaOptions — passed-through config`
-
-const schemaOptionsCode = `const schema = useSchema(elements, {
-  precognition: true,             // Enable Laravel Precognition
-  method: 'post',                 // HTTP method for precognition
-  url: '/api/users',              // Endpoint for precognition
-  optInPrecognition: true,        // Require per-field opt-in via precognitive: true
-})`
+schema.form      // InertiaForm — form instance with auto-generated _prefix`
 
 const componentShorthandCode = `// Just a component — value defaults to null, label auto-humanised from key
 const schema = useSchema({
@@ -237,33 +229,23 @@ const fieldsetCode = `const schema = useSchema({
   },
 })`
 
-const precognitionCode = `// Enable globally — all fields validate via precognition
-const schema = useSchema(elements, {
-  precognition: true,
-  method: 'post',
-  url: '/api/users',
+const precognitionCode = `// All fields validate via precognition by default
+const schema = useSchema('post', '/api/users', {
+  name: Input,
+  email: Input,
 })
 
-// Opt-in mode — only fields with precognitive: true validate
-const schema = useSchema(() => ({
+// Per-field opt-out — disable precognition for specific fields
+const schema = useSchema('post', '/api/users', () => ({
   name: {
     component: Input,
-    precognitive: true,
-  },
-  bio: {
-    component: Input,            // No precognition
+    precognitive: false,   // Exclude from precognition
   },
   email: {
     component: Input,
-    precognitive: true,
     precognitiveEvent: 'blur',    // Validate on blur instead of change
   },
-}), {
-  precognition: true,
-  optInPrecognition: true,
-  method: 'post',
-  url: '/api/users',
-})`
+}))`
 
 const checkboxGroupCode = `import { CheckboxGroup } from '@codinglabsau/inertia-form-builder'
 
@@ -387,7 +369,9 @@ form._prefix             // e.g. "xkqwmz" — used by Element.vue for id attrs`
 
     <!-- §1 — useSchema -->
     <section class="space-y-4">
-      <Heading as="h2" class="text-xl">useSchema(elements, options?)</Heading>
+      <Heading as="h2" class="text-xl"
+        >useSchema(elements) / useSchema(method, url, elements)</Heading
+      >
 
       <p class="text-muted-foreground">
         Creates a reactive form schema. Accepts a static object, function, or ref as input.
@@ -399,10 +383,6 @@ form._prefix             // e.g. "xkqwmz" — used by Element.vue for id attrs`
       <Heading as="h3" class="text-lg">Return value</Heading>
 
       <CodeBlock :code="schemaReturnCode" />
-
-      <Heading as="h3" class="text-lg">SchemaOptions</Heading>
-
-      <CodeBlock :code="schemaOptionsCode" />
     </section>
 
     <!-- §2 — Element Definition -->
@@ -529,8 +509,12 @@ form._prefix             // e.g. "xkqwmz" — used by Element.vue for id attrs`
         <Heading as="h3" class="text-lg">precognitive / precognitiveEvent</Heading>
 
         <p class="text-muted-foreground">
-          Per-field precognition control. Only relevant when
-          <code class="rounded bg-muted px-1">precognition: true</code> is set in schema options.
+          Per-field precognition control. Only relevant when using the precognition signature (<code
+            class="rounded bg-muted px-1"
+            >useSchema(method, url, elements)</code
+          >
+          ). All fields are precognitive by default &mdash; set
+          <code class="rounded bg-muted px-1">precognitive: false</code> to opt out.
         </p>
 
         <CodeBlock :code="precognitionCode" />

@@ -228,21 +228,22 @@ describe('useSchema', () => {
   })
 
   describe('precognition support', () => {
-    it('uses precognitive form when enabled', async () => {
+    it('uses precognitive form when method and url are passed', async () => {
       const { useForm: usePrecognitiveForm } = vi.mocked(
         await import('laravel-precognition-vue-inertia'),
       )
 
-      useSchema(
-        { name: MockInput },
-        {
-          precognition: true,
-          method: 'post',
-          url: '/api/test',
-        },
-      )
+      useSchema('post', '/api/test', { name: MockInput })
 
       expect(usePrecognitiveForm).toHaveBeenCalledWith('post', '/api/test', expect.any(Object))
+    })
+
+    it('uses standard form when no method is passed', async () => {
+      const { useForm } = vi.mocked(await import('@inertiajs/vue3'))
+
+      useSchema({ name: MockInput })
+
+      expect(useForm).toHaveBeenCalledWith(expect.any(Object))
     })
   })
 })

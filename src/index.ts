@@ -1,7 +1,6 @@
 import useSchema from './composables/useSchema'
 export type {
   Schema,
-  SchemaOptions,
   ElementMap,
   Element,
   Fieldset,

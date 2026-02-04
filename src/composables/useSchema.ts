@@ -1,12 +1,13 @@
 import { type InertiaForm, useForm } from '@inertiajs/vue3'
 import { useForm as usePrecognitiveForm } from 'laravel-precognition-vue-inertia'
-import { type RequestMethod } from 'laravel-precognition'
 import { computed, isRef, watch, type ComputedRef, type DefineComponent, type Ref } from 'vue'
 
 import CheckboxGroup from '../components/elements/CheckboxGroup.vue'
 import type Grid from '../components/elements/Grid.vue'
 
 type Component = DefineComponent<any, any, any> | typeof Grid | typeof CheckboxGroup
+
+type RequestMethod = 'get' | 'post' | 'put' | 'patch' | 'delete'
 
 type Form = InertiaForm<any> & { _prefix: string }
 
@@ -28,13 +29,6 @@ type ElementConfig<T extends Component = Component> = {
   precognitiveEvent?: 'update' | 'change' | 'blur' | 'focus'
 } & (T extends typeof CheckboxGroup ? CheckboxesConfig : {})
 
-type SchemaOptions = {
-  precognition?: boolean
-  optInPrecognition?: boolean
-  method?: RequestMethod
-  url?: string
-}
-
 type ElementDefinition = ElementConfig | Component
 
 type ElementMap = { [key: string]: ElementDefinition }
@@ -49,7 +43,6 @@ type Fieldset = {
 type Schema = {
   elements: ComputedRef<Element[]>
   form: Form
-  options: SchemaOptions
 }
 
 /** Input type for useSchema - supports static object, function, or ref */
@@ -157,45 +150,47 @@ const resolveElements = (input: ElementMapInput): ElementMap => {
 /**
  * Creates a reactive form schema from element definitions.
  *
- * @param elementsInput - Static object, function, or ref containing element definitions
- * @param options - Schema options (precognition settings, etc.)
- * @returns Schema with reactive elements, form instance, and options
- *
  * @example
- * // Static (BC)
+ * // Standard
  * useSchema({ name: Input })
  *
  * // Function (reactive)
  * useSchema(() => ({ name: Input }))
  *
- * // Ref (reactive)
- * const elements = ref({ name: Input })
- * useSchema(elements)
+ * // Precognition — mirrors laravel-precognition-vue API
+ * useSchema('post', '/users', { name: Input })
  */
 export default function useSchema(
-  elementsInput: ElementMapInput = {},
-  options: SchemaOptions = {},
+  methodOrElements: RequestMethod | ElementMapInput = {},
+  urlOrNothing?: string,
+  elementsInput?: ElementMapInput,
 ): Schema {
+  const isPrecognition = typeof methodOrElements === 'string'
+
+  const input = isPrecognition ? (elementsInput ?? {}) : methodOrElements
+  const method = isPrecognition ? (methodOrElements as RequestMethod) : undefined
+  const url = isPrecognition ? urlOrNothing : undefined
+
   // Resolve initial elements
-  const initialElements = resolveElements(elementsInput)
+  const initialElements = resolveElements(input as ElementMapInput)
 
   // Create form with initial fields
-  const form = options?.precognition
-    ? usePrecognitiveForm(options.method, options.url, prepareFields(initialElements))
+  const form = isPrecognition
+    ? usePrecognitiveForm(method, url, prepareFields(initialElements))
     : useForm(prepareFields(initialElements))
 
   form._prefix = randomStringGenerator(6)
 
   // Create reactive elements computed
-  const elements = computed(() => mapElements(resolveElements(elementsInput)))
+  const elements = computed(() => mapElements(resolveElements(input as ElementMapInput)))
 
   // Sync form fields when elements change dynamically
-  const isReactive = typeof elementsInput === 'function' || isRef(elementsInput)
+  const isReactive = typeof input === 'function' || isRef(input)
   if (isReactive) {
     watch(
       elements,
       (newElements) => {
-        const newFields = prepareFields(resolveElements(elementsInput))
+        const newFields = prepareFields(resolveElements(input as ElementMapInput))
         // Add new fields to form (preserve existing values)
         for (const key of Object.keys(newFields)) {
           if (!(key in form)) {
@@ -217,8 +212,7 @@ export default function useSchema(
   return {
     elements,
     form,
-    options,
   }
 }
 
-export type { Schema, SchemaOptions, ElementMap, Element, Fieldset, Form, Alert, ElementMapInput }
+export type { Schema, ElementMap, Element, Fieldset, Form, Alert, ElementMapInput }

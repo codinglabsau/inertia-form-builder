@@ -1,9 +1,9 @@
 import { type InertiaForm } from '@inertiajs/vue3';
-import { type RequestMethod } from 'laravel-precognition';
 import { type ComputedRef, type DefineComponent, type Ref } from 'vue';
 import CheckboxGroup from '../components/elements/CheckboxGroup.vue';
 import type Grid from '../components/elements/Grid.vue';
 type Component = DefineComponent<any, any, any> | typeof Grid | typeof CheckboxGroup;
+type RequestMethod = 'get' | 'post' | 'put' | 'patch' | 'delete';
 type Form = InertiaForm<any> & {
     _prefix: string;
 };
@@ -23,12 +23,6 @@ type ElementConfig<T extends Component = Component> = {
     precognitive?: boolean;
     precognitiveEvent?: 'update' | 'change' | 'blur' | 'focus';
 } & (T extends typeof CheckboxGroup ? CheckboxesConfig : {});
-type SchemaOptions = {
-    precognition?: boolean;
-    optInPrecognition?: boolean;
-    method?: RequestMethod;
-    url?: string;
-};
 type ElementDefinition = ElementConfig | Component;
 type ElementMap = {
     [key: string]: ElementDefinition;
@@ -47,7 +41,6 @@ type Fieldset = {
 type Schema = {
     elements: ComputedRef<Element[]>;
     form: Form;
-    options: SchemaOptions;
 };
 /** Input type for useSchema - supports static object, function, or ref */
 type ElementMapInput = ElementMap | (() => ElementMap) | Ref<ElementMap>;
@@ -62,20 +55,15 @@ export declare const mapElements: (elements: ElementMap) => Element[];
 /**
  * Creates a reactive form schema from element definitions.
  *
- * @param elementsInput - Static object, function, or ref containing element definitions
- * @param options - Schema options (precognition settings, etc.)
- * @returns Schema with reactive elements, form instance, and options
- *
  * @example
- * // Static (BC)
+ * // Standard
  * useSchema({ name: Input })
  *
  * // Function (reactive)
  * useSchema(() => ({ name: Input }))
  *
- * // Ref (reactive)
- * const elements = ref({ name: Input })
- * useSchema(elements)
+ * // Precognition — mirrors laravel-precognition-vue API
+ * useSchema('post', '/users', { name: Input })
  */
-export default function useSchema(elementsInput?: ElementMapInput, options?: SchemaOptions): Schema;
-export type { Schema, SchemaOptions, ElementMap, Element, Fieldset, Form, Alert, ElementMapInput };
+export default function useSchema(methodOrElements?: RequestMethod | ElementMapInput, urlOrNothing?: string, elementsInput?: ElementMapInput): Schema;
+export type { Schema, ElementMap, Element, Fieldset, Form, Alert, ElementMapInput };

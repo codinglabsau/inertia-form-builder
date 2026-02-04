@@ -3,7 +3,7 @@
 import { Button } from '@codinglabsau/gooey'
 import type { Schema, Element as ElementType } from '../composables/useSchema'
 import Element from './Element.vue'
-import { provide, computed } from 'vue'
+import { computed } from 'vue'
 
 const props = withDefaults(
   defineProps<{
@@ -14,8 +14,6 @@ const props = withDefaults(
     submit: 'Save',
   },
 )
-
-provide('schemaOptions', props.schema.options)
 
 // Extract elements for template - handles both computed ref (v2) and array (legacy)
 const elements = computed<ElementType[]>(() => {

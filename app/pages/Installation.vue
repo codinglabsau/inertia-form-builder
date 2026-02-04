@@ -44,11 +44,9 @@ export default {
 
       <p class="text-muted-foreground">
         This also requires the
-        <a
-          href="https://github.com/codinglabsau/gooey"
-          target="_blank"
-          class="underline"
-        >Coding Labs gooey</a>
+        <a href="https://github.com/codinglabsau/gooey" target="_blank" class="underline"
+          >Coding Labs gooey</a
+        >
         package for theme and components. Include the theme plugin in your Tailwind config:
       </p>
 
@@ -56,11 +54,9 @@ export default {
 
       <p class="text-muted-foreground">
         See the
-        <a
-          href="https://github.com/codinglabsau/gooey"
-          target="_blank"
-          class="underline"
-        >gooey documentation</a>
+        <a href="https://github.com/codinglabsau/gooey" target="_blank" class="underline"
+          >gooey documentation</a
+        >
         for theme customisation.
       </p>
     </section>

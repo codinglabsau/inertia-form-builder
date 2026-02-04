@@ -65,7 +65,6 @@ const createMockSchema = (elements: Record<string, any> = {}) => ({
     processing: false,
     ...Object.fromEntries(Object.entries(elements).map(([name, def]) => [name, def.value ?? null])),
   },
-  options: {},
 })
 
 describe('FormBuilder', () => {
@@ -161,21 +160,6 @@ describe('FormBuilder', () => {
       })
 
       expect(wrapper.find('.form-prefix').text()).toBe('test')
-    })
-  })
-
-  describe('provides schema options', () => {
-    it('provides schemaOptions to child components', () => {
-      const schema = createMockSchema({ name: MockInput })
-      schema.options = { precognition: true }
-
-      // This test verifies the provide is called - actual injection
-      // is tested in Element.spec.ts
-      const wrapper = mount(FormBuilder, {
-        props: { schema },
-      })
-
-      expect(wrapper.exists()).toBe(true)
     })
   })
 })

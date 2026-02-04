@@ -1,12 +1,6 @@
 <script setup lang="ts">
 // @ts-ignore - gooey types use unresolved path aliases
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@codinglabsau/gooey'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@codinglabsau/gooey'
 
 defineProps<{
   id?: string
