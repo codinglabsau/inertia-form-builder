@@ -86,7 +86,7 @@ const sidebarOpen = ref(false)
     </TwoColumnLayoutSidebar>
 
     <Main>
-      <div class="px-4 sm:px-6 lg:px-8 prose prose-pre">
+      <div class="px-4 sm:px-6 lg:px-8 prose prose-pre dark:prose-invert">
         <RouterView />
       </div>
     </Main>

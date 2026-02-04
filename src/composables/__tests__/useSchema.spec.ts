@@ -1,12 +1,18 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { ref, nextTick, defineComponent, h } from 'vue'
+import { ref, reactive, nextTick, defineComponent, h } from 'vue'
 import useSchema, { mapElements } from '../useSchema'
 
-// Mock Inertia's useForm
+// Mock Inertia's useForm - reactive so watch() triggers work
 vi.mock('@inertiajs/vue3', () => ({
   useForm: vi.fn((initialData) => {
-    const form = { ...initialData, errors: {}, processing: false }
-    form.data = () => ({ ...initialData })
+    const form = reactive({ ...initialData, errors: {}, processing: false }) as any
+    form.data = () => {
+      const result: Record<string, any> = {}
+      for (const key of Object.keys(initialData)) {
+        result[key] = form[key]
+      }
+      return result
+    }
     return form
   }),
 }))
@@ -21,11 +27,21 @@ vi.mock('laravel-precognition-vue-inertia', () => ({
   }),
 }))
 
+// Import CheckboxGroup for type-matching in prepareFields
+import CheckboxGroup from '../../components/elements/CheckboxGroup.vue'
+
 // Mock component for testing
 const MockInput = defineComponent({
   props: ['modelValue', 'id'],
   setup() {
     return () => h('input')
+  },
+})
+
+const MockGrid = defineComponent({
+  props: ['schema', 'form'],
+  setup() {
+    return () => h('div')
   },
 })
 
@@ -142,6 +158,72 @@ describe('useSchema', () => {
       showEmail.value = true
       await nextTick()
       expect(schema.elements.value).toHaveLength(2)
+    })
+  })
+
+  describe('nested schema', () => {
+    it('extracts fields from elements with schema property', () => {
+      const schema = useSchema({
+        grid: {
+          component: MockGrid,
+          schema: {
+            first_name: { component: MockInput, value: 'John' },
+            last_name: { component: MockInput, value: 'Doe' },
+          },
+        },
+      })
+
+      expect(schema.form.first_name).toBe('John')
+      expect(schema.form.last_name).toBe('Doe')
+    })
+  })
+
+  describe('checkbox group', () => {
+    it('uses checked array as initial form value', () => {
+      const schema = useSchema({
+        tags: {
+          component: CheckboxGroup,
+          checked: ['vue', 'typescript'],
+          items: ['vue', 'typescript', 'react'],
+        } as any,
+      })
+
+      expect(schema.form.tags).toEqual(['vue', 'typescript'])
+    })
+  })
+
+  describe('reactive schema form sync', () => {
+    it('adds new fields to form when elements change', async () => {
+      const showEmail = ref(false)
+
+      const schema = useSchema(() => ({
+        name: { component: MockInput, value: 'John' },
+        ...(showEmail.value ? { email: { component: MockInput, value: 'john@test.com' } } : {}),
+      }))
+
+      expect(schema.form.name).toBe('John')
+      expect('email' in schema.form).toBe(false)
+
+      showEmail.value = true
+      await nextTick()
+
+      expect(schema.form.email).toBe('john@test.com')
+    })
+
+    it('removes fields from form when elements are removed', async () => {
+      const showEmail = ref(true)
+
+      const schema = useSchema(() => ({
+        name: { component: MockInput, value: 'John' },
+        ...(showEmail.value ? { email: { component: MockInput, value: 'john@test.com' } } : {}),
+      }))
+
+      expect('email' in schema.form).toBe(true)
+
+      showEmail.value = false
+      await nextTick()
+
+      expect('email' in schema.form).toBe(false)
     })
   })
 

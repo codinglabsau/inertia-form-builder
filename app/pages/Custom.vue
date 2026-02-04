@@ -85,7 +85,7 @@ const schema = useSchema({
         <p class="mt-2 text-sm text-muted-foreground">
           Custom components must accept
           <code class="rounded bg-background px-1">modelValue</code>
- and emit
+          and emit
           <code class="rounded bg-background px-1">update:modelValue</code>:
         </p>
 
