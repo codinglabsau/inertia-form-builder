@@ -67,10 +67,10 @@ const computedProps = computed(() => {
   addIfExpected('schema', definition.schema)
   addIfExpected('error', errorBag.value[0] ?? null)
 
-  // Props from definition
+  // Props from definition — always pass through (includes HTML attrs like disabled, readonly)
   if (definition.props) {
     for (const [key, value] of Object.entries(definition.props)) {
-      addIfExpected(key, value)
+      result[key] = value
     }
   }
 
@@ -83,11 +83,13 @@ const computedProps = computed(() => {
       key !== 'alert' &&
       key !== 'fieldset' &&
       key !== 'schema' &&
-      key !== 'showLabel' &&
       key !== 'precognitive' &&
       key !== 'precognitiveEvent'
     ) {
-      addIfExpected(key, definition[key])
+      const val = definition[key]
+      // Skip falsey label values (false/null/'') — they control label visibility, not component props
+      if (key === 'label' && (val === false || val === null || val === '')) continue
+      addIfExpected(key, val)
     }
   }
 
@@ -144,16 +146,19 @@ const errorBag = computed(() => {
   return [props.form.errors[props.element.name]]
 })
 
+const errors = computed(() => errorBag.value.filter(Boolean).map((error) => ({ message: error })))
+
 const label = computed(() => {
-  const value = props.element.definition.label ?? props.element.name
+  const value = props.element.definition.label || props.element.name
   return value.replaceAll('_id', '').replaceAll('_', ' ')
 })
 
 const isNested = computed(() => !!props.element.definition.schema)
 
 const showLabel = computed(() => {
-  if (props.element.definition.showLabel !== undefined) {
-    return props.element.definition.showLabel
+  const labelValue = props.element.definition.label
+  if (labelValue === false || labelValue === null || labelValue === '') {
+    return false
   }
   if (props.element.definition.props?.type === 'hidden') {
     return false
@@ -213,8 +218,9 @@ if (typeof visibilityFn === 'function') {
       </AlertDescription>
     </Alert>
 
-    <template v-if="!computedProps.hasOwnProperty('error')">
-      <FieldError v-for="(error, index) in errorBag" :key="index" :error="error" />
-    </template>
+    <FieldError
+      v-if="!computedProps.hasOwnProperty('error') && errors.length > 0"
+      :errors="errors"
+    />
   </div>
 </template>

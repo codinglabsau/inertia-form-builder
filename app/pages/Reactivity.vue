@@ -110,14 +110,16 @@ const removeConfirmPassword = () => {
       </p>
     </section>
 
-    <section>
-      <Heading as="h2" class="text-xl">Toggle Fields</Heading>
+    <section class="space-y-6">
+      <div>
+        <Heading as="h2" class="text-xl">Toggle Fields</Heading>
 
-      <p class="mt-2 text-muted-foreground">
-        Conditionally include fields based on reactive state.
-      </p>
+        <p class="mt-2 text-muted-foreground">
+          Conditionally include fields based on reactive state.
+        </p>
+      </div>
 
-      <div class="mt-6 grid gap-6 lg:grid-cols-2">
+      <div class="grid gap-6 lg:grid-cols-2">
         <Card>
           <CardContent class="space-y-4 pt-6">
             <div class="flex gap-4">
@@ -136,28 +138,46 @@ const removeConfirmPassword = () => {
           </CardContent>
         </Card>
 
-        <div>
-          <p class="mb-2 text-sm font-medium">Form Data:</p>
+        <div class="space-y-4">
+          <div>
+            <p class="mb-2 text-sm font-medium">Form Data:</p>
 
-          <pre>{{ dynamicFieldsSchema.form.data() }}</pre>
+            <CodeBlock
+              :code="JSON.stringify(dynamicFieldsSchema.form.data(), null, 2)"
+              lang="json"
+              :copyable="false"
+            />
+          </div>
 
-          <p class="mt-4 mb-2 text-sm font-medium">Elements:</p>
+          <div>
+            <p class="mb-2 text-sm font-medium">Elements:</p>
 
-          <pre>{{ dynamicFieldsSchema.elements.map((e) => e.name) }}</pre>
+            <CodeBlock
+              :code="
+                JSON.stringify(
+                  dynamicFieldsSchema.elements.value.map((e) => e.name),
+                  null,
+                  2,
+                )
+              "
+              lang="json"
+              :copyable="false"
+            />
+          </div>
         </div>
       </div>
 
-      <div class="mt-4">
-        <CodeBlock :code="toggleFieldsCode" />
-      </div>
+      <CodeBlock :code="toggleFieldsCode" />
     </section>
 
-    <section>
-      <Heading as="h2" class="text-xl">Dynamic Field List</Heading>
+    <section class="space-y-6">
+      <div>
+        <Heading as="h2" class="text-xl">Dynamic Field List</Heading>
 
-      <p class="mt-2 text-muted-foreground">Add and remove fields dynamically from a list.</p>
+        <p class="mt-2 text-muted-foreground">Add and remove fields dynamically from a list.</p>
+      </div>
 
-      <div class="mt-6 grid gap-6 lg:grid-cols-2">
+      <div class="grid gap-6 lg:grid-cols-2">
         <Card>
           <CardContent class="space-y-4 pt-6">
             <div class="flex gap-4">
@@ -182,23 +202,27 @@ const removeConfirmPassword = () => {
         <div>
           <p class="mb-2 text-sm font-medium">Form Data:</p>
 
-          <pre>{{ dynamicListSchema.form.data() }}</pre>
+          <CodeBlock
+            :code="JSON.stringify(dynamicListSchema.form.data(), null, 2)"
+            lang="json"
+            :copyable="false"
+          />
         </div>
       </div>
 
-      <div class="mt-4">
-        <CodeBlock :code="dynamicListCode" />
-      </div>
+      <CodeBlock :code="dynamicListCode" />
     </section>
 
-    <section>
-      <Heading as="h2" class="text-xl">Using Ref Directly</Heading>
+    <section class="space-y-6">
+      <div>
+        <Heading as="h2" class="text-xl">Using Ref Directly</Heading>
 
-      <p class="mt-2 text-muted-foreground">
-        You can also pass a ref containing the element map directly.
-      </p>
+        <p class="mt-2 text-muted-foreground">
+          You can also pass a ref containing the element map directly.
+        </p>
+      </div>
 
-      <div class="mt-6 grid gap-6 lg:grid-cols-2">
+      <div class="grid gap-6 lg:grid-cols-2">
         <Card>
           <CardContent class="space-y-4 pt-6">
             <div class="flex gap-4">
@@ -225,19 +249,25 @@ const removeConfirmPassword = () => {
         <div>
           <p class="mb-2 text-sm font-medium">Form Data:</p>
 
-          <pre>{{ refSchema.form.data() }}</pre>
+          <CodeBlock
+            :code="JSON.stringify(refSchema.form.data(), null, 2)"
+            lang="json"
+            :copyable="false"
+          />
         </div>
       </div>
 
-      <div class="mt-4">
-        <CodeBlock :code="refDirectlyCode" />
-      </div>
+      <CodeBlock :code="refDirectlyCode" />
     </section>
 
-    <section>
-      <Heading as="h2" class="text-xl">Supported Input Types</Heading>
+    <section class="space-y-6">
+      <div>
+        <Heading as="h2" class="text-xl">Supported Input Types</Heading>
 
-      <p class="mt-2 text-muted-foreground">All three input patterns work with full reactivity:</p>
+        <p class="mt-2 text-muted-foreground">
+          All three input patterns work with full reactivity:
+        </p>
+      </div>
 
       <CodeBlock :code="supportedInputTypesCode" />
     </section>

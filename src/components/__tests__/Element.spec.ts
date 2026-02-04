@@ -6,9 +6,16 @@ import Element from '../Element.vue'
 // Mock gooey components
 vi.mock('@codinglabsau/gooey', () => ({
   FieldError: defineComponent({
-    props: ['error'],
+    props: ['errors'],
     setup(props) {
-      return () => (props.error ? h('span', { class: 'error' }, props.error) : null)
+      return () =>
+        props.errors?.length
+          ? h(
+              'div',
+              { class: 'error' },
+              props.errors.map((e: any) => h('span', {}, e.message)),
+            )
+          : null
     },
   }),
   Label: defineComponent({
@@ -101,13 +108,13 @@ describe('Element', () => {
       expect(wrapper.text()).toContain('first name')
     })
 
-    it('hides label when showLabel is false', () => {
+    it('hides label when label is false', () => {
       const form = createMockForm({ name: '' })
       const wrapper = mount(Element, {
         props: {
           element: {
             name: 'name',
-            definition: { component: MockInput, showLabel: false },
+            definition: { component: MockInput, label: false },
           },
           form,
         },

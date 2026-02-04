@@ -4,14 +4,13 @@ import { RouterLink } from 'vue-router'
 import { Button } from '@codinglabsau/gooey'
 
 const introLinks = [
-  { to: '/', label: 'Home' },
   { to: '/installation', label: 'Installation' },
   { to: '/contribution-guide', label: 'Contribution Guide' },
 ]
 
 const usageLinks = [
   { to: '/basics', label: 'The Basics' },
-  { to: '/full-example', label: 'Full Example' },
+  { to: '/api', label: 'API' },
   { to: '/grid', label: 'Grid' },
   { to: '/section', label: 'Section' },
   { to: '/select', label: 'Select & Checkboxes' },

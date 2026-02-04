@@ -14,10 +14,9 @@ type CheckboxesConfig = {
 type ElementConfig<T extends Component = Component> = {
     component: T;
     value?: any;
-    label?: string;
+    label?: string | false | null;
     schema?: ElementMap;
     fieldset?: Fieldset;
-    showLabel?: boolean;
     visible?: (form: Form) => boolean;
     alert?: Alert;
     props?: Record<string, any>;

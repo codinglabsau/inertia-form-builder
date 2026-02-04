@@ -54,16 +54,16 @@ const submit = () => alert('submitted')
 
 <template>
   <div class="space-y-12 py-8">
-    <section>
-      <Heading>Conditional Fields</Heading>
+    <section class="space-y-6">
+      <div>
+        <Heading>Conditional Fields</Heading>
 
-      <p class="mt-2 text-muted-foreground">
-        Fields can be conditionally shown based on other field values.
-      </p>
+        <p class="mt-2 text-muted-foreground">
+          Fields can be conditionally shown based on other field values.
+        </p>
+      </div>
 
-      <CodeBlock :code="visibilityCode" />
-
-      <div class="mt-6 grid gap-6 lg:grid-cols-2">
+      <div class="grid gap-6 lg:grid-cols-2">
         <Card>
           <CardContent class="pt-6">
             <form @submit.prevent="submit">
@@ -72,18 +72,26 @@ const submit = () => alert('submitted')
           </CardContent>
         </Card>
 
-        <pre>{{ visibleSchema.form.data() }}</pre>
+        <CodeBlock
+          :code="JSON.stringify(visibleSchema.form.data(), null, 2)"
+          lang="json"
+          :copyable="false"
+        />
       </div>
+
+      <CodeBlock :code="visibilityCode" />
     </section>
 
-    <section>
-      <Heading as="h2" class="text-xl">Default Slot</Heading>
+    <section class="space-y-6">
+      <div>
+        <Heading as="h2" class="text-xl">Default Slot</Heading>
 
-      <p class="mt-2 text-muted-foreground">
-        When a schema has no visible elements, the default slot content is displayed.
-      </p>
+        <p class="mt-2 text-muted-foreground">
+          When a schema has no visible elements, the default slot content is displayed.
+        </p>
+      </div>
 
-      <div class="mt-6 grid gap-6 lg:grid-cols-2">
+      <div class="grid gap-6 lg:grid-cols-2">
         <Card>
           <CardContent class="pt-6">
             <form @submit.prevent="submit">
@@ -92,7 +100,11 @@ const submit = () => alert('submitted')
           </CardContent>
         </Card>
 
-        <pre>{{ emptySchema.form.data() }}</pre>
+        <CodeBlock
+          :code="JSON.stringify(emptySchema.form.data(), null, 2)"
+          lang="json"
+          :copyable="false"
+        />
       </div>
     </section>
   </div>

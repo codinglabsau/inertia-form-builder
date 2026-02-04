@@ -25,9 +25,9 @@ const selectAndCheckboxSchema = useSchema({
   },
   full_time: {
     component: Checkbox,
-    showLabel: false,
+    label: false,
     value: true,
-    label: 'Full Time',
+    props: { label: 'Full Time' },
   },
   starts_at: {
     component: Input,
@@ -67,9 +67,9 @@ const schema = useSchema({
   },
   full_time: {
     component: Checkbox,
-    showLabel: false,
+    label: false,
     value: true,
-    label: 'Full Time',
+    props: { label: 'Full Time' },
   },
   days: {
     component: CheckboxGroup,
@@ -93,9 +93,7 @@ const submit = () => alert('submitted')
       Various input types including select dropdowns and checkbox groups.
     </p>
 
-    <CodeBlock :code="selectCode" />
-
-    <div class="mt-6 grid gap-6 lg:grid-cols-2">
+    <div class="grid gap-6 lg:grid-cols-2">
       <Card>
         <CardContent class="pt-6">
           <form @submit.prevent="submit">
@@ -104,7 +102,13 @@ const submit = () => alert('submitted')
         </CardContent>
       </Card>
 
-      <pre>{{ selectAndCheckboxSchema.form.data() }}</pre>
+      <CodeBlock
+        :code="JSON.stringify(selectAndCheckboxSchema.form.data(), null, 2)"
+        lang="json"
+        :copyable="false"
+      />
     </div>
+
+    <CodeBlock :code="selectCode" />
   </div>
 </template>

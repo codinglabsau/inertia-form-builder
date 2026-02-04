@@ -4,6 +4,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import tailwindcss from '@tailwindcss/vite'
 import Markdown from 'unplugin-vue-markdown/vite'
+import Shiki from '@shikijs/markdown-it'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -16,7 +17,18 @@ export default defineConfig({
     vue({
       include: [/\.vue$/, /\.md$/],
     }),
-    Markdown({}),
+    Markdown({
+      async markdownItSetup(md) {
+        md.use(
+          await Shiki({
+            themes: {
+              light: 'github-light',
+              dark: 'github-dark',
+            },
+          }),
+        )
+      },
+    }),
     tailwindcss(),
   ],
   resolve: {

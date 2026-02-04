@@ -48,6 +48,7 @@
     "@eslint/js": "^9.39.0",
     "@inertiajs/vue3": "^2.2.0",
     "@playwright/test": "^1.49.0",
+    "@shikijs/markdown-it": "^3.22.0",
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.1.18",
     "@vitejs/plugin-vue": "^6.0.3",

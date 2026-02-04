@@ -7,15 +7,15 @@ import CheckboxGroup from '../CheckboxGroup.vue'
 vi.mock('@codinglabsau/gooey', () => ({
   Checkbox: defineComponent({
     name: 'Checkbox',
-    props: { id: String, checked: Boolean },
-    emits: ['update:checked'],
+    props: { id: String, modelValue: Boolean },
+    emits: ['update:modelValue'],
     setup(props, { emit }) {
       return () =>
         h('input', {
           type: 'checkbox',
           id: props.id,
-          checked: props.checked,
-          onChange: () => emit('update:checked', !props.checked),
+          checked: props.modelValue,
+          onChange: () => emit('update:modelValue', !props.modelValue),
         })
     },
   }),

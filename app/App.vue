@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useRoute } from 'vue-router'
 import { useColorMode } from '@vueuse/core'
 import { Moon, Sun } from 'lucide-vue-next'
 
@@ -22,6 +23,8 @@ import {
 import Logo from './components/Logo.vue'
 import SidebarNavigation from './components/SidebarNavigation.vue'
 
+const route = useRoute()
+
 const mode = useColorMode()
 const isDark = computed({
   get: () => mode.value === 'dark',
@@ -34,16 +37,12 @@ const sidebarOpen = ref(false)
 </script>
 
 <template>
-  <TwoColumnLayout>
-    <Header>
-      <RouterLink to="/" class="hidden lg:block">
-        <div class="flex items-center space-x-2">
-          <Logo alt="Inertia Form Builder" class="w-6" />
+  <RouterView v-if="route.meta.standalone" />
 
-          <div class="text-xl font-semibold tracking-tight whitespace-nowrap">
-            Inertia Form Builder
-          </div>
-        </div>
+  <TwoColumnLayout v-else>
+    <Header class="!h-24">
+      <RouterLink to="/" class="hidden lg:block">
+        <Logo alt="Inertia Form Builder" class="h-20" />
       </RouterLink>
 
       <TwoColumnLayoutSidebarTrigger @click="sidebarOpen = true" />
@@ -64,11 +63,7 @@ const sidebarOpen = ref(false)
         <Sheet v-model:open="sidebarOpen">
           <SheetContent side="left" class="w-72 p-0">
             <div class="flex h-14 items-center border-b px-4">
-              <div class="flex items-center space-x-2">
-                <Logo alt="Inertia Form Builder" class="w-6" />
-
-                <div class="font-semibold">Inertia Form Builder</div>
-              </div>
+              <Logo alt="Inertia Form Builder" class="h-20" />
             </div>
 
             <ScrollArea class="h-[calc(100vh-3.5rem)]">
@@ -86,8 +81,12 @@ const sidebarOpen = ref(false)
     </TwoColumnLayoutSidebar>
 
     <Main>
-      <div class="px-4 sm:px-6 lg:px-8 prose prose-pre dark:prose-invert">
-        <RouterView />
+      <div class="px-4 sm:px-6 lg:px-8">
+        <RouterView v-slot="{ Component, route: currentRoute }">
+          <component :is="currentRoute.meta.layout || 'div'">
+            <component :is="Component" />
+          </component>
+        </RouterView>
       </div>
     </Main>
   </TwoColumnLayout>

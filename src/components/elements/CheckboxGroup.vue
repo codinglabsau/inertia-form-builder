@@ -31,8 +31,8 @@ const toggleValue = (itemValue: any, checked: boolean) => {
     <div v-for="(item, index) in items" :key="index" class="flex items-center gap-2">
       <Checkbox
         :id="`${props.form._prefix}-${item.label ?? item}`"
-        :checked="isChecked(item.value ?? item)"
-        @update:checked="toggleValue(item.value ?? item, $event)"
+        :model-value="isChecked(item.value ?? item)"
+        @update:model-value="toggleValue(item.value ?? item, $event)"
       />
 
       <Label :for="`${props.form._prefix}-${item.label ?? item}`" class="cursor-pointer">

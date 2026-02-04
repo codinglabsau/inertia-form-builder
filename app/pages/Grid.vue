@@ -58,9 +58,7 @@ const submit = () => alert('submitted')
 
     <p class="text-muted-foreground">Use the Grid component to arrange fields in columns.</p>
 
-    <CodeBlock :code="gridCode" />
-
-    <div class="mt-6 grid gap-6 lg:grid-cols-2">
+    <div class="grid gap-6 lg:grid-cols-2">
       <Card>
         <CardContent class="pt-6">
           <form @submit.prevent="submit">
@@ -69,7 +67,13 @@ const submit = () => alert('submitted')
         </CardContent>
       </Card>
 
-      <pre>{{ gridSchema.form.data() }}</pre>
+      <CodeBlock
+        :code="JSON.stringify(gridSchema.form.data(), null, 2)"
+        lang="json"
+        :copyable="false"
+      />
     </div>
+
+    <CodeBlock :code="gridCode" />
   </div>
 </template>

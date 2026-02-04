@@ -38,16 +38,16 @@ const submit = () => alert('submitted')
       </p>
     </section>
 
-    <section>
-      <Heading as="h2" class="text-xl">Actions Slot</Heading>
+    <section class="space-y-6">
+      <div>
+        <Heading as="h2" class="text-xl">Actions Slot</Heading>
 
-      <p class="mt-2 text-muted-foreground">
-        Use the <code class="rounded bg-muted px-1">#actions</code> slot to add custom buttons.
-      </p>
+        <p class="mt-2 text-muted-foreground">
+          Use the <code class="rounded bg-muted px-1">#actions</code> slot to add custom buttons.
+        </p>
+      </div>
 
-      <CodeBlock :code="actionsSlotCode" lang="vue-html" />
-
-      <div class="mt-6 grid gap-6 lg:grid-cols-2">
+      <div class="grid gap-6 lg:grid-cols-2">
         <Card>
           <CardContent class="pt-6">
             <form @submit.prevent="submit">
@@ -64,19 +64,27 @@ const submit = () => alert('submitted')
           </CardContent>
         </Card>
 
-        <pre>{{ actionsSchema.form.data() }}</pre>
+        <CodeBlock
+          :code="JSON.stringify(actionsSchema.form.data(), null, 2)"
+          lang="json"
+          :copyable="false"
+        />
       </div>
+
+      <CodeBlock :code="actionsSlotCode" lang="vue-html" />
     </section>
 
-    <section>
-      <Heading as="h2" class="text-xl">Actions Wrapper Slot</Heading>
+    <section class="space-y-6">
+      <div>
+        <Heading as="h2" class="text-xl">Actions Wrapper Slot</Heading>
 
-      <p class="mt-2 text-muted-foreground">
-        Use <code class="rounded bg-muted px-1">#actions-wrapper</code> to completely override the
-        actions container.
-      </p>
+        <p class="mt-2 text-muted-foreground">
+          Use <code class="rounded bg-muted px-1">#actions-wrapper</code> to completely override the
+          actions container.
+        </p>
+      </div>
 
-      <div class="mt-6 grid gap-6 lg:grid-cols-2">
+      <div class="grid gap-6 lg:grid-cols-2">
         <Card>
           <CardContent class="pt-6">
             <form @submit.prevent="submit">
@@ -93,7 +101,11 @@ const submit = () => alert('submitted')
           </CardContent>
         </Card>
 
-        <pre>{{ actionsWrapperSchema.form.data() }}</pre>
+        <CodeBlock
+          :code="JSON.stringify(actionsWrapperSchema.form.data(), null, 2)"
+          lang="json"
+          :copyable="false"
+        />
       </div>
     </section>
   </div>

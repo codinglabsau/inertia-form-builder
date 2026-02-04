@@ -83,9 +83,7 @@ const submit = () => alert('submitted')
       Demonstrate error states, readonly, disabled, and alert messages.
     </p>
 
-    <CodeBlock :code="statesCode" />
-
-    <div class="mt-6 grid gap-6 lg:grid-cols-2">
+    <div class="grid gap-6 lg:grid-cols-2">
       <Card>
         <CardContent class="pt-6">
           <form @submit.prevent="submit">
@@ -94,7 +92,13 @@ const submit = () => alert('submitted')
         </CardContent>
       </Card>
 
-      <pre>{{ inputStatesSchema.form.data() }}</pre>
+      <CodeBlock
+        :code="JSON.stringify(inputStatesSchema.form.data(), null, 2)"
+        lang="json"
+        :copyable="false"
+      />
     </div>
+
+    <CodeBlock :code="statesCode" />
   </div>
 </template>

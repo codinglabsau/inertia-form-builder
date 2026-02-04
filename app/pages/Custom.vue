@@ -16,7 +16,8 @@ const schema = useSchema({
   },
 })`
 
-const customComponentCode = `<script setup lang="ts">
+const customComponentCode =
+  `<script setup lang="ts">
 import { computed } from 'vue'
 
 const props = defineProps<{
@@ -106,14 +107,16 @@ const submit = () => alert('submitted')
 
 <template>
   <div class="space-y-12 py-8">
-    <section>
-      <Heading>Custom Components</Heading>
+    <section class="space-y-6">
+      <div>
+        <Heading>Custom Components</Heading>
 
-      <p class="mt-2 text-muted-foreground">Use your own Vue components within the form schema.</p>
+        <p class="mt-2 text-muted-foreground">
+          Use your own Vue components within the form schema.
+        </p>
+      </div>
 
-      <CodeBlock :code="customUsageCode" />
-
-      <div class="mt-6 grid gap-6 lg:grid-cols-2">
+      <div class="grid gap-6 lg:grid-cols-2">
         <Card>
           <CardContent class="pt-6">
             <form @submit.prevent="submit">
@@ -122,10 +125,16 @@ const submit = () => alert('submitted')
           </CardContent>
         </Card>
 
-        <pre>{{ customComponentSchema.form.data() }}</pre>
+        <CodeBlock
+          :code="JSON.stringify(customComponentSchema.form.data(), null, 2)"
+          lang="json"
+          :copyable="false"
+        />
       </div>
 
-      <div class="mt-6 rounded-lg border bg-muted p-4">
+      <CodeBlock :code="customUsageCode" />
+
+      <div class="rounded-lg border bg-muted p-4">
         <p class="font-medium">Creating a Custom Component</p>
 
         <p class="mt-2 text-sm text-muted-foreground">
@@ -139,16 +148,16 @@ const submit = () => alert('submitted')
       </div>
     </section>
 
-    <section>
-      <Heading as="h2" class="text-xl">Fieldsets</Heading>
+    <section class="space-y-6">
+      <div>
+        <Heading as="h2" class="text-xl">Fieldsets</Heading>
 
-      <p class="mt-2 text-muted-foreground">
-        Components that manage multiple form fields using fieldsets.
-      </p>
+        <p class="mt-2 text-muted-foreground">
+          Components that manage multiple form fields using fieldsets.
+        </p>
+      </div>
 
-      <CodeBlock :code="fieldsetCode" />
-
-      <div class="mt-6 grid gap-6 lg:grid-cols-2">
+      <div class="grid gap-6 lg:grid-cols-2">
         <Card>
           <CardContent class="pt-6">
             <form @submit.prevent="submit">
@@ -157,18 +166,24 @@ const submit = () => alert('submitted')
           </CardContent>
         </Card>
 
-        <pre>{{ customComponentWithFieldsetSchema.form.data() }}</pre>
+        <CodeBlock
+          :code="JSON.stringify(customComponentWithFieldsetSchema.form.data(), null, 2)"
+          lang="json"
+          :copyable="false"
+        />
       </div>
+
+      <CodeBlock :code="fieldsetCode" />
     </section>
 
-    <section>
-      <Heading as="h2" class="text-xl">Mapped Fieldsets</Heading>
+    <section class="space-y-6">
+      <div>
+        <Heading as="h2" class="text-xl">Mapped Fieldsets</Heading>
 
-      <p class="mt-2 text-muted-foreground">Map fieldset keys to different form model names.</p>
+        <p class="mt-2 text-muted-foreground">Map fieldset keys to different form model names.</p>
+      </div>
 
-      <CodeBlock :code="mappedFieldsetCode" />
-
-      <div class="mt-6 grid gap-6 lg:grid-cols-2">
+      <div class="grid gap-6 lg:grid-cols-2">
         <Card>
           <CardContent class="pt-6">
             <form @submit.prevent="submit">
@@ -177,8 +192,14 @@ const submit = () => alert('submitted')
           </CardContent>
         </Card>
 
-        <pre>{{ customComponentWithMappedFieldsetSchema.form.data() }}</pre>
+        <CodeBlock
+          :code="JSON.stringify(customComponentWithMappedFieldsetSchema.form.data(), null, 2)"
+          lang="json"
+          :copyable="false"
+        />
       </div>
+
+      <CodeBlock :code="mappedFieldsetCode" />
     </section>
   </div>
 </template>

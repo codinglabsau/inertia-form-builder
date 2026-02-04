@@ -15,7 +15,4 @@ import CheckboxGroup from './components/elements/CheckboxGroup.vue'
 import Grid from './components/elements/Grid.vue'
 import Section from './components/elements/Section.vue'
 
-// Element helpers
-export { defineElement, hidden, when } from './helpers/elements'
-
 export { useSchema, FormBuilder, CheckboxGroup, Grid, Section }
