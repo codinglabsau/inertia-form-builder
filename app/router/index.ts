@@ -8,6 +8,7 @@ import Precognition from '../pages/precognition.md'
 
 // Vue pages (interactive demos)
 import Basics from '../pages/Basics.vue'
+import FullExample from '../pages/FullExample.vue'
 import Grid from '../pages/Grid.vue'
 import Section from '../pages/Section.vue'
 import Select from '../pages/Select.vue'
@@ -22,6 +23,7 @@ const routes = [
   { path: '/installation', component: Installation },
   { path: '/contribution-guide', component: ContributionGuide },
   { path: '/basics', component: Basics },
+  { path: '/full-example', component: FullExample },
   { path: '/grid', component: Grid },
   { path: '/section', component: Section },
   { path: '/select', component: Select },

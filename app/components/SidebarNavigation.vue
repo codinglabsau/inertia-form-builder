@@ -11,6 +11,7 @@ const introLinks = [
 
 const usageLinks = [
   { to: '/basics', label: 'The Basics' },
+  { to: '/full-example', label: 'Full Example' },
   { to: '/grid', label: 'Grid' },
   { to: '/section', label: 'Section' },
   { to: '/select', label: 'Select & Checkboxes' },
