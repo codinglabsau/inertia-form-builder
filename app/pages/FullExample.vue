@@ -19,24 +19,30 @@ import {
   hidden,
   when,
 } from '../../src/index'
-import { ref } from 'vue'
-
-const showOptional = ref(true)
+import type { Fieldset } from '../../src/composables/useSchema'
+import MultipleFieldsetCustomComponent from '../components/MultipleFieldsetCustomComponent.vue'
 
 const schema = useSchema(() => ({
-  // Simple — just pass a component, value defaults to null
+  // 1. Simplest — just a component, value defaults to null, label auto-humanised
   first_name: Input,
 
-  // defineElement helper — type-safe with autocomplete
+  // 2. defineElement — type-safe factory with autocomplete
   last_name: defineElement(Input, {
     value: 'Thomas',
     label: 'Surname',
   }),
 
-  // hidden helper — creates a hidden field (no label, type=hidden)
+  // 3. hidden — no label, type=hidden, value set
   user_id: hidden(42),
 
-  // Select with options and default value
+  // 4. showLabel: false — label suppressed, field still visible
+  internal_ref: {
+    component: Input,
+    value: 'REF-001',
+    showLabel: false,
+  },
+
+  // 5. Select with options, default value, and props forwarding
   role_id: {
     component: SelectInput,
     value: 2,
@@ -49,7 +55,7 @@ const schema = useSchema(() => ({
     },
   },
 
-  // Checkbox — showLabel false to use the checkbox's own label
+  // 6. Checkbox — showLabel false so the checkbox renders its own label
   is_active: {
     component: Checkbox,
     value: true,
@@ -57,7 +63,7 @@ const schema = useSchema(() => ({
     showLabel: false,
   },
 
-  // Grid — arrange fields side-by-side
+  // 7. Grid — nested schema rendered in columns
   location: {
     component: Grid,
     schema: {
@@ -67,7 +73,7 @@ const schema = useSchema(() => ({
     },
   },
 
-  // Section — group fields under a heading
+  // 8. Section — nested schema with heading and description
   contact: {
     component: Section,
     props: {
@@ -83,17 +89,21 @@ const schema = useSchema(() => ({
     },
   },
 
-  // when helper — conditional visibility
-  ...(showOptional.value
-    ? {
-        notes: when((form) => form.role_id !== 3, Input, {
-          label: 'Notes (hidden for Viewers)',
-          value: '',
-        }),
-      }
-    : {}),
+  // 9. visible — inline conditional visibility function
+  notes: {
+    component: Input,
+    value: '',
+    label: 'Notes (hidden for Viewers)',
+    visible: (form) => form.role_id !== 3,
+  },
 
-  // CheckboxGroup — multiple selections
+  // 10. when helper — same as visible but as a factory function
+  secondary_email: when((form) => form.role_id === 1, Input, {
+    label: 'Admin Email',
+    value: '',
+  }),
+
+  // 11. CheckboxGroup — multiple selections with checked defaults
   notifications: {
     component: CheckboxGroup,
     label: 'Notifications',
@@ -105,13 +115,25 @@ const schema = useSchema(() => ({
     checked: ['email'],
   },
 
-  // Alert on a field
+  // 12. Alert — with action link and visibility function
   api_key: {
     component: Input,
     value: 'sk-123',
     alert: {
       text: 'Changing this will invalidate existing integrations.',
+      actionText: 'View docs',
+      actionHref: '/installation',
+      visible: () => true,
     },
+  },
+
+  // 13. Fieldset — maps multiple form fields to one custom component
+  car: {
+    component: MultipleFieldsetCustomComponent,
+    fieldset: {
+      manufacturer: 'Lamborghini',
+      model: 5,
+    } as Fieldset,
   },
 }))
 
@@ -124,27 +146,38 @@ const submit = () => alert('submitted')
       <Heading>Full Example</Heading>
 
       <p class="mt-2 text-muted-foreground">
-        A single schema demonstrating every feature — simple fields, helpers, layout components,
-        visibility, alerts, and checkbox groups. Change the role to "Viewer" to see the notes field
-        disappear.
+        A single reactive schema demonstrating every element config option. Change the role select
+        to see conditional fields appear and disappear. Only
+        <code class="rounded bg-muted px-1">precognitive</code>
+ /
+        <code class="rounded bg-muted px-1">precognitiveEvent</code>
+        are omitted — they need a Laravel backend.
       </p>
 
-      <pre><code>import { Input, Select, Checkbox } from '@codinglabsau/gooey'
-import {
-  useSchema, FormBuilder, CheckboxGroup,
-  Grid, Section, defineElement, hidden, when,
-} from '@codinglabsau/inertia-form-builder'
-
-const schema = useSchema(() => ({
+      <pre><code>const schema = useSchema(() => ({
+  // Simple — component only, value defaults to null
   first_name: Input,
+
+  // defineElement — type-safe factory
   last_name: defineElement(Input, { value: 'Thomas', label: 'Surname' }),
+
+  // hidden — no label, type=hidden
   user_id: hidden(42),
+
+  // showLabel: false — suppresses label but field is visible
+  internal_ref: { component: Input, value: 'REF-001', showLabel: false },
+
+  // Select with props forwarding
   role_id: {
     component: Select,
     value: 2,
     props: { options: [...] },
   },
+
+  // Checkbox with its own label
   is_active: { component: Checkbox, value: true, label: 'Active', showLabel: false },
+
+  // Grid — nested schema in columns
   location: {
     component: Grid,
     schema: {
@@ -153,30 +186,54 @@ const schema = useSchema(() => ({
       postcode: { component: Input, value: '4220' },
     },
   },
+
+  // Section — nested schema with heading/description
   contact: {
     component: Section,
-    props: { heading: 'Contact Details', description: 'How should we reach you?' },
-    schema: {
-      email: { component: Input },
-      phone: { component: Input, props: { type: 'tel' } },
-    },
+    props: { heading: 'Contact Details', description: '...' },
+    schema: { email: { component: Input }, phone: { component: Input } },
   },
-  notes: when(form => form.role_id !== 3, Input, { label: 'Notes' }),
+
+  // visible — inline conditional function
+  notes: { component: Input, visible: form => form.role_id !== 3 },
+
+  // when — helper alternative to visible
+  secondary_email: when(form => form.role_id === 1, Input, { label: 'Admin Email' }),
+
+  // CheckboxGroup — multiple selections
   notifications: {
     component: CheckboxGroup,
     label: 'Notifications',
     items: [{ label: 'Email', value: 'email' }, ...],
     checked: ['email'],
   },
+
+  // Alert with action link and visibility
   api_key: {
     component: Input,
-    alert: { text: 'Changing this will invalidate existing integrations.' },
+    alert: {
+      text: 'Changing this will invalidate existing integrations.',
+      actionText: 'View docs',
+      actionHref: '/installation',
+      visible: () => true,
+    },
+  },
+
+  // Fieldset — maps multiple form fields to one component
+  car: {
+    component: CarPicker,
+    fieldset: { manufacturer: 'Lamborghini', model: 5 },
   },
 }))</code></pre>
     </section>
 
     <section>
       <Heading as="h2" class="text-xl">Live Demo</Heading>
+
+      <p class="mt-2 text-muted-foreground">
+        Try changing <strong>Role</strong> — "Viewer" hides the notes field, only "Admin" shows the
+        admin email. The car fieldset maps two form fields through one component.
+      </p>
 
       <div class="mt-6 grid gap-6 lg:grid-cols-2">
         <Card>
