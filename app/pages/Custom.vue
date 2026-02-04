@@ -18,20 +18,7 @@ const schema = useSchema({
 
 const customComponentCode =
   `<script setup lang="ts">
-import { computed } from 'vue'
-
-const props = defineProps<{
-  modelValue?: string
-}>()
-
-const emit = defineEmits<{
-  (e: 'update:modelValue', value?: string): void
-}>()
-
-const inputVal = computed({
-  get: () => props.modelValue,
-  set: (value) => emit('update:modelValue', value),
-})
+const colour = defineModel<string>()
 <` + `/script>`
 
 const fieldsetCode = `const schema = useSchema({
@@ -138,10 +125,9 @@ const submit = () => alert('submitted')
         <p class="font-medium">Creating a Custom Component</p>
 
         <p class="mt-2 text-sm text-muted-foreground">
-          Custom components must accept
-          <code class="rounded bg-background px-1">modelValue</code>
-          and emit
-          <code class="rounded bg-background px-1">update:modelValue</code>:
+          Custom components just need a
+          <code class="rounded bg-background px-1">defineModel</code>
+          for two-way binding:
         </p>
 
         <CodeBlock :code="customComponentCode" lang="vue" />

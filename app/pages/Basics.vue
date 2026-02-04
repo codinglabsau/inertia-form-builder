@@ -41,18 +41,29 @@ const labelsSchema = useSchema({
   },
 })
 
-const simpleCode = `const schema = useSchema({
+const simpleCode = `<script setup>
+import { Input } from '@codinglabsau/gooey'
+import { FormBuilder, useSchema } from '@codinglabsau/inertia-form-builder'
+
+const schema = useSchema({
   firstname: Input,
   surname: Input,
   secret: {
     component: Input,
     value: 'security by obscurity',
-    props: {
-      type: 'hidden',
-    },
+    props: { type: 'hidden' },
     label: false,
   },
-})`
+})
+
+const submit = () => schema.form.post('/users')
+<\/script>
+
+<template>
+  <form @submit.prevent="submit">
+    <FormBuilder :schema="schema" />
+  </form>
+</template>`
 
 const customIdCode = `const schema = useSchema({
   firstname: {
@@ -129,7 +140,7 @@ const submit = () => alert('submitted')
         />
       </div>
 
-      <CodeBlock :code="simpleCode" />
+      <CodeBlock :code="simpleCode" lang="vue" />
     </section>
 
     <section class="space-y-6">

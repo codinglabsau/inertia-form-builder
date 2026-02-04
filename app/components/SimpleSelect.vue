@@ -10,18 +10,15 @@ import {
 
 defineProps<{
   id?: string
-  modelValue?: string | number | null
   options: Array<{ value: string | number; label: string }>
   placeholder?: string
 }>()
 
-const emit = defineEmits<{
-  'update:modelValue': [value: string | number]
-}>()
+const modelValue = defineModel<string | number | null>()
 </script>
 
 <template>
-  <Select :model-value="String(modelValue)" @update:model-value="emit('update:modelValue', $event)">
+  <Select :model-value="String(modelValue)" @update:model-value="modelValue = $event">
     <SelectTrigger>
       <SelectValue :placeholder="placeholder ?? 'Select...'" />
     </SelectTrigger>

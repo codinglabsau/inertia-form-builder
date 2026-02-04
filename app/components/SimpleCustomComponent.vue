@@ -1,18 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-
-const props = defineProps<{
-  modelValue?: string
-}>()
-
-const emit = defineEmits<{
-  (e: 'update:modelValue', value?: typeof props.modelValue): void
-}>()
-
-const inputVal = computed({
-  get: () => props.modelValue,
-  set: (value) => emit('update:modelValue', value),
-})
+const colour = defineModel<string>()
 </script>
 
 <template>
@@ -20,25 +7,25 @@ const inputVal = computed({
     <div
       class="size-16 rounded-full bg-green-400 hover:cursor-pointer"
       :class="{
-        'shadow-lg ring ring-blue-300 drop-shadow': inputVal === 'green',
+        'shadow-lg ring ring-blue-300 drop-shadow': colour === 'green',
       }"
-      @click="inputVal = 'green'"
+      @click="colour = 'green'"
     />
 
     <div
       class="size-16 rounded-full bg-orange-400 hover:cursor-pointer"
       :class="{
-        'shadow-lg ring ring-blue-300 drop-shadow': inputVal === 'orange',
+        'shadow-lg ring ring-blue-300 drop-shadow': colour === 'orange',
       }"
-      @click="inputVal = 'orange'"
+      @click="colour = 'orange'"
     />
 
     <div
       class="size-16 rounded-full bg-red-400 hover:cursor-pointer"
       :class="{
-        'shadow-lg ring ring-blue-300 drop-shadow': inputVal === 'red',
+        'shadow-lg ring ring-blue-300 drop-shadow': colour === 'red',
       }"
-      @click="inputVal = 'red'"
+      @click="colour = 'red'"
     />
   </div>
 </template>

@@ -46,35 +46,36 @@ const models = computed(() => {
   return { modelValue: props.form[props.element.name] }
 })
 
-// Configure component props - build iteratively, only include expected props
+// Configure component props
 const computedProps = computed(() => {
   const definition = props.element.definition
   const expectedProps = definition.component?.props
-  if (!expectedProps) return {}
-
   const result: Record<string, any> = {}
 
-  // Only add props that the component expects
+  // Only add if component declares the prop — used for internal props that conflict
+  // with HTML attributes (e.g. `form` is a real HTML attr on <input>)
   const addIfExpected = (key: string, value: any) => {
-    if (expectedProps.hasOwnProperty(key)) {
+    if (expectedProps?.hasOwnProperty(key)) {
       result[key] = value
     }
   }
 
-  // Core props
-  addIfExpected('id', `${props.form._prefix}-${props.element.name}`)
+  // id — always set, falls through as HTML attribute via Vue inheritance
+  result['id'] = `${props.form._prefix}-${props.element.name}`
+
+  // Internal props — guarded because `form` is a real HTML attribute on <input>
   addIfExpected('form', props.form)
   addIfExpected('schema', definition.schema)
   addIfExpected('error', errorBag.value[0] ?? null)
 
-  // Props from definition — always pass through (includes HTML attrs like disabled, readonly)
+  // User-specified props — always forward (HTML attrs like disabled, readonly fall through)
   if (definition.props) {
     for (const [key, value] of Object.entries(definition.props)) {
       result[key] = value
     }
   }
 
-  // Element-level props (label, items for CheckboxGroup, etc.)
+  // Element-level props (label, items, checked, etc.)
   for (const key of Object.keys(definition)) {
     if (
       key !== 'component' &&
@@ -87,15 +88,14 @@ const computedProps = computed(() => {
       key !== 'precognitiveEvent'
     ) {
       const val = definition[key]
-      // Skip falsey label values (false/null/'') — they control label visibility, not component props
       if (key === 'label' && (val === false || val === null || val === '')) continue
       addIfExpected(key, val)
     }
   }
 
-  // Model values
+  // Model values — always forward
   for (const [key, value] of Object.entries(models.value)) {
-    addIfExpected(key, value)
+    result[key] = value
   }
 
   return result

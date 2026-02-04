@@ -96,14 +96,11 @@ const eventCode = `const schema = useSchema({
 
 const customBlurCode = `<!-- Emitting a blur event in a custom input -->
 <script setup>
-const emit = defineEmits(['blur', 'update:modelValue'])
-
-const handleBlur = (e) => {
-  emit('blur', e)
-}
+const model = defineModel()
+const emit = defineEmits(['blur'])
 <\/script>
 
-<input @blur="handleBlur" ... />`
+<input v-model="model" @blur="emit('blur', $event)" />`
 
 const debounceCode = `schema.form.setValidationTimeout(1000) // 1 second delay`
 </script>
