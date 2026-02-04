@@ -2,6 +2,16 @@
 // @ts-ignore - gooey types use unresolved path aliases
 import { Heading, Input, Button, Card, CardContent } from '@codinglabsau/gooey'
 import { FormBuilder, useSchema } from '../../src/index'
+import CodeBlock from '../components/CodeBlock.vue'
+
+const actionsSlotCode = `<FormBuilder :schema="schema">
+  <template #actions="{ form }">
+    <div class="flex gap-2">
+      <Button type="submit" :loading="form.processing">Save</Button>
+      <Button type="button" variant="outline" @click="form.reset()">Reset</Button>
+    </div>
+  </template>
+</FormBuilder>`
 
 const actionsSchema = useSchema({
   address: Input,
@@ -35,14 +45,7 @@ const submit = () => alert('submitted')
         Use the <code class="rounded bg-muted px-1">#actions</code> slot to add custom buttons.
       </p>
 
-      <pre><code>&lt;FormBuilder :schema="schema"&gt;
-  &lt;template #actions="{ form }"&gt;
-    &lt;div class="flex gap-2"&gt;
-      &lt;Button type="submit" :loading="form.processing"&gt;Save&lt;/Button&gt;
-      &lt;Button type="button" variant="outline" @click="form.reset()"&gt;Reset&lt;/Button&gt;
-    &lt;/div&gt;
-  &lt;/template&gt;
-&lt;/FormBuilder&gt;</code></pre>
+      <CodeBlock :code="actionsSlotCode" lang="vue-html" />
 
       <div class="mt-6 grid gap-6 lg:grid-cols-2">
         <Card>

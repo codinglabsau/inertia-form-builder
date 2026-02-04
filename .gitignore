@@ -10,6 +10,7 @@ lerna-debug.log*
 node_modules
 
 dist/types/demo
+docs-dist
 dist/types/**/__tests__
 
 .claude/settings.local.json

@@ -5,6 +5,59 @@ import { FormBuilder, useSchema } from '../../src/index'
 import type { Fieldset } from '../../src/composables/useSchema'
 import SimpleCustomComponent from '../components/SimpleCustomComponent.vue'
 import MultipleFieldsetCustomComponent from '../components/MultipleFieldsetCustomComponent.vue'
+import CodeBlock from '../components/CodeBlock.vue'
+
+const customUsageCode = `import SimpleCustomComponent from './SimpleCustomComponent.vue'
+
+const schema = useSchema({
+  colour: {
+    component: SimpleCustomComponent,
+    value: 'green',
+  },
+})`
+
+const customComponentCode = `<script setup lang="ts">
+import { computed } from 'vue'
+
+const props = defineProps<{
+  modelValue?: string
+}>()
+
+const emit = defineEmits<{
+  (e: 'update:modelValue', value?: string): void
+}>()
+
+const inputVal = computed({
+  get: () => props.modelValue,
+  set: (value) => emit('update:modelValue', value),
+})
+<` + `/script>`
+
+const fieldsetCode = `const schema = useSchema({
+  car: {
+    component: MultipleFieldsetCustomComponent,
+    fieldset: {
+      manufacturer: 'Lamborghini',
+      model: 5,
+    } as Fieldset,
+  },
+})`
+
+const mappedFieldsetCode = `const schema = useSchema({
+  car: {
+    component: MultipleFieldsetCustomComponent,
+    fieldset: {
+      proxy_manufacturer: {
+        model: 'manufacturer',  // Maps to 'manufacturer' prop
+        value: 'Ferrari',
+      },
+      proxy_model: {
+        model: 'model',
+        value: 3,
+      },
+    } as Fieldset,
+  },
+})`
 
 const customComponentSchema = useSchema({
   colour: {
@@ -58,14 +111,7 @@ const submit = () => alert('submitted')
 
       <p class="mt-2 text-muted-foreground">Use your own Vue components within the form schema.</p>
 
-      <pre><code>import SimpleCustomComponent from './SimpleCustomComponent.vue'
-
-const schema = useSchema({
-  colour: {
-    component: SimpleCustomComponent,
-    value: 'green',
-  },
-})</code></pre>
+      <CodeBlock :code="customUsageCode" />
 
       <div class="mt-6 grid gap-6 lg:grid-cols-2">
         <Card>
@@ -89,22 +135,7 @@ const schema = useSchema({
           <code class="rounded bg-background px-1">update:modelValue</code>:
         </p>
 
-        <pre><code>&lt;script setup lang="ts"&gt;
-import { computed } from 'vue'
-
-const props = defineProps&lt;{
-  modelValue?: string
-}&gt;()
-
-const emit = defineEmits&lt;{
-  (e: 'update:modelValue', value?: string): void
-}&gt;()
-
-const inputVal = computed({
-  get: () => props.modelValue,
-  set: (value) => emit('update:modelValue', value),
-})
-&lt;/script&gt;</code></pre>
+        <CodeBlock :code="customComponentCode" lang="vue" />
       </div>
     </section>
 
@@ -115,15 +146,7 @@ const inputVal = computed({
         Components that manage multiple form fields using fieldsets.
       </p>
 
-      <pre><code>const schema = useSchema({
-  car: {
-    component: MultipleFieldsetCustomComponent,
-    fieldset: {
-      manufacturer: 'Lamborghini',
-      model: 5,
-    } as Fieldset,
-  },
-})</code></pre>
+      <CodeBlock :code="fieldsetCode" />
 
       <div class="mt-6 grid gap-6 lg:grid-cols-2">
         <Card>
@@ -143,21 +166,7 @@ const inputVal = computed({
 
       <p class="mt-2 text-muted-foreground">Map fieldset keys to different form model names.</p>
 
-      <pre><code>const schema = useSchema({
-  car: {
-    component: MultipleFieldsetCustomComponent,
-    fieldset: {
-      proxy_manufacturer: {
-        model: 'manufacturer',  // Maps to 'manufacturer' prop
-        value: 'Ferrari',
-      },
-      proxy_model: {
-        model: 'model',
-        value: 3,
-      },
-    } as Fieldset,
-  },
-})</code></pre>
+      <CodeBlock :code="mappedFieldsetCode" />
 
       <div class="mt-6 grid gap-6 lg:grid-cols-2">
         <Card>

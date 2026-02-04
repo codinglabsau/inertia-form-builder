@@ -2,6 +2,7 @@
 // @ts-ignore - gooey types use unresolved path aliases
 import { Heading, Input, Card, CardContent } from '@codinglabsau/gooey'
 import { FormBuilder, useSchema, Grid as GridLayout } from '../../src/index'
+import CodeBlock from '../components/CodeBlock.vue'
 
 const gridSchema = useSchema({
   name: {
@@ -26,16 +27,7 @@ const gridSchema = useSchema({
   },
 })
 
-const submit = () => alert('submitted')
-</script>
-
-<template>
-  <div class="space-y-6 py-8">
-    <Heading>Grid Layout</Heading>
-
-    <p class="text-muted-foreground">Use the Grid component to arrange fields in columns.</p>
-
-    <pre><code>import { FormBuilder, useSchema, Grid } from '@codinglabsau/inertia-form-builder'
+const gridCode = `import { FormBuilder, useSchema, Grid } from '@codinglabsau/inertia-form-builder'
 
 const gridSchema = useSchema({
   name: {
@@ -55,7 +47,18 @@ const gridSchema = useSchema({
     component: Input,
     value: 'harry@highpants.com',
   },
-})</code></pre>
+})`
+
+const submit = () => alert('submitted')
+</script>
+
+<template>
+  <div class="space-y-6 py-8">
+    <Heading>Grid Layout</Heading>
+
+    <p class="text-muted-foreground">Use the Grid component to arrange fields in columns.</p>
+
+    <CodeBlock :code="gridCode" />
 
     <div class="mt-6 grid gap-6 lg:grid-cols-2">
       <Card>

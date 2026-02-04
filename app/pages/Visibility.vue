@@ -2,6 +2,7 @@
 // @ts-ignore - gooey types use unresolved path aliases
 import { Heading, Input, Select, Card, CardContent } from '@codinglabsau/gooey'
 import { FormBuilder, useSchema } from '../../src/index'
+import CodeBlock from '../components/CodeBlock.vue'
 
 const visibleSchema = useSchema({
   limit_type: {
@@ -27,21 +28,7 @@ const visibleSchema = useSchema({
   },
 })
 
-const emptySchema = useSchema()
-
-const submit = () => alert('submitted')
-</script>
-
-<template>
-  <div class="space-y-12 py-8">
-    <section>
-      <Heading>Conditional Fields</Heading>
-
-      <p class="mt-2 text-muted-foreground">
-        Fields can be conditionally shown based on other field values.
-      </p>
-
-      <pre><code>const schema = useSchema({
+const visibilityCode = `const schema = useSchema({
   limit_type: {
     component: Select,
     value: 1,
@@ -58,7 +45,23 @@ const submit = () => alert('submitted')
     props: { type: 'number' },
     visible: (form) => form.limit_type === 2,
   },
-})</code></pre>
+})`
+
+const emptySchema = useSchema()
+
+const submit = () => alert('submitted')
+</script>
+
+<template>
+  <div class="space-y-12 py-8">
+    <section>
+      <Heading>Conditional Fields</Heading>
+
+      <p class="mt-2 text-muted-foreground">
+        Fields can be conditionally shown based on other field values.
+      </p>
+
+      <CodeBlock :code="visibilityCode" />
 
       <div class="mt-6 grid gap-6 lg:grid-cols-2">
         <Card>

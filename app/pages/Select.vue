@@ -9,6 +9,7 @@ import {
   CardContent,
 } from '@codinglabsau/gooey'
 import { FormBuilder, useSchema, CheckboxGroup } from '../../src/index'
+import CodeBlock from '../components/CodeBlock.vue'
 
 const selectAndCheckboxSchema = useSchema({
   position_id: {
@@ -49,18 +50,7 @@ const selectAndCheckboxSchema = useSchema({
   },
 })
 
-const submit = () => alert('submitted')
-</script>
-
-<template>
-  <div class="space-y-6 py-8">
-    <Heading>Select & Checkboxes</Heading>
-
-    <p class="text-muted-foreground">
-      Various input types including select dropdowns and checkbox groups.
-    </p>
-
-    <pre><code>import { Select, Checkbox, Input } from '@codinglabsau/gooey'
+const selectCode = `import { Select, Checkbox, Input } from '@codinglabsau/gooey'
 import { FormBuilder, useSchema, CheckboxGroup } from '@codinglabsau/inertia-form-builder'
 
 const schema = useSchema({
@@ -90,7 +80,20 @@ const schema = useSchema({
     ],
     checked: [2],
   },
-})</code></pre>
+})`
+
+const submit = () => alert('submitted')
+</script>
+
+<template>
+  <div class="space-y-6 py-8">
+    <Heading>Select & Checkboxes</Heading>
+
+    <p class="text-muted-foreground">
+      Various input types including select dropdowns and checkbox groups.
+    </p>
+
+    <CodeBlock :code="selectCode" />
 
     <div class="mt-6 grid gap-6 lg:grid-cols-2">
       <Card>

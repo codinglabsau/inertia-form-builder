@@ -2,6 +2,7 @@
 // @ts-ignore - gooey types use unresolved path aliases
 import { Heading, Input, Card, CardContent } from '@codinglabsau/gooey'
 import { FormBuilder, useSchema } from '../../src/index'
+import CodeBlock from '../components/CodeBlock.vue'
 
 const simpleSchema = useSchema({
   firstname: Input,
@@ -39,6 +40,20 @@ const labelsSchema = useSchema({
     showLabel: false,
   },
 })
+
+const propsCode = `const schema = useSchema({
+  firstname: {
+    component: Input,
+    props: {
+      id: 'custom-id',
+      placeholder: 'Enter name...',
+    },
+  },
+})`
+
+const reactivityCode = `const schema = useSchema(() => ({
+  firstname: Input,
+}))`
 
 const submit = () => alert('submitted')
 </script>
@@ -122,15 +137,7 @@ const submit = () => alert('submitted')
         the form element.
       </p>
 
-      <pre><code>const schema = useSchema({
-  firstname: {
-    component: Input,
-    props: {
-      id: 'custom-id',
-      placeholder: 'Enter name...',
-    },
-  },
-})</code></pre>
+      <CodeBlock :code="propsCode" />
     </section>
 
     <section>
@@ -140,9 +147,7 @@ const submit = () => alert('submitted')
         To make the schema reactive to prop changes, pass it as a function:
       </p>
 
-      <pre><code>const schema = useSchema(() => ({
-  firstname: Input,
-}))</code></pre>
+      <CodeBlock :code="reactivityCode" />
     </section>
   </div>
 </template>

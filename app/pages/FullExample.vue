@@ -21,6 +21,79 @@ import {
 } from '../../src/index'
 import type { Fieldset } from '../../src/composables/useSchema'
 import MultipleFieldsetCustomComponent from '../components/MultipleFieldsetCustomComponent.vue'
+import CodeBlock from '../components/CodeBlock.vue'
+
+const fullExampleCode = `const schema = useSchema(() => ({
+  // Simple — component only, value defaults to null
+  first_name: Input,
+
+  // defineElement — type-safe factory
+  last_name: defineElement(Input, { value: 'Thomas', label: 'Surname' }),
+
+  // hidden — no label, type=hidden
+  user_id: hidden(42),
+
+  // showLabel: false — suppresses label but field is visible
+  internal_ref: { component: Input, value: 'REF-001', showLabel: false },
+
+  // Select with props forwarding
+  role_id: {
+    component: Select,
+    value: 2,
+    props: { options: [...] },
+  },
+
+  // Checkbox with its own label
+  is_active: { component: Checkbox, value: true, label: 'Active', showLabel: false },
+
+  // Grid — nested schema in columns
+  location: {
+    component: Grid,
+    schema: {
+      city: { component: Input, value: 'Burleigh Heads' },
+      state: { component: Input, value: 'QLD' },
+      postcode: { component: Input, value: '4220' },
+    },
+  },
+
+  // Section — nested schema with heading/description
+  contact: {
+    component: Section,
+    props: { heading: 'Contact Details', description: '...' },
+    schema: { email: { component: Input }, phone: { component: Input } },
+  },
+
+  // visible — inline conditional function
+  notes: { component: Input, visible: form => form.role_id !== 3 },
+
+  // when — helper alternative to visible
+  secondary_email: when(form => form.role_id === 1, Input, { label: 'Admin Email' }),
+
+  // CheckboxGroup — multiple selections
+  notifications: {
+    component: CheckboxGroup,
+    label: 'Notifications',
+    items: [{ label: 'Email', value: 'email' }, ...],
+    checked: ['email'],
+  },
+
+  // Alert with action link and visibility
+  api_key: {
+    component: Input,
+    alert: {
+      text: 'Changing this will invalidate existing integrations.',
+      actionText: 'View docs',
+      actionHref: '/installation',
+      visible: () => true,
+    },
+  },
+
+  // Fieldset — maps multiple form fields to one component
+  car: {
+    component: CarPicker,
+    fieldset: { manufacturer: 'Lamborghini', model: 5 },
+  },
+}))`
 
 const schema = useSchema(() => ({
   // 1. Simplest — just a component, value defaults to null, label auto-humanised
@@ -154,77 +227,7 @@ const submit = () => alert('submitted')
         are omitted — they need a Laravel backend.
       </p>
 
-      <pre><code>const schema = useSchema(() => ({
-  // Simple — component only, value defaults to null
-  first_name: Input,
-
-  // defineElement — type-safe factory
-  last_name: defineElement(Input, { value: 'Thomas', label: 'Surname' }),
-
-  // hidden — no label, type=hidden
-  user_id: hidden(42),
-
-  // showLabel: false — suppresses label but field is visible
-  internal_ref: { component: Input, value: 'REF-001', showLabel: false },
-
-  // Select with props forwarding
-  role_id: {
-    component: Select,
-    value: 2,
-    props: { options: [...] },
-  },
-
-  // Checkbox with its own label
-  is_active: { component: Checkbox, value: true, label: 'Active', showLabel: false },
-
-  // Grid — nested schema in columns
-  location: {
-    component: Grid,
-    schema: {
-      city: { component: Input, value: 'Burleigh Heads' },
-      state: { component: Input, value: 'QLD' },
-      postcode: { component: Input, value: '4220' },
-    },
-  },
-
-  // Section — nested schema with heading/description
-  contact: {
-    component: Section,
-    props: { heading: 'Contact Details', description: '...' },
-    schema: { email: { component: Input }, phone: { component: Input } },
-  },
-
-  // visible — inline conditional function
-  notes: { component: Input, visible: form => form.role_id !== 3 },
-
-  // when — helper alternative to visible
-  secondary_email: when(form => form.role_id === 1, Input, { label: 'Admin Email' }),
-
-  // CheckboxGroup — multiple selections
-  notifications: {
-    component: CheckboxGroup,
-    label: 'Notifications',
-    items: [{ label: 'Email', value: 'email' }, ...],
-    checked: ['email'],
-  },
-
-  // Alert with action link and visibility
-  api_key: {
-    component: Input,
-    alert: {
-      text: 'Changing this will invalidate existing integrations.',
-      actionText: 'View docs',
-      actionHref: '/installation',
-      visible: () => true,
-    },
-  },
-
-  // Fieldset — maps multiple form fields to one component
-  car: {
-    component: CarPicker,
-    fieldset: { manufacturer: 'Lamborghini', model: 5 },
-  },
-}))</code></pre>
+      <CodeBlock :code="fullExampleCode" />
     </section>
 
     <section>

@@ -2,6 +2,39 @@
 // @ts-ignore - gooey types use unresolved path aliases
 import { Heading, Input, Card, CardContent } from '@codinglabsau/gooey'
 import { FormBuilder, useSchema } from '../../src/index'
+import CodeBlock from '../components/CodeBlock.vue'
+
+const statesCode = `const schema = useSchema({
+  error: {
+    component: Input,
+    value: 'bad value',
+  },
+  read_only: {
+    component: Input,
+    value: 'read only',
+    props: { readonly: true },
+  },
+  disabled: {
+    component: Input,
+    value: 'disabled',
+    props: { disabled: true },
+  },
+  warning: {
+    component: Input,
+    value: 'Warning',
+    alert: {
+      text: 'Show me the warning.',
+      actionText: 'Click me',
+      actionHref: '/action',
+      visible: () => true,
+    },
+  },
+})
+
+// Set error manually
+schema.form.errors = {
+  error: 'This error field is invalid.',
+}`
 
 const inputStatesSchema = useSchema({
   error: {
@@ -50,37 +83,7 @@ const submit = () => alert('submitted')
       Demonstrate error states, readonly, disabled, and alert messages.
     </p>
 
-    <pre><code>const schema = useSchema({
-  error: {
-    component: Input,
-    value: 'bad value',
-  },
-  read_only: {
-    component: Input,
-    value: 'read only',
-    props: { readonly: true },
-  },
-  disabled: {
-    component: Input,
-    value: 'disabled',
-    props: { disabled: true },
-  },
-  warning: {
-    component: Input,
-    value: 'Warning',
-    alert: {
-      text: 'Show me the warning.',
-      actionText: 'Click me',
-      actionHref: '/action',
-      visible: () => true,
-    },
-  },
-})
-
-// Set error manually
-schema.form.errors = {
-  error: 'This error field is invalid.',
-}</code></pre>
+    <CodeBlock :code="statesCode" />
 
     <div class="mt-6 grid gap-6 lg:grid-cols-2">
       <Card>

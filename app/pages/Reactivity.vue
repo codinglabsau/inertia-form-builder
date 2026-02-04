@@ -3,6 +3,47 @@ import { ref, computed } from 'vue'
 // @ts-ignore - gooey types use unresolved path aliases
 import { Heading, Input, Card, CardContent, Button } from '@codinglabsau/gooey'
 import { FormBuilder, useSchema } from '../../src/index'
+import CodeBlock from '../components/CodeBlock.vue'
+
+const toggleFieldsCode = `const showEmail = ref(false)
+
+const schema = useSchema(() => ({
+  name: Input,
+  ...(showEmail.value ? { email: Input } : {}),
+}))`
+
+const dynamicListCode = `const additionalFields = ref([])
+
+const schema = useSchema(() => {
+  const fields = { title: Input }
+  for (const fieldName of additionalFields.value) {
+    fields[fieldName] = Input
+  }
+  return fields
+})`
+
+const refDirectlyCode = `const elementsRef = ref({
+  username: Input,
+  password: { component: Input, props: { type: 'password' } },
+})
+
+const schema = useSchema(elementsRef)
+
+// Update the ref to add/remove fields
+elementsRef.value = {
+  ...elementsRef.value,
+  confirm_password: Input,
+}`
+
+const supportedInputTypesCode = `// Static object (BC - works but not reactive)
+useSchema({ name: Input })
+
+// Function (reactive)
+useSchema(() => ({ name: Input }))
+
+// Ref (reactive)
+const elements = ref({ name: Input })
+useSchema(elements)`
 
 // Demo 1: Dynamic fields with ref
 const showEmail = ref(false)
@@ -106,12 +147,9 @@ const removeConfirmPassword = () => {
         </div>
       </div>
 
-      <pre class="mt-4"><code>const showEmail = ref(false)
-
-const schema = useSchema(() => ({
-  name: Input,
-  ...(showEmail.value ? { email: Input } : {}),
-}))</code></pre>
+      <div class="mt-4">
+        <CodeBlock :code="toggleFieldsCode" />
+      </div>
     </section>
 
     <section>
@@ -148,15 +186,9 @@ const schema = useSchema(() => ({
         </div>
       </div>
 
-      <pre class="mt-4"><code>const additionalFields = ref([])
-
-const schema = useSchema(() => {
-  const fields = { title: Input }
-  for (const fieldName of additionalFields.value) {
-    fields[fieldName] = Input
-  }
-  return fields
-})</code></pre>
+      <div class="mt-4">
+        <CodeBlock :code="dynamicListCode" />
+      </div>
     </section>
 
     <section>
@@ -197,18 +229,9 @@ const schema = useSchema(() => {
         </div>
       </div>
 
-      <pre class="mt-4"><code>const elementsRef = ref({
-  username: Input,
-  password: { component: Input, props: { type: 'password' } },
-})
-
-const schema = useSchema(elementsRef)
-
-// Update the ref to add/remove fields
-elementsRef.value = {
-  ...elementsRef.value,
-  confirm_password: Input,
-}</code></pre>
+      <div class="mt-4">
+        <CodeBlock :code="refDirectlyCode" />
+      </div>
     </section>
 
     <section>
@@ -216,15 +239,7 @@ elementsRef.value = {
 
       <p class="mt-2 text-muted-foreground">All three input patterns work with full reactivity:</p>
 
-      <pre><code>// Static object (BC - works but not reactive)
-useSchema({ name: Input })
-
-// Function (reactive)
-useSchema(() => ({ name: Input }))
-
-// Ref (reactive)
-const elements = ref({ name: Input })
-useSchema(elements)</code></pre>
+      <CodeBlock :code="supportedInputTypesCode" />
     </section>
   </div>
 </template>

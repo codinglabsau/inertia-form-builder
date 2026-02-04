@@ -2,6 +2,7 @@
 // @ts-ignore - gooey types use unresolved path aliases
 import { Heading, Input, Card, CardContent } from '@codinglabsau/gooey'
 import { FormBuilder, useSchema, Section as SectionLayout, Grid } from '../../src/index'
+import CodeBlock from '../components/CodeBlock.vue'
 
 const sectionSchema = useSchema({
   physical_attributes: {
@@ -36,18 +37,7 @@ const sectionSchema = useSchema({
   },
 })
 
-const submit = () => alert('submitted')
-</script>
-
-<template>
-  <div class="space-y-6 py-8">
-    <Heading>Form Sections</Heading>
-
-    <p class="text-muted-foreground">
-      Group related fields into sections with headings and descriptions.
-    </p>
-
-    <pre><code>import { FormBuilder, useSchema, Section, Grid } from '@codinglabsau/inertia-form-builder'
+const sectionCode = `import { FormBuilder, useSchema, Section, Grid } from '@codinglabsau/inertia-form-builder'
 
 const sectionSchema = useSchema({
   physical_attributes: {
@@ -72,7 +62,20 @@ const sectionSchema = useSchema({
       phone: { component: Input },
     },
   },
-})</code></pre>
+})`
+
+const submit = () => alert('submitted')
+</script>
+
+<template>
+  <div class="space-y-6 py-8">
+    <Heading>Form Sections</Heading>
+
+    <p class="text-muted-foreground">
+      Group related fields into sections with headings and descriptions.
+    </p>
+
+    <CodeBlock :code="sectionCode" />
 
     <div class="mt-6 grid gap-6 lg:grid-cols-2">
       <Card>
