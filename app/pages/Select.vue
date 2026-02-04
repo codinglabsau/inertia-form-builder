@@ -1,25 +1,19 @@
 <script setup lang="ts">
 // @ts-ignore - gooey types use unresolved path aliases
-import {
-  Heading,
-  Checkbox,
-  Input,
-  Select as SelectInput,
-  Card,
-  CardContent,
-} from '@codinglabsau/gooey'
+import { Heading, Checkbox, Input, Card, CardContent } from '@codinglabsau/gooey'
 import { FormBuilder, useSchema, CheckboxGroup } from '../../src/index'
 import CodeBlock from '../components/CodeBlock.vue'
+import SimpleSelect from '../components/SimpleSelect.vue'
 
 const selectAndCheckboxSchema = useSchema({
   position_id: {
-    component: SelectInput,
-    value: 2,
+    component: SimpleSelect,
+    value: '2',
     props: {
       options: [
-        { value: 1, label: 'Developer' },
-        { value: 2, label: 'Designer' },
-        { value: 3, label: 'Manager' },
+        { value: '1', label: 'Developer' },
+        { value: '2', label: 'Designer' },
+        { value: '3', label: 'Manager' },
       ],
     },
   },

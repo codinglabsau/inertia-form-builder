@@ -1,18 +1,19 @@
 <script setup lang="ts">
 // @ts-ignore - gooey types use unresolved path aliases
-import { Heading, Input, Select, Card, CardContent } from '@codinglabsau/gooey'
+import { Heading, Input, Card, CardContent } from '@codinglabsau/gooey'
 import { FormBuilder, useSchema } from '../../src/index'
 import CodeBlock from '../components/CodeBlock.vue'
+import SimpleSelect from '../components/SimpleSelect.vue'
 
 const visibleSchema = useSchema({
   limit_type: {
-    component: Select,
-    value: 1,
+    component: SimpleSelect,
+    value: '1',
     props: {
       options: [
-        { value: 1, label: 'None' },
-        { value: 2, label: 'Limited' },
-        { value: 3, label: 'Unlimited' },
+        { value: '1', label: 'None' },
+        { value: '2', label: 'Limited' },
+        { value: '3', label: 'Unlimited' },
       ],
     },
     label: 'Change to "Limited" to show the limit input',
@@ -23,7 +24,7 @@ const visibleSchema = useSchema({
       type: 'number',
     },
     visible: (form) => {
-      return form.limit_type === 2
+      return form.limit_type === '2'
     },
   },
 })
@@ -31,19 +32,19 @@ const visibleSchema = useSchema({
 const visibilityCode = `const schema = useSchema({
   limit_type: {
     component: Select,
-    value: 1,
+    value: '1',
     props: {
       options: [
-        { value: 1, label: 'None' },
-        { value: 2, label: 'Limited' },
-        { value: 3, label: 'Unlimited' },
+        { value: '1', label: 'None' },
+        { value: '2', label: 'Limited' },
+        { value: '3', label: 'Unlimited' },
       ],
     },
   },
   limit: {
     component: Input,
     props: { type: 'number' },
-    visible: (form) => form.limit_type === 2,
+    visible: (form) => form.limit_type === '2',
   },
 })`
 
