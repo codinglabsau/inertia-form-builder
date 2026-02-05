@@ -7,6 +7,7 @@ import Home from '../pages/Index.vue'
 // Markdown pages (text-heavy docs)
 import Installation from '../pages/Installation.vue'
 import ContributionGuide from '../pages/ContributionGuide.vue'
+import UpgradeGuide from '../pages/UpgradeGuide.vue'
 import Precognition from '../pages/Precognition.vue'
 
 // Vue pages (interactive demos)
@@ -24,6 +25,7 @@ import Reactivity from '../pages/Reactivity.vue'
 const routes = [
   { path: '/', component: Home, meta: { standalone: true } },
   { path: '/installation', component: Installation, meta: { layout: ArticleLayout } },
+  { path: '/upgrade-guide', component: UpgradeGuide, meta: { layout: ArticleLayout } },
   { path: '/contribution-guide', component: ContributionGuide, meta: { layout: ArticleLayout } },
   { path: '/basics', component: Basics, meta: { layout: ArticleLayout } },
   { path: '/api', component: Api, meta: { layout: ArticleLayout } },

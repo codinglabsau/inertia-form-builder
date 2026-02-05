@@ -5,6 +5,7 @@ import { Button } from '@codinglabsau/gooey'
 
 const introLinks = [
   { to: '/installation', label: 'Installation' },
+  { to: '/upgrade-guide', label: 'Upgrade Guide' },
   { to: '/contribution-guide', label: 'Contribution Guide' },
 ]
 
