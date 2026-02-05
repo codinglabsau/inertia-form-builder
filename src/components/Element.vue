@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watchEffect } from 'vue'
+import { computed } from 'vue'
 // @ts-ignore - gooey types use unresolved path aliases
 import { FieldError, Label, Alert, AlertDescription, Button } from '@codinglabsau/gooey'
 import type { Alert as AlertType, Element, Fieldset, Form } from '@/composables/useSchema'
@@ -170,16 +170,11 @@ const alert = computed<AlertType | null>(() => {
   return null
 })
 
-// Visibility: store the visibility function and compute visibility reactively
-const visibilityFn = props.element.definition.visible
-const visible = ref(typeof visibilityFn === 'function' ? visibilityFn(props.form) : true)
-
-// Use watchEffect for targeted reactivity - only re-runs when accessed form properties change
-if (typeof visibilityFn === 'function') {
-  watchEffect(() => {
-    visible.value = visibilityFn(props.form)
-  })
-}
+// Visibility: reads the current definition's visible function on every evaluation
+const visible = computed(() => {
+  const fn = props.element.definition.visible
+  return typeof fn === 'function' ? fn(props.form) : true
+})
 </script>
 
 <template>

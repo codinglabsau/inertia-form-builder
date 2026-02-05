@@ -521,9 +521,9 @@ form._prefix             // e.g. "xkqwmz" — used by Element.vue for id attrs`
         <p class="text-muted-foreground">
           Event handlers called with
           <code class="rounded bg-muted px-1">(form, name)</code>
-. The
+          . The
           <code class="rounded bg-muted px-1">update</code>
- key fires inside the
+          key fires inside the
           <code class="rounded bg-muted px-1">update:modelValue</code> handler after model sync; all
           other keys become separate listeners. Commonly used to wire up precognition validation.
         </p>

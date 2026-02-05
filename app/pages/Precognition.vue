@@ -120,7 +120,7 @@ const debounceCode = `schema.form.setValidationTimeout(1000) // 1 second delay`
           <code class="rounded bg-muted px-1">useSchema</code>
           to create a precognition-aware form instance. Wire up validation using
           <code class="rounded bg-muted px-1">events</code>
- — each handler receives
+          — each handler receives
           <code class="rounded bg-muted px-1">(form, name)</code>.
         </p>
       </div>
@@ -268,7 +268,7 @@ const debounceCode = `schema.form.setValidationTimeout(1000) // 1 second delay`
                 <td class="px-4 py-3 text-muted-foreground">
                   Event handlers called with
                   <code class="rounded bg-muted px-1">(form, name)</code>
-. The
+                  . The
                   <code class="rounded bg-muted px-1">update</code> key fires after model sync; all
                   other keys become separate listeners.
                 </td>
