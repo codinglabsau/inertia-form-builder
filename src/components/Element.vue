@@ -1,163 +1,185 @@
 <script setup lang="ts">
-import { computed, ref, watch, inject } from 'vue'
-import { Error, Label, WarningAlert, WarningAlertButton } from '@codinglabsau/ui'
-import type { Alert, Element, Fieldset, Form, SchemaOptions } from '@/composables/useSchema'
+import { computed } from 'vue'
+// @ts-ignore - gooey types use unresolved path aliases
+import { FieldError, Label, Alert, AlertDescription, Button } from '@codinglabsau/gooey'
+import type { Alert as AlertType, Element, Fieldset, Form } from '@/composables/useSchema'
+
+type EventHandler = (form: Form, name: string) => void
 
 const props = defineProps<{
   element: Element
   form: Form
 }>()
 
-// Inject schema options
-const schemaOptions = inject<SchemaOptions>('schemaOptions', {})
+// Parse fieldset once and reuse across models, listeners, and errorBag
+const parsedFieldset = computed(() => {
+  const fieldset = props.element.definition?.fieldset as Fieldset
+  if (!fieldset) return null
 
-// configure component model(s)
+  const fields: Array<{ key: string; formKey: string }> = []
+  for (const [key, value] of Object.entries(fieldset)) {
+    const formKey = value && typeof value === 'object' && value.model ? value.model : key
+    fields.push({ key, formKey })
+  }
+  return fields
+})
+
+// Configure component model(s)
 const models = computed(() => {
-  const fieldset = props.element.definition?.fieldset as Fieldset
-
+  const fieldset = parsedFieldset.value
   if (fieldset) {
-    // fieldsets have a getter foreach component model
-    return Object.entries(fieldset).reduce((carry, [key, value]) => {
-      if (value?.model) {
-        carry[value.model] = props.form[value.model]
-      } else {
-        carry[key] = props.form[key]
-      }
-
-      return carry
-    }, {})
+    const result: Record<string, any> = {}
+    for (const { key, formKey } of fieldset) {
+      result[formKey] = props.form[formKey]
+    }
+    return result
   }
 
-  // a single model component binds modelValue to the prop value
-  return {
-    modelValue: props.form[props.element.name],
-  }
+  // Single model component
+  return { modelValue: props.form[props.element.name] }
 })
 
-// configure component props, discarding props that are unexpected
+// Configure component props
 const computedProps = computed(() => {
-  let componentProps = Object.entries({
-    id: `${props.form._prefix}-${props.element.name}`,
-    ...props.element.definition,
-    ...props.element.definition.props,
-    ...models.value,
-    schema: props.element.definition.schema,
-    form: props.form,
-    error: errorBag.value[0] ?? null,
-  })
+  const definition = props.element.definition
+  const expectedProps = definition.component?.props
+  const result: Record<string, any> = {}
 
-  let expectedProps = props.element.definition.component.props
-
-  return Object.fromEntries(componentProps.filter(([key]) => expectedProps.hasOwnProperty(key)))
-})
-
-// configure component listener(s)
-const listeners = computed(() => {
-  const fieldset = props.element.definition?.fieldset as Fieldset
-
-  const precognitive =
-    schemaOptions?.precognition === true &&
-    (props.element.definition.precognitive ?? schemaOptions?.optInPrecognition !== true)
-  const precognitiveEvent = props.element.definition.precognitiveEvent ?? 'change'
-
-  const dynamicListeners = (formKey: string, modelKey: string = 'modelValue') => {
-    return {
-      [`update:${modelKey}`]: (newVal) => {
-        props.form[formKey] = newVal
-
-        if (precognitive && precognitiveEvent === 'update') {
-          props.form.validate(formKey)
-        }
-      },
-      ...(precognitive && precognitiveEvent !== 'update'
-        ? { [precognitiveEvent]: () => props.form.validate(formKey) }
-        : {}),
+  // Only add if component declares the prop — used for internal props that conflict
+  // with HTML attributes (e.g. `form` is a real HTML attr on <input>)
+  const addIfExpected = (key: string, value: any) => {
+    if (expectedProps?.hasOwnProperty(key)) {
+      result[key] = value
     }
   }
 
-  if (fieldset) {
-    // fieldsets update each component model separately
-    return Object.entries(fieldset).reduce((carry, [key, value]) => {
-      const fieldKey = value?.model ?? key
+  // id — always set, falls through as HTML attribute via Vue inheritance
+  result['id'] = `${props.form._prefix}-${props.element.name}`
 
-      return {
-        ...carry,
-        ...dynamicListeners(fieldKey, fieldKey),
-      }
-    }, {})
+  // Internal props — guarded because `form` is a real HTML attribute on <input>
+  addIfExpected('form', props.form)
+  addIfExpected('schema', definition.schema)
+  addIfExpected('error', errorBag.value[0] ?? null)
+
+  // User-specified props — always forward (HTML attrs like disabled, readonly fall through)
+  if (definition.props) {
+    for (const [key, value] of Object.entries(definition.props)) {
+      result[key] = value
+    }
   }
 
-  // a single model component updates the value on the underlying form
-  return dynamicListeners(props.element.name)
+  // Element-level props (label, items, checked, etc.)
+  for (const key of Object.keys(definition)) {
+    if (
+      key !== 'component' &&
+      key !== 'props' &&
+      key !== 'visible' &&
+      key !== 'alert' &&
+      key !== 'fieldset' &&
+      key !== 'schema' &&
+      key !== 'events'
+    ) {
+      const val = definition[key]
+      if (key === 'label' && (val === false || val === null || val === '')) continue
+      addIfExpected(key, val)
+    }
+  }
+
+  // Model values — always forward
+  for (const [key, value] of Object.entries(models.value)) {
+    result[key] = value
+  }
+
+  return result
 })
 
-// calculate all the errors that apply to the component
-const errorBag = computed(() => {
-  const fieldset = props.element.definition?.fieldset as Fieldset
+// Configure component listener(s)
+const listeners = computed(() => {
+  const fieldset = parsedFieldset.value
+  const events = props.element.definition.events as Record<string, EventHandler> | undefined
 
-  if (fieldset) {
-    // fieldsets could have 1 error per field
-    return Object.keys(fieldset)
-      .map((element) => props.form.errors[element])
-      .filter((error) => error)
+  const createListeners = (formKey: string, modelKey: string = 'modelValue') => {
+    const result: Record<string, any> = {
+      [`update:${modelKey}`]: (newVal: any) => {
+        props.form[formKey] = newVal
+        if (events?.update) {
+          events.update(props.form, formKey)
+        }
+      },
+    }
+
+    if (events) {
+      for (const [event, handler] of Object.entries(events)) {
+        if (event !== 'update') {
+          result[event] = () => handler(props.form, formKey)
+        }
+      }
+    }
+
+    return result
   }
 
-  // normal fields can only have 1 error
+  if (fieldset) {
+    const result: Record<string, any> = {}
+    for (const { formKey } of fieldset) {
+      Object.assign(result, createListeners(formKey, formKey))
+    }
+    return result
+  }
+
+  return createListeners(props.element.name)
+})
+
+// Calculate errors for the component
+const errorBag = computed(() => {
+  const fieldset = parsedFieldset.value
+  if (fieldset) {
+    return fieldset.map(({ formKey }) => props.form.errors[formKey]).filter((error) => error)
+  }
   return [props.form.errors[props.element.name]]
 })
 
-const label = computed(() => {
-  const value = props.element.definition.label ?? props.element.name
+const errors = computed(() => errorBag.value.filter(Boolean).map((error) => ({ message: error })))
 
+const label = computed(() => {
+  const value = props.element.definition.label || props.element.name
   return value.replaceAll('_id', '').replaceAll('_', ' ')
 })
 
-const isNested = !!props.element.definition.schema
+const isNested = computed(() => !!props.element.definition.schema)
 
 const showLabel = computed(() => {
-  if (props.element.definition.showLabel !== undefined) {
-    return props.element.definition.showLabel
-  }
-
-  if (props.element.definition.component.name === 'Hidden') {
+  const labelValue = props.element.definition.label
+  if (labelValue === false || labelValue === null || labelValue === '') {
     return false
   }
-
-  return !isNested
+  if (props.element.definition.props?.type === 'hidden') {
+    return false
+  }
+  return !isNested.value
 })
 
-const alert = computed<Alert | null>(() => {
+const alert = computed<AlertType | null>(() => {
   if (props.element.definition.alert !== undefined) {
-    const alert = props.element.definition.alert as Alert
-    alert.visible = typeof alert.visible === 'function' ? alert.visible : () => true
-
-    return alert
+    const alertDef = props.element.definition.alert as AlertType
+    return {
+      ...alertDef,
+      visible: typeof alertDef.visible === 'function' ? alertDef.visible : () => true,
+    }
   }
   return null
 })
 
-const visibleFunc = ref(
-  typeof props.element.definition.visible === 'function'
-    ? props.element.definition.visible
-    : () => true
-)
-
-const visible = ref(
-  typeof props.element.definition.visible === 'function'
-    ? props.element.definition.visible(props.form)
-    : () => true
-)
-
-watch(props.form, (newForm) => {
-  if (typeof visibleFunc.value === 'function') {
-    visible.value = visibleFunc.value(newForm)
-  }
+// Visibility: reads the current definition's visible function on every evaluation
+const visible = computed(() => {
+  const fn = props.element.definition.visible
+  return typeof fn === 'function' ? fn(props.form) : true
 })
 </script>
 
 <template>
   <div v-if="visible">
-    <Label v-if="showLabel" :for="computedProps.id as string">
+    <Label v-if="showLabel" :for="computedProps.id as string" class="mb-1 block capitalize">
       {{ label }}
     </Label>
 
@@ -168,17 +190,25 @@ watch(props.form, (newForm) => {
       v-on="listeners"
     />
 
-    <WarningAlert v-if="alert && alert.visible()" without-icon>
-      {{ alert.text }}
-      <template v-if="alert.actionHref && alert.actionText" #actions>
-        <WarningAlertButton :external="alert.externalAction" :href="alert.actionHref">
+    <Alert v-if="alert && alert.visible()" variant="warning" class="mt-2">
+      <AlertDescription class="flex items-center justify-between">
+        {{ alert.text }}
+        <Button
+          v-if="alert.actionHref && alert.actionText"
+          as="a"
+          :href="alert.actionHref"
+          :target="alert.externalAction ? '_blank' : undefined"
+          variant="outline"
+          size="sm"
+        >
           {{ alert.actionText }}
-        </WarningAlertButton>
-      </template>
-    </WarningAlert>
+        </Button>
+      </AlertDescription>
+    </Alert>
 
-    <template v-if="!computedProps.hasOwnProperty('error')">
-      <Error v-for="(error, index) in errorBag" :key="index" :error="error" />
-    </template>
+    <FieldError
+      v-if="!computedProps.hasOwnProperty('error') && errors.length > 0"
+      :errors="errors"
+    />
   </div>
 </template>

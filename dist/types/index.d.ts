@@ -1,4 +1,5 @@
 import useSchema from './composables/useSchema';
+export type { Schema, ElementMap, Element, Fieldset, Form, Alert, ElementMapInput, } from './composables/useSchema';
 import FormBuilder from './components/FormBuilder.vue';
 import CheckboxGroup from './components/elements/CheckboxGroup.vue';
 import Grid from './components/elements/Grid.vue';

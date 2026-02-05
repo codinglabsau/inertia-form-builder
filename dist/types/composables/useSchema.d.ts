@@ -1,9 +1,9 @@
 import { type InertiaForm } from '@inertiajs/vue3';
-import { type RequestMethod } from 'laravel-precognition';
-import type { DangerButton, PrimaryButton, SecondaryButton, Breadcrumbs, Container, DataTable, Dropdown, DropdownItem, Heading, Notifications, Pagination, StackedList, Tabs, Toggle, Actions, Combobox, Checkbox, Date, DateRange, Email, Error, Hidden, Image, Label, Number, Password, Price, Select, Textarea, Text } from '@codinglabsau/ui';
+import { type ComputedRef, type DefineComponent, type Ref } from 'vue';
 import CheckboxGroup from '../components/elements/CheckboxGroup.vue';
 import type Grid from '../components/elements/Grid.vue';
-type Component = typeof DangerButton | typeof PrimaryButton | typeof SecondaryButton | typeof Breadcrumbs | typeof Container | typeof DataTable | typeof Dropdown | typeof DropdownItem | typeof Heading | typeof Notifications | typeof Pagination | typeof StackedList | typeof Tabs | typeof Toggle | typeof Actions | typeof Combobox | typeof Checkbox | typeof Date | typeof DateRange | typeof Email | typeof Error | typeof Hidden | typeof Image | typeof Label | typeof Number | typeof Password | typeof Price | typeof Select | typeof Textarea | typeof Text | typeof Grid | typeof CheckboxGroup;
+type Component = DefineComponent<any, any, any> | typeof Grid | typeof CheckboxGroup;
+type RequestMethod = 'get' | 'post' | 'put' | 'patch' | 'delete';
 type Form = InertiaForm<any> & {
     _prefix: string;
 };
@@ -14,22 +14,14 @@ type CheckboxesConfig = {
 type ElementConfig<T extends Component = Component> = {
     component: T;
     value?: any;
-    label?: string;
+    label?: string | false | null;
     schema?: ElementMap;
     fieldset?: Fieldset;
-    showLabel?: boolean;
     visible?: (form: Form) => boolean;
     alert?: Alert;
-    props?: InstanceType<T>['$props'];
-    precognitive?: boolean;
-    precognitiveEvent?: 'update' | 'change' | 'blur' | 'focus';
+    props?: Record<string, any>;
+    events?: Record<string, (form: Form, name: string) => void>;
 } & (T extends typeof CheckboxGroup ? CheckboxesConfig : {});
-type SchemaOptions = {
-    precognition?: boolean;
-    optInPrecognition?: boolean;
-    method?: RequestMethod;
-    url?: string;
-};
 type ElementDefinition = ElementConfig | Component;
 type ElementMap = {
     [key: string]: ElementDefinition;
@@ -38,17 +30,19 @@ type Element = {
     name: string;
     definition: ElementDefinition;
 };
+/** Fieldset maps component models to form fields. Values can be raw or object with model/value. */
 type Fieldset = {
-    [key: string]: {
+    [key: string]: any | {
         model?: string;
         value?: any;
     };
 };
 type Schema = {
-    elements: Element[];
+    elements: ComputedRef<Element[]>;
     form: Form;
-    options: SchemaOptions;
 };
+/** Input type for useSchema - supports static object, function, or ref */
+type ElementMapInput = ElementMap | (() => ElementMap) | Ref<ElementMap>;
 type Alert = {
     text: string;
     actionText?: string;
@@ -57,5 +51,18 @@ type Alert = {
     visible?: Function;
 };
 export declare const mapElements: (elements: ElementMap) => Element[];
-export default function useSchema(elements?: ElementMap, options?: SchemaOptions): Schema;
-export type { Schema, SchemaOptions, ElementMap, Element, Fieldset, Form, Alert };
+/**
+ * Creates a reactive form schema from element definitions.
+ *
+ * @example
+ * // Standard
+ * useSchema({ name: Input })
+ *
+ * // Function (reactive)
+ * useSchema(() => ({ name: Input }))
+ *
+ * // Precognition — mirrors laravel-precognition-vue API
+ * useSchema('post', '/users', { name: Input })
+ */
+export default function useSchema(methodOrElements?: RequestMethod | ElementMapInput, urlOrNothing?: string, elementsInput?: ElementMapInput): Schema;
+export type { Schema, ElementMap, Element, Fieldset, Form, Alert, ElementMapInput };

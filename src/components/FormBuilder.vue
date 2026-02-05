@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { Actions, PrimaryButton } from '@codinglabsau/ui'
-import type { Schema } from '../composables/useSchema'
+// @ts-ignore - gooey types use unresolved path aliases
+import { Button } from '@codinglabsau/gooey'
+import type { Schema, Element as ElementType } from '../composables/useSchema'
 import Element from './Element.vue'
-import { provide, watch, ref } from 'vue'
+import { computed } from 'vue'
 
 const props = withDefaults(
   defineProps<{
@@ -11,31 +12,36 @@ const props = withDefaults(
   }>(),
   {
     submit: 'Save',
-  }
+  },
 )
 
-provide('schemaOptions', props.schema.options)
+// Extract elements for template - handles both computed ref (v2) and array (legacy)
+const elements = computed<ElementType[]>(() => {
+  const els = props.schema.elements
+  // Handle both ComputedRef and plain array for BC
+  return 'value' in els ? els.value : els
+})
 </script>
 
 <template>
   <div class="mx-auto mt-6 max-w-md space-y-6">
     <slot>
       <Element
-        v-for="(element, index) in schema.elements"
-        :key="index"
+        v-for="element in elements"
+        :key="element.name"
         :element="element"
         :form="schema.form"
       />
     </slot>
 
     <slot name="actions-wrapper" :form="schema.form">
-      <Actions>
+      <div class="flex justify-end gap-2">
         <slot name="actions" :form="schema.form">
-          <PrimaryButton as="button" type="submit" :loading="schema.form.processing">
+          <Button type="submit" :loading="schema.form.processing">
             {{ submit }}
-          </PrimaryButton>
+          </Button>
         </slot>
-      </Actions>
+      </div>
     </slot>
   </div>
 </template>

@@ -9,7 +9,8 @@ lerna-debug.log*
 
 node_modules
 
-docs/.vitepress/dist
-docs/.vitepress/cache
-
 dist/types/demo
+docs-dist
+dist/types/**/__tests__
+
+.claude/settings.local.json

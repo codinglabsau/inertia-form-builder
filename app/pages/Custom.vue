@@ -1,0 +1,191 @@
+<script setup lang="ts">
+// @ts-ignore - gooey types use unresolved path aliases
+import { Heading, Card, CardContent } from '@codinglabsau/gooey'
+import { FormBuilder, useSchema } from '../../src/index'
+import type { Fieldset } from '../../src/composables/useSchema'
+import SimpleCustomComponent from '../components/SimpleCustomComponent.vue'
+import MultipleFieldsetCustomComponent from '../components/MultipleFieldsetCustomComponent.vue'
+import CodeBlock from '../components/CodeBlock.vue'
+
+const customUsageCode = `import SimpleCustomComponent from './SimpleCustomComponent.vue'
+
+const schema = useSchema({
+  colour: {
+    component: SimpleCustomComponent,
+    value: 'green',
+  },
+})`
+
+const customComponentCode =
+  `<script setup lang="ts">
+const colour = defineModel<string>()
+<` + `/script>`
+
+const fieldsetCode = `const schema = useSchema({
+  car: {
+    component: MultipleFieldsetCustomComponent,
+    fieldset: {
+      manufacturer: 'Lamborghini',
+      model: 5,
+    } as Fieldset,
+  },
+})`
+
+const mappedFieldsetCode = `const schema = useSchema({
+  car: {
+    component: MultipleFieldsetCustomComponent,
+    fieldset: {
+      proxy_manufacturer: {
+        model: 'manufacturer',  // Maps to 'manufacturer' prop
+        value: 'Ferrari',
+      },
+      proxy_model: {
+        model: 'model',
+        value: 3,
+      },
+    } as Fieldset,
+  },
+})`
+
+const customComponentSchema = useSchema({
+  colour: {
+    component: SimpleCustomComponent,
+    value: 'green',
+  },
+})
+
+const customComponentWithFieldsetSchema = useSchema({
+  car: {
+    component: MultipleFieldsetCustomComponent,
+    fieldset: {
+      manufacturer: 'Lamborghini',
+      model: 5,
+    } as Fieldset,
+  },
+})
+
+customComponentWithFieldsetSchema.form.errors = {
+  manufacturer: 'The manufacturer field handles errors internally',
+  model: 'The model field handles errors internally',
+}
+
+const customComponentWithMappedFieldsetSchema = useSchema({
+  car: {
+    component: MultipleFieldsetCustomComponent,
+    fieldset: {
+      proxy_manufacturer: {
+        model: 'manufacturer',
+        value: 'Ferrari',
+      },
+      proxy_model: {
+        model: 'model',
+        value: 3,
+      },
+    } as Fieldset,
+  },
+})
+
+customComponentWithMappedFieldsetSchema.form.errors = {
+  proxy_manufacturer: 'The proxy manufacturer field handles errors internally.',
+}
+
+const submit = () => alert('submitted')
+</script>
+
+<template>
+  <div class="space-y-12 py-8">
+    <section class="space-y-6">
+      <div>
+        <Heading>Custom Components</Heading>
+
+        <p class="mt-2 text-muted-foreground">
+          Use your own Vue components within the form schema.
+        </p>
+      </div>
+
+      <div class="grid gap-6 lg:grid-cols-2">
+        <Card>
+          <CardContent class="pt-6">
+            <form @submit.prevent="submit">
+              <FormBuilder :schema="customComponentSchema" />
+            </form>
+          </CardContent>
+        </Card>
+
+        <CodeBlock
+          :code="JSON.stringify(customComponentSchema.form.data(), null, 2)"
+          lang="json"
+          :copyable="false"
+        />
+      </div>
+
+      <CodeBlock :code="customUsageCode" />
+
+      <div class="rounded-lg border bg-muted p-4">
+        <p class="font-medium">Creating a Custom Component</p>
+
+        <p class="mt-2 text-sm text-muted-foreground">
+          Custom components just need a
+          <code class="rounded bg-background px-1">defineModel</code>
+          for two-way binding:
+        </p>
+
+        <CodeBlock :code="customComponentCode" lang="vue" />
+      </div>
+    </section>
+
+    <section class="space-y-6">
+      <div>
+        <Heading as="h2" class="text-xl">Fieldsets</Heading>
+
+        <p class="mt-2 text-muted-foreground">
+          Components that manage multiple form fields using fieldsets.
+        </p>
+      </div>
+
+      <div class="grid gap-6 lg:grid-cols-2">
+        <Card>
+          <CardContent class="pt-6">
+            <form @submit.prevent="submit">
+              <FormBuilder :schema="customComponentWithFieldsetSchema" />
+            </form>
+          </CardContent>
+        </Card>
+
+        <CodeBlock
+          :code="JSON.stringify(customComponentWithFieldsetSchema.form.data(), null, 2)"
+          lang="json"
+          :copyable="false"
+        />
+      </div>
+
+      <CodeBlock :code="fieldsetCode" />
+    </section>
+
+    <section class="space-y-6">
+      <div>
+        <Heading as="h2" class="text-xl">Mapped Fieldsets</Heading>
+
+        <p class="mt-2 text-muted-foreground">Map fieldset keys to different form model names.</p>
+      </div>
+
+      <div class="grid gap-6 lg:grid-cols-2">
+        <Card>
+          <CardContent class="pt-6">
+            <form @submit.prevent="submit">
+              <FormBuilder :schema="customComponentWithMappedFieldsetSchema" />
+            </form>
+          </CardContent>
+        </Card>
+
+        <CodeBlock
+          :code="JSON.stringify(customComponentWithMappedFieldsetSchema.form.data(), null, 2)"
+          lang="json"
+          :copyable="false"
+        />
+      </div>
+
+      <CodeBlock :code="mappedFieldsetCode" />
+    </section>
+  </div>
+</template>

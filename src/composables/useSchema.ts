@@ -1,75 +1,13 @@
 import { type InertiaForm, useForm } from '@inertiajs/vue3'
 import { useForm as usePrecognitiveForm } from 'laravel-precognition-vue-inertia'
-import { type RequestMethod } from 'laravel-precognition'
+import { computed, isRef, watch, type ComputedRef, type DefineComponent, type Ref } from 'vue'
 
-import type {
-  DangerButton,
-  PrimaryButton,
-  SecondaryButton,
-  Breadcrumbs,
-  Container,
-  DataTable,
-  Dropdown,
-  DropdownItem,
-  Heading,
-  Notifications,
-  Pagination,
-  StackedList,
-  Tabs,
-  Toggle,
-  Actions,
-  Combobox,
-  Checkbox,
-  Date,
-  DateRange,
-  Email,
-  Error,
-  Hidden,
-  Image,
-  Label,
-  Number,
-  Password,
-  Price,
-  Select,
-  Textarea,
-  Text,
-} from '@codinglabsau/ui'
 import CheckboxGroup from '../components/elements/CheckboxGroup.vue'
 import type Grid from '../components/elements/Grid.vue'
 
-type Component =
-  | typeof DangerButton
-  | typeof PrimaryButton
-  | typeof SecondaryButton
-  | typeof Breadcrumbs
-  | typeof Container
-  | typeof DataTable
-  | typeof Dropdown
-  | typeof DropdownItem
-  | typeof Heading
-  | typeof Notifications
-  | typeof Pagination
-  | typeof StackedList
-  | typeof Tabs
-  | typeof Toggle
-  | typeof Actions
-  | typeof Combobox
-  | typeof Checkbox
-  | typeof Date
-  | typeof DateRange
-  | typeof Email
-  | typeof Error
-  | typeof Hidden
-  | typeof Image
-  | typeof Label
-  | typeof Number
-  | typeof Password
-  | typeof Price
-  | typeof Select
-  | typeof Textarea
-  | typeof Text
-  | typeof Grid
-  | typeof CheckboxGroup
+type Component = DefineComponent<any, any, any> | typeof Grid | typeof CheckboxGroup
+
+type RequestMethod = 'get' | 'post' | 'put' | 'patch' | 'delete'
 
 type Form = InertiaForm<any> & { _prefix: string }
 
@@ -81,23 +19,14 @@ type CheckboxesConfig = {
 type ElementConfig<T extends Component = Component> = {
   component: T
   value?: any
-  label?: string
+  label?: string | false | null
   schema?: ElementMap
   fieldset?: Fieldset
-  showLabel?: boolean
   visible?: (form: Form) => boolean
   alert?: Alert
-  props?: InstanceType<T>['$props']
-  precognitive?: boolean
-  precognitiveEvent?: 'update' | 'change' | 'blur' | 'focus'
+  props?: Record<string, any>
+  events?: Record<string, (form: Form, name: string) => void>
 } & (T extends typeof CheckboxGroup ? CheckboxesConfig : {})
-
-type SchemaOptions = {
-  precognition?: boolean
-  optInPrecognition?: boolean
-  method?: RequestMethod
-  url?: string
-}
 
 type ElementDefinition = ElementConfig | Component
 
@@ -105,18 +34,18 @@ type ElementMap = { [key: string]: ElementDefinition }
 
 type Element = { name: string; definition: ElementDefinition }
 
+/** Fieldset maps component models to form fields. Values can be raw or object with model/value. */
 type Fieldset = {
-  [key: string]: {
-    model?: string
-    value?: any
-  }
+  [key: string]: any | { model?: string; value?: any }
 }
 
 type Schema = {
-  elements: Element[]
+  elements: ComputedRef<Element[]>
   form: Form
-  options: SchemaOptions
 }
+
+/** Input type for useSchema - supports static object, function, or ref */
+type ElementMapInput = ElementMap | (() => ElementMap) | Ref<ElementMap>
 
 type Alert = {
   text: string
@@ -126,62 +55,71 @@ type Alert = {
   visible?: Function
 }
 
-const reducer = (elements: ElementMap) =>
-  Object.keys(elements).reduce((carry, key) => {
-    if (elements[key].schema) {
-      return { ...carry, ...reducer(elements[key].schema) }
+/** Extracts field values from nested schemas (accumulates iteratively) */
+const extractNestedFields = (
+  elements: ElementMap,
+  result: Record<string, any> = {},
+): Record<string, any> => {
+  for (const key of Object.keys(elements)) {
+    const element = elements[key]
+    if (element.schema) {
+      extractNestedFields(element.schema, result)
+    } else {
+      result[key] = element.value ?? null
     }
-
-    carry[key] = elements[key].value ?? null
-
-    return carry
-  }, {})
+  }
+  return result
+}
 
 const randomStringGenerator = (length: number): string => {
   const chars = 'abcdefghijklmnopqrstuvwxyz'
   let result = ''
-
   for (let i = 0; i < length; i++) {
     result += chars.charAt(Math.floor(Math.random() * chars.length))
   }
-
   return result
 }
 
-const prepareFields = (elements: ElementMap) => {
-  return Object.keys(elements).reduce((carry, key) => {
-    // reduce nested schema objects
-    if (elements[key].schema) {
-      return { ...carry, ...reducer(elements[key].schema) }
+/** Extracts initial form field values from element definitions */
+const prepareFields = (elements: ElementMap): Record<string, any> => {
+  const result: Record<string, any> = {}
+
+  for (const key of Object.keys(elements)) {
+    const element = elements[key]
+
+    // Nested schema - extract recursively
+    if (element.schema) {
+      extractNestedFields(element.schema, result)
+      continue
     }
 
-    // special handling for checkbox arrays
-    if (elements[key].component === CheckboxGroup) {
-      carry[key] = (elements[key] as ElementConfig<typeof CheckboxGroup>).checked ?? []
-
-      return carry
+    // CheckboxGroup - use checked array
+    if (element.component === CheckboxGroup) {
+      result[key] = (element as ElementConfig<typeof CheckboxGroup>).checked ?? []
+      continue
     }
 
-    // special handling for fieldsets
-    const fieldset = elements[key]?.fieldset as Fieldset
-
+    // Fieldset - map each field
+    const fieldset = element?.fieldset as Fieldset
     if (fieldset) {
-      Object.entries(fieldset).forEach(([fieldsetKey, fieldsetValue]) => {
-        if (fieldsetValue?.model) {
-          carry[fieldsetValue.model] = fieldsetValue.value ?? null
+      for (const [fieldsetKey, fieldsetValue] of Object.entries(fieldset)) {
+        if (fieldsetValue && typeof fieldsetValue === 'object' && fieldsetValue.model) {
+          result[fieldsetValue.model] = fieldsetValue.value ?? null
         } else {
-          carry[fieldsetKey] = fieldsetValue
+          result[fieldsetKey] =
+            fieldsetValue && typeof fieldsetValue === 'object'
+              ? (fieldsetValue.value ?? null)
+              : fieldsetValue
         }
-      })
-
-      return carry
+      }
+      continue
     }
 
-    // default schema item with value
-    carry[key] = elements[key].value ?? null
+    // Default - use value
+    result[key] = element.value ?? null
+  }
 
-    return carry
-  }, {})
+  return result
 }
 
 export const mapElements = (elements: ElementMap): Element[] => {
@@ -197,18 +135,83 @@ export const mapElements = (elements: ElementMap): Element[] => {
   })
 }
 
-export default function useSchema(elements: ElementMap = {}, options: SchemaOptions = {}): Schema {
-  const form = options?.precognition
-    ? usePrecognitiveForm(options.method, options.url, prepareFields(elements))
-    : useForm(prepareFields(elements))
+/** Resolves element map input to current value */
+const resolveElements = (input: ElementMapInput): ElementMap => {
+  if (typeof input === 'function') {
+    return input()
+  }
+  if (isRef(input)) {
+    return input.value
+  }
+  return input
+}
+
+/**
+ * Creates a reactive form schema from element definitions.
+ *
+ * @example
+ * // Standard
+ * useSchema({ name: Input })
+ *
+ * // Function (reactive)
+ * useSchema(() => ({ name: Input }))
+ *
+ * // Precognition — mirrors laravel-precognition-vue API
+ * useSchema('post', '/users', { name: Input })
+ */
+export default function useSchema(
+  methodOrElements: RequestMethod | ElementMapInput = {},
+  urlOrNothing?: string,
+  elementsInput?: ElementMapInput,
+): Schema {
+  const isPrecognition = typeof methodOrElements === 'string'
+
+  const input = isPrecognition ? (elementsInput ?? {}) : methodOrElements
+  const method = isPrecognition ? (methodOrElements as RequestMethod) : undefined
+  const url = isPrecognition ? urlOrNothing : undefined
+
+  // Resolve initial elements
+  const initialElements = resolveElements(input as ElementMapInput)
+
+  // Create form with initial fields
+  const form = isPrecognition
+    ? usePrecognitiveForm(method, url, prepareFields(initialElements))
+    : useForm(prepareFields(initialElements))
 
   form._prefix = randomStringGenerator(6)
 
+  // Create reactive elements computed
+  const elements = computed(() => mapElements(resolveElements(input as ElementMapInput)))
+
+  // Sync form fields when elements change dynamically
+  const isReactive = typeof input === 'function' || isRef(input)
+  if (isReactive) {
+    watch(
+      elements,
+      (newElements) => {
+        const newFields = prepareFields(resolveElements(input as ElementMapInput))
+        // Add new fields to form (preserve existing values)
+        for (const key of Object.keys(newFields)) {
+          if (!(key in form)) {
+            form[key] = newFields[key]
+          }
+        }
+        // Remove fields that no longer exist
+        const formData = form.data()
+        for (const key of Object.keys(formData)) {
+          if (key !== '_prefix' && !(key in newFields)) {
+            delete form[key]
+          }
+        }
+      },
+      { deep: true },
+    )
+  }
+
   return {
-    elements: mapElements(elements),
+    elements,
     form,
-    options,
   }
 }
 
-export type { Schema, SchemaOptions, ElementMap, Element, Fieldset, Form, Alert }
+export type { Schema, ElementMap, Element, Fieldset, Form, Alert, ElementMapInput }
