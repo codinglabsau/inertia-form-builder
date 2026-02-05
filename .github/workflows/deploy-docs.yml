@@ -17,6 +17,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN_FOR_PUBLISHING_WITH_PRIVATE_DEPS }}
     steps:
       - uses: actions/checkout@v4
 
