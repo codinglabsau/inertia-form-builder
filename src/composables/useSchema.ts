@@ -25,8 +25,7 @@ type ElementConfig<T extends Component = Component> = {
   visible?: (form: Form) => boolean
   alert?: Alert
   props?: Record<string, any>
-  precognitive?: boolean
-  precognitiveEvent?: 'update' | 'change' | 'blur' | 'focus'
+  events?: Record<string, (form: Form, name: string) => void>
 } & (T extends typeof CheckboxGroup ? CheckboxesConfig : {})
 
 type ElementDefinition = ElementConfig | Component

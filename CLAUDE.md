@@ -39,7 +39,7 @@ npm run test:e2e     # Playwright E2E tests
 
 **Element Definition**: Each element in the schema can be either:
 1. A component directly (e.g., `{ field: Input }`)
-2. A config object with `component`, `value`, `label`, `props`, `visible`, `alert`, `fieldset`, `schema` (for nesting), `showLabel`, `precognitive`, `precognitiveEvent`
+2. A config object with `component`, `value`, `label`, `props`, `visible`, `alert`, `fieldset`, `schema` (for nesting), `events`
 
 ### Key Files
 
@@ -72,13 +72,15 @@ For components that need multiple form fields (e.g., a custom address component)
 
 ### Precognition Support
 
-Enable Laravel Precognition for real-time validation:
+Enable Laravel Precognition for real-time validation using the overloaded signature and `events` config:
 ```ts
-useSchema(elements, {
-  precognition: true,
-  method: 'post',
-  url: '/endpoint',
-  optInPrecognition: true  // require per-field opt-in
+const precog = (event = 'change') => ({
+  events: { [event]: (form, name) => form.validate(name) },
+})
+
+const schema = useSchema('post', '/endpoint', {
+  name: { component: Input, ...precog('blur') },
+  email: { component: Input, ...precog() },
 })
 ```
 

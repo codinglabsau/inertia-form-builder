@@ -4,6 +4,8 @@ import { computed, ref, watchEffect } from 'vue'
 import { FieldError, Label, Alert, AlertDescription, Button } from '@codinglabsau/gooey'
 import type { Alert as AlertType, Element, Fieldset, Form } from '@/composables/useSchema'
 
+type EventHandler = (form: Form, name: string) => void
+
 const props = defineProps<{
   element: Element
   form: Form
@@ -75,8 +77,7 @@ const computedProps = computed(() => {
       key !== 'alert' &&
       key !== 'fieldset' &&
       key !== 'schema' &&
-      key !== 'precognitive' &&
-      key !== 'precognitiveEvent'
+      key !== 'events'
     ) {
       const val = definition[key]
       if (key === 'label' && (val === false || val === null || val === '')) continue
@@ -95,22 +96,24 @@ const computedProps = computed(() => {
 // Configure component listener(s)
 const listeners = computed(() => {
   const fieldset = parsedFieldset.value
-  const isPrecognition = typeof props.form.validate === 'function'
-  const precognitive = isPrecognition && props.element.definition.precognitive !== false
-  const precognitiveEvent = props.element.definition.precognitiveEvent ?? 'change'
+  const events = props.element.definition.events as Record<string, EventHandler> | undefined
 
   const createListeners = (formKey: string, modelKey: string = 'modelValue') => {
     const result: Record<string, any> = {
       [`update:${modelKey}`]: (newVal: any) => {
         props.form[formKey] = newVal
-        if (precognitive && precognitiveEvent === 'update') {
-          props.form.validate(formKey)
+        if (events?.update) {
+          events.update(props.form, formKey)
         }
       },
     }
 
-    if (precognitive && precognitiveEvent !== 'update') {
-      result[precognitiveEvent] = () => props.form.validate(formKey)
+    if (events) {
+      for (const [event, handler] of Object.entries(events)) {
+        if (event !== 'update') {
+          result[event] = () => handler(props.form, formKey)
+        }
+      }
     }
 
     return result

@@ -51,8 +51,9 @@ const componentConfigCode = `{
     placeholder: 'you@example.com',
   },
   visible: (form) => form.show_name,     // Conditional visibility
-  precognitive: true,                    // Enable precognition for this field
-  precognitiveEvent: 'blur',             // 'update' | 'change' | 'blur' | 'focus'
+  events: {                              // Event handlers — (form, name) => void
+    blur: (form, name) => form.validate(name),
+  },
 }`
 
 const valueCode = `const schema = useSchema({
@@ -229,23 +230,32 @@ const fieldsetCode = `const schema = useSchema({
   },
 })`
 
-const precognitionCode = `// All fields validate via precognition by default
+const precognitionCode = `// Wire up validation per-field using events
 const schema = useSchema('post', '/api/users', {
-  name: Input,
-  email: Input,
-})
-
-// Per-field opt-out — disable precognition for specific fields
-const schema = useSchema('post', '/api/users', () => ({
   name: {
     component: Input,
-    precognitive: false,   // Exclude from precognition
+    events: {
+      blur: (form, name) => form.validate(name),
+    },
   },
   email: {
     component: Input,
-    precognitiveEvent: 'blur',    // Validate on blur instead of change
+    events: {
+      change: (form, name) => form.validate(name),
+    },
   },
-}))`
+  notes: Input, // No events — no real-time validation
+})
+
+// Reusable helper for repeated patterns
+const precog = (event = 'change') => ({
+  events: { [event]: (form, name) => form.validate(name) },
+})
+
+const schema = useSchema('post', '/api/users', {
+  name: { component: Input, ...precog('blur') },
+  email: { component: Input, ...precog() },
+})`
 
 const checkboxGroupCode = `import { CheckboxGroup } from '@codinglabsau/inertia-form-builder'
 
@@ -506,15 +516,16 @@ form._prefix             // e.g. "xkqwmz" — used by Element.vue for id attrs`
       </div>
 
       <div class="space-y-4">
-        <Heading as="h3" class="text-lg">precognitive / precognitiveEvent</Heading>
+        <Heading as="h3" class="text-lg">events</Heading>
 
         <p class="text-muted-foreground">
-          Per-field precognition control. Only relevant when using the precognition signature (<code
-            class="rounded bg-muted px-1"
-            >useSchema(method, url, elements)</code
-          >
-          ). All fields are precognitive by default &mdash; set
-          <code class="rounded bg-muted px-1">precognitive: false</code> to opt out.
+          Event handlers called with
+          <code class="rounded bg-muted px-1">(form, name)</code>
+. The
+          <code class="rounded bg-muted px-1">update</code>
+ key fires inside the
+          <code class="rounded bg-muted px-1">update:modelValue</code> handler after model sync; all
+          other keys become separate listeners. Commonly used to wire up precognition validation.
         </p>
 
         <CodeBlock :code="precognitionCode" />

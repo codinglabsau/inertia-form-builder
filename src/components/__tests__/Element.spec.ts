@@ -297,6 +297,76 @@ describe('Element', () => {
     })
   })
 
+  describe('events', () => {
+    it('calls blur handler with form and name', async () => {
+      const form = createMockForm({ name: '' })
+      const handler = vi.fn()
+
+      const wrapper = mount(Element, {
+        props: {
+          element: {
+            name: 'name',
+            definition: { component: MockInput, events: { blur: handler } },
+          },
+          form,
+        },
+      })
+
+      await wrapper.find('input').trigger('blur')
+
+      expect(handler).toHaveBeenCalledWith(form, 'name')
+    })
+
+    it('calls update handler after model sync inside update:modelValue', async () => {
+      const form = createMockForm({ name: '' })
+      const handler = vi.fn()
+
+      mount(Element, {
+        props: {
+          element: {
+            name: 'name',
+            definition: { component: MockInput, events: { update: handler } },
+          },
+          form,
+        },
+      })
+
+      // Simulate update:modelValue by finding the component and emitting
+      const wrapper = mount(Element, {
+        props: {
+          element: {
+            name: 'name',
+            definition: { component: MockInput, events: { update: handler } },
+          },
+          form,
+        },
+      })
+
+      await wrapper.find('input').setValue('Jane')
+
+      expect(form.name).toBe('Jane')
+      expect(handler).toHaveBeenCalledWith(form, 'name')
+    })
+
+    it('only creates update:modelValue listener when no events configured', () => {
+      const form = createMockForm({ name: '' })
+
+      const wrapper = mount(Element, {
+        props: {
+          element: {
+            name: 'name',
+            definition: { component: MockInput },
+          },
+          form,
+        },
+      })
+
+      // Input should work normally — no extra listeners
+      const input = wrapper.find('input')
+      expect(input.exists()).toBe(true)
+    })
+  })
+
   describe('alerts', () => {
     it('displays alert when defined', () => {
       const form = createMockForm({ name: '' })

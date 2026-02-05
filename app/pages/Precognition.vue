@@ -12,6 +12,16 @@ const schema = useSchema('post', '/users', {
   name: {
     component: Text,
     value: '',
+    events: {
+      change: (form, name) => form.validate(name),
+    },
+  },
+  email: {
+    component: Text,
+    value: '',
+    events: {
+      blur: (form, name) => form.validate(name),
+    },
   },
 })
 
@@ -30,16 +40,26 @@ const submit = () => {
   </form>
 </template>`
 
-const optOutCode = `const schema = useSchema('post', '/projects', {
+const helperCode = `// Reusable helper for repeated precognition patterns
+const precog = (event = 'change') => ({
+  events: { [event]: (form, name) => form.validate(name) },
+})
+
+const schema = useSchema('post', '/projects', {
   title: {
     component: Text,
     value: '',
-    // Validates via precognition (default)
+    ...precog('blur'),    // Validate on blur
+  },
+  email: {
+    component: Text,
+    value: '',
+    ...precog(),          // Validate on change (default)
   },
   description: {
     component: Textarea,
     value: '',
-    precognitive: false, // Opt out this specific field
+    // No events — no real-time validation for this field
   },
 })`
 
@@ -47,22 +67,23 @@ const eventCode = `const schema = useSchema('post', '/users', {
   title: {
     component: Text,
     value: '',
-    precognitiveEvent: 'blur', // Validate on focus loss
+    events: {
+      blur: (form, name) => form.validate(name),
+    },
   },
   email: {
     component: Text,
     value: '',
-    precognitiveEvent: 'change', // Validate on change event (default)
-  },
-  description: {
-    component: Textarea,
-    value: '',
-    precognitiveEvent: 'focus', // Validate on focus
+    events: {
+      change: (form, name) => form.validate(name),
+    },
   },
   summary: {
     component: Text,
     value: '',
-    precognitiveEvent: 'update', // Validate on v-model update
+    events: {
+      update: (form, name) => form.validate(name),
+    },
   },
 })`
 
@@ -84,8 +105,9 @@ const debounceCode = `schema.form.setValidationTimeout(1000) // 1 second delay`
 
       <p class="mt-2 text-muted-foreground">
         Precognition validates form inputs in real-time as the user types or interacts, without
-        requiring full form submission. This package supports precognition out of the box using
-        Laravel's Precognition features.
+        requiring full form submission. This package supports precognition using Laravel's
+        Precognition features via the generic
+        <code class="rounded bg-muted px-1">events</code> config.
       </p>
     </section>
 
@@ -96,10 +118,10 @@ const debounceCode = `schema.form.setValidationTimeout(1000) // 1 second delay`
         <p class="mt-2 text-muted-foreground">
           Pass the HTTP method and URL as the first two arguments to
           <code class="rounded bg-muted px-1">useSchema</code>
-          to activate precognition. The
-          <code class="rounded bg-muted px-1">schema.form</code> is a precognition-aware form
-          instance. All interaction including submission should be done through
-          <code class="rounded bg-muted px-1">schema.form.submit()</code>.
+          to create a precognition-aware form instance. Wire up validation using
+          <code class="rounded bg-muted px-1">events</code>
+ — each handler receives
+          <code class="rounded bg-muted px-1">(form, name)</code>.
         </p>
       </div>
 
@@ -122,16 +144,16 @@ const debounceCode = `schema.form.setValidationTimeout(1000) // 1 second delay`
 
     <section class="space-y-6">
       <div>
-        <Heading as="h2" class="text-xl">Per-Field Opt-Out</Heading>
+        <Heading as="h2" class="text-xl">Reusable Helper</Heading>
 
         <p class="mt-2 text-muted-foreground">
-          All fields are precognitive by default. Set
-          <code class="rounded bg-muted px-1">precognitive: false</code>
-          on individual fields to exclude them from real-time validation.
+          For forms where most fields validate the same way, extract a helper to reduce repetition.
+          Fields without <code class="rounded bg-muted px-1">events</code> won't validate in
+          real-time.
         </p>
       </div>
 
-      <CodeBlock :code="optOutCode" />
+      <CodeBlock :code="helperCode" />
     </section>
 
     <section class="space-y-6">
@@ -139,10 +161,8 @@ const debounceCode = `schema.form.setValidationTimeout(1000) // 1 second delay`
         <Heading as="h2" class="text-xl">Validation Events</Heading>
 
         <p class="mt-2 text-muted-foreground">
-          Control when validation triggers using
-          <code class="rounded bg-muted px-1">precognitiveEvent</code>
-          . Defaults to
-          <code class="rounded bg-muted px-1">change</code>.
+          Control when validation triggers by choosing the event key in
+          <code class="rounded bg-muted px-1">events</code>.
         </p>
       </div>
 
@@ -163,7 +183,7 @@ const debounceCode = `schema.form.setValidationTimeout(1000) // 1 second delay`
               <td class="px-4 py-3"><code class="rounded bg-muted px-1">change</code></td>
 
               <td class="px-4 py-3 text-muted-foreground">
-                Default. Triggers when the value is committed (native DOM event).
+                Triggers when the value is committed (native DOM event).
               </td>
             </tr>
 
@@ -171,7 +191,8 @@ const debounceCode = `schema.form.setValidationTimeout(1000) // 1 second delay`
               <td class="px-4 py-3"><code class="rounded bg-muted px-1">update</code></td>
 
               <td class="px-4 py-3 text-muted-foreground">
-                Triggers on <code class="rounded bg-muted px-1">update:modelValue</code>.
+                Fires inside the <code class="rounded bg-muted px-1">update:modelValue</code>
+                handler, after the form value is synced. Use for per-keystroke validation.
               </td>
             </tr>
 
@@ -196,8 +217,8 @@ const debounceCode = `schema.form.setValidationTimeout(1000) // 1 second delay`
 
       <div class="rounded-lg border bg-muted p-4">
         <p class="text-sm text-muted-foreground">
-          If your custom component doesn't emit the specified event, validation will not run. Ensure
-          custom components propagate the relevant DOM events.
+          If your custom component doesn't emit the specified event, the handler will not run.
+          Ensure custom components propagate the relevant DOM events.
         </p>
       </div>
 
@@ -230,8 +251,6 @@ const debounceCode = `schema.form.setValidationTimeout(1000) // 1 second delay`
 
                 <th class="px-4 py-3 text-left font-medium">Type</th>
 
-                <th class="px-4 py-3 text-left font-medium">Default</th>
-
                 <th class="px-4 py-3 text-left font-medium">Description</th>
               </tr>
             </thead>
@@ -239,37 +258,19 @@ const debounceCode = `schema.form.setValidationTimeout(1000) // 1 second delay`
             <tbody class="divide-y">
               <tr>
                 <td class="px-4 py-3">
-                  <code class="rounded bg-muted px-1">precognitive</code>
+                  <code class="rounded bg-muted px-1">events</code>
                 </td>
-
-                <td class="px-4 py-3 text-muted-foreground">boolean</td>
-
-                <td class="px-4 py-3 text-muted-foreground">true</td>
 
                 <td class="px-4 py-3 text-muted-foreground">
-                  Set to <code class="rounded bg-muted px-1">false</code> to exclude a field from
-                  real-time validation.
+                  Record&lt;string, (form, name) =&gt; void&gt;
                 </td>
-              </tr>
-
-              <tr>
-                <td class="px-4 py-3">
-                  <code class="rounded bg-muted px-1">precognitiveEvent</code>
-                </td>
-
-                <td class="px-4 py-3 text-muted-foreground">string</td>
-
-                <td class="px-4 py-3 text-muted-foreground">'change'</td>
 
                 <td class="px-4 py-3 text-muted-foreground">
-                  The event that triggers validation:
-                  <code class="rounded bg-muted px-1">change</code>
-                  ,
-                  <code class="rounded bg-muted px-1">update</code>
-                  ,
-                  <code class="rounded bg-muted px-1">blur</code>
-                  ,
-                  <code class="rounded bg-muted px-1">focus</code>.
+                  Event handlers called with
+                  <code class="rounded bg-muted px-1">(form, name)</code>
+. The
+                  <code class="rounded bg-muted px-1">update</code> key fires after model sync; all
+                  other keys become separate listeners.
                 </td>
               </tr>
             </tbody>

@@ -239,10 +239,10 @@ const hs = (e) => {
   asap: ys,
   isIterable: bs
 };
-function O(e, t, r, n, o) {
+function S(e, t, r, n, o) {
   Error.call(this), Error.captureStackTrace ? Error.captureStackTrace(this, this.constructor) : this.stack = new Error().stack, this.message = e, this.name = "AxiosError", t && (this.code = t), r && (this.config = r), n && (this.request = n), o && (this.response = o, this.status = o.status ? o.status : null);
 }
-p.inherits(O, Error, {
+p.inherits(S, Error, {
   toJSON: function() {
     return {
       // Standard
@@ -263,7 +263,7 @@ p.inherits(O, Error, {
     };
   }
 });
-const Tn = O.prototype, Sn = {};
+const Tn = S.prototype, Sn = {};
 [
   "ERR_BAD_OPTION_VALUE",
   "ERR_BAD_OPTION",
@@ -281,15 +281,15 @@ const Tn = O.prototype, Sn = {};
 ].forEach((e) => {
   Sn[e] = { value: e };
 });
-Object.defineProperties(O, Sn);
+Object.defineProperties(S, Sn);
 Object.defineProperty(Tn, "isAxiosError", { value: !0 });
-O.from = (e, t, r, n, o, s) => {
+S.from = (e, t, r, n, o, s) => {
   const i = Object.create(Tn);
   p.toFlatObject(e, i, function(c) {
     return c !== Error.prototype;
   }, (d) => d !== "isAxiosError");
   const a = e && e.message ? e.message : "Error", u = t == null && e ? e.code : t;
-  return O.call(i, a, u, r, n, o), e && i.cause == null && Object.defineProperty(i, "cause", { value: e, configurable: !0 }), i.name = e && e.name || "Error", s && Object.assign(i, s), i;
+  return S.call(i, a, u, r, n, o), e && i.cause == null && Object.defineProperty(i, "cause", { value: e, configurable: !0 }), i.name = e && e.name || "Error", s && Object.assign(i, s), i;
 };
 const vs = null;
 function xt(e) {
@@ -329,7 +329,7 @@ function ut(e, t, r) {
     if (p.isBoolean(l))
       return l.toString();
     if (!u && p.isBlob(l))
-      throw new O("Blob is not supported. Use a Buffer instead.");
+      throw new S("Blob is not supported. Use a Buffer instead.");
     return p.isArrayBuffer(l) || p.isTypedArray(l) ? u && typeof Blob == "function" ? new Blob([l]) : Buffer.from(l) : l;
   }
   function c(l, y, m) {
@@ -338,11 +338,11 @@ function ut(e, t, r) {
       if (p.endsWith(y, "{}"))
         y = n ? y : y.slice(0, -2), l = JSON.stringify(l);
       else if (p.isArray(l) && ws(l) || (p.isFileList(l) || p.endsWith(y, "[]")) && (b = p.toArray(l)))
-        return y = On(y), b.forEach(function(T, R) {
-          !(p.isUndefined(T) || T === null) && t.append(
+        return y = On(y), b.forEach(function(O, R) {
+          !(p.isUndefined(O) || O === null) && t.append(
             // eslint-disable-next-line no-nested-ternary
             i === !0 ? fr([y], R, s) : i === null ? y : y + "[]",
-            d(T)
+            d(O)
           );
         }), !1;
     }
@@ -580,7 +580,7 @@ const Be = {
         return JSON.parse(t, this.parseReviver);
       } catch (a) {
         if (i)
-          throw a.name === "SyntaxError" ? O.from(a, O.ERR_BAD_RESPONSE, this, null, this.response) : a;
+          throw a.name === "SyntaxError" ? S.from(a, S.ERR_BAD_RESPONSE, this, null, this.response) : a;
       }
     }
     return t;
@@ -823,16 +823,16 @@ function xn(e) {
   return !!(e && e.__CANCEL__);
 }
 function Te(e, t, r) {
-  O.call(this, e ?? "canceled", O.ERR_CANCELED, t, r), this.name = "CanceledError";
+  S.call(this, e ?? "canceled", S.ERR_CANCELED, t, r), this.name = "CanceledError";
 }
-p.inherits(Te, O, {
+p.inherits(Te, S, {
   __CANCEL__: !0
 });
 function Pn(e, t, r) {
   const n = r.config.validateStatus;
-  !r.status || !n || n(r.status) ? e(r) : t(new O(
+  !r.status || !n || n(r.status) ? e(r) : t(new S(
     "Request failed with status code " + r.status,
-    [O.ERR_BAD_REQUEST, O.ERR_BAD_RESPONSE][Math.floor(r.status / 100) - 4],
+    [S.ERR_BAD_REQUEST, S.ERR_BAD_RESPONSE][Math.floor(r.status / 100) - 4],
     r.config,
     r.request,
     r
@@ -1038,13 +1038,13 @@ const jn = (e) => {
     function b() {
       if (!m)
         return;
-      const T = I.from(
+      const O = I.from(
         "getAllResponseHeaders" in m && m.getAllResponseHeaders()
-      ), x = {
+      ), P = {
         data: !a || a === "text" || a === "json" ? m.responseText : m.response,
         status: m.status,
         statusText: m.statusText,
-        headers: T,
+        headers: O,
         config: e,
         request: m
       };
@@ -1052,32 +1052,32 @@ const jn = (e) => {
         r($), y();
       }, function($) {
         n($), y();
-      }, x), m = null;
+      }, P), m = null;
     }
     "onloadend" in m ? m.onloadend = b : m.onreadystatechange = function() {
       !m || m.readyState !== 4 || m.status === 0 && !(m.responseURL && m.responseURL.indexOf("file:") === 0) || setTimeout(b);
     }, m.onabort = function() {
-      m && (n(new O("Request aborted", O.ECONNABORTED, e, m)), m = null);
+      m && (n(new S("Request aborted", S.ECONNABORTED, e, m)), m = null);
     }, m.onerror = function(R) {
-      const x = R && R.message ? R.message : "Network Error", A = new O(x, O.ERR_NETWORK, e, m);
+      const P = R && R.message ? R.message : "Network Error", A = new S(P, S.ERR_NETWORK, e, m);
       A.event = R || null, n(A), m = null;
     }, m.ontimeout = function() {
       let R = o.timeout ? "timeout of " + o.timeout + "ms exceeded" : "timeout exceeded";
-      const x = o.transitional || Rn;
-      o.timeoutErrorMessage && (R = o.timeoutErrorMessage), n(new O(
+      const P = o.transitional || Rn;
+      o.timeoutErrorMessage && (R = o.timeoutErrorMessage), n(new S(
         R,
-        x.clarifyTimeoutError ? O.ETIMEDOUT : O.ECONNABORTED,
+        P.clarifyTimeoutError ? S.ETIMEDOUT : S.ECONNABORTED,
         e,
         m
       )), m = null;
-    }, s === void 0 && i.setContentType(null), "setRequestHeader" in m && p.forEach(i.toJSON(), function(R, x) {
-      m.setRequestHeader(x, R);
-    }), p.isUndefined(o.withCredentials) || (m.withCredentials = !!o.withCredentials), a && a !== "json" && (m.responseType = o.responseType), d && ([h, l] = Xe(d, !0), m.addEventListener("progress", h)), u && m.upload && ([f, g] = Xe(u), m.upload.addEventListener("progress", f), m.upload.addEventListener("loadend", g)), (o.cancelToken || o.signal) && (c = (T) => {
-      m && (n(!T || T.type ? new Te(null, e, m) : T), m.abort(), m = null);
+    }, s === void 0 && i.setContentType(null), "setRequestHeader" in m && p.forEach(i.toJSON(), function(R, P) {
+      m.setRequestHeader(P, R);
+    }), p.isUndefined(o.withCredentials) || (m.withCredentials = !!o.withCredentials), a && a !== "json" && (m.responseType = o.responseType), d && ([h, l] = Xe(d, !0), m.addEventListener("progress", h)), u && m.upload && ([f, g] = Xe(u), m.upload.addEventListener("progress", f), m.upload.addEventListener("loadend", g)), (o.cancelToken || o.signal) && (c = (O) => {
+      m && (n(!O || O.type ? new Te(null, e, m) : O), m.abort(), m = null);
     }, o.cancelToken && o.cancelToken.subscribe(c), o.signal && (o.signal.aborted ? c() : o.signal.addEventListener("abort", c)));
     const E = Hs(o.url);
     if (E && L.protocols.indexOf(E) === -1) {
-      n(new O("Unsupported protocol " + E + ":", O.ERR_BAD_REQUEST, e));
+      n(new S("Unsupported protocol " + E + ":", S.ERR_BAD_REQUEST, e));
       return;
     }
     m.send(s || null);
@@ -1090,11 +1090,11 @@ const jn = (e) => {
       if (!o) {
         o = !0, a();
         const c = d instanceof Error ? d : this.reason;
-        n.abort(c instanceof O ? c : new Te(c instanceof Error ? c.message : c));
+        n.abort(c instanceof S ? c : new Te(c instanceof Error ? c.message : c));
       }
     };
     let i = t && setTimeout(() => {
-      i = null, s(new O(`timeout ${t} of ms exceeded`, O.ETIMEDOUT));
+      i = null, s(new S(`timeout ${t} of ms exceeded`, S.ETIMEDOUT));
     }, t);
     const a = () => {
       e && (i && clearTimeout(i), i = null, e.forEach((d) => {
@@ -1199,7 +1199,7 @@ const jn = (e) => {
       let b = y && y[l];
       if (b)
         return b.call(y);
-      throw new O(`Response type '${l}' is not supported`, O.ERR_NOT_SUPPORT, m);
+      throw new S(`Response type '${l}' is not supported`, S.ERR_NOT_SUPPORT, m);
     });
   });
   const h = async (l) => {
@@ -1226,9 +1226,9 @@ const jn = (e) => {
       method: m,
       data: b,
       signal: E,
-      cancelToken: T,
+      cancelToken: O,
       timeout: R,
-      onDownloadProgress: x,
+      onDownloadProgress: P,
       onUploadProgress: A,
       responseType: $,
       headers: V,
@@ -1236,7 +1236,7 @@ const jn = (e) => {
       fetchOptions: H
     } = jn(l), w = t || fetch;
     $ = $ ? ($ + "").toLowerCase() : "text";
-    let v = Xs([E, T && T.toAbortSignal()], R), S = null;
+    let v = Xs([E, O && O.toAbortSignal()], R), T = null;
     const _ = v && v.unsubscribe && (() => {
       v.unsubscribe();
     });
@@ -1266,17 +1266,17 @@ const jn = (e) => {
         duplex: "half",
         credentials: j ? B : void 0
       };
-      S = s && new r(y, ee);
-      let X = await (s ? w(S, H) : w(y, ee));
+      T = s && new r(y, ee);
+      let X = await (s ? w(T, H) : w(y, ee));
       const ur = c && ($ === "stream" || $ === "response");
-      if (c && (x || ur && _)) {
+      if (c && (P || ur && _)) {
         const oe = {};
         ["status", "statusText", "headers"].forEach((lr) => {
           oe[lr] = X[lr];
         });
-        const me = p.toFiniteNumber(X.headers.get("content-length")), [mt, qe] = x && mr(
+        const me = p.toFiniteNumber(X.headers.get("content-length")), [mt, qe] = P && mr(
           me,
-          Xe(gr(x), !0)
+          Xe(gr(P), !0)
         ) || [];
         X = new n(
           br(X.body, vr, mt, () => {
@@ -1294,16 +1294,16 @@ const jn = (e) => {
           status: X.status,
           statusText: X.statusText,
           config: l,
-          request: S
+          request: T
         });
       });
     } catch (j) {
       throw _ && _(), j && j.name === "TypeError" && /Load failed|fetch/i.test(j.message) ? Object.assign(
-        new O("Network Error", O.ERR_NETWORK, l, S),
+        new S("Network Error", S.ERR_NETWORK, l, T),
         {
           cause: j.cause || j
         }
-      ) : O.from(j, j && j.code, l, S);
+      ) : S.from(j, j && j.code, l, T);
     }
   };
 }, ri = /* @__PURE__ */ new Map(), Fn = (e) => {
@@ -1345,7 +1345,7 @@ function oi(e, t) {
     n = e[i];
     let a;
     if (o = n, !ni(n) && (o = zt[(a = String(n)).toLowerCase()], o === void 0))
-      throw new O(`Unknown adapter '${a}'`);
+      throw new S(`Unknown adapter '${a}'`);
     if (o && (p.isFunction(o) || (o = o.get(t))))
       break;
     s[a || "#" + i] = o;
@@ -1357,7 +1357,7 @@ function oi(e, t) {
     let a = r ? i.length > 1 ? `since :
 ` + i.map(Sr).join(`
 `) : " " + Sr(i[0]) : "as no adapter specified";
-    throw new O(
+    throw new S(
       "There is no suitable adapter to dispatch the request " + a,
       "ERR_NOT_SUPPORT"
     );
@@ -1411,9 +1411,9 @@ lt.transitional = function(t, r, n) {
   }
   return (s, i, a) => {
     if (t === !1)
-      throw new O(
+      throw new S(
         o(i, " has been removed" + (r ? " in " + r : "")),
-        O.ERR_DEPRECATED
+        S.ERR_DEPRECATED
       );
     return r && !_r[i] && (_r[i] = !0, console.warn(
       o(
@@ -1428,7 +1428,7 @@ lt.spelling = function(t) {
 };
 function si(e, t, r) {
   if (typeof e != "object")
-    throw new O("options must be an object", O.ERR_BAD_OPTION_VALUE);
+    throw new S("options must be an object", S.ERR_BAD_OPTION_VALUE);
   const n = Object.keys(e);
   let o = n.length;
   for (; o-- > 0; ) {
@@ -1436,11 +1436,11 @@ function si(e, t, r) {
     if (i) {
       const a = e[s], u = a === void 0 || i(a, s, e);
       if (u !== !0)
-        throw new O("option " + s + " must be " + u, O.ERR_BAD_OPTION_VALUE);
+        throw new S("option " + s + " must be " + u, S.ERR_BAD_OPTION_VALUE);
       continue;
     }
     if (r !== !0)
-      throw new O("Unknown option " + s, O.ERR_BAD_OPTION);
+      throw new S("Unknown option " + s, S.ERR_BAD_OPTION);
   }
 }
 const Ke = {
@@ -1739,7 +1739,7 @@ F.CancelToken = ii;
 F.isCancel = xn;
 F.VERSION = Ln;
 F.toFormData = ut;
-F.AxiosError = O;
+F.AxiosError = S;
 F.Cancel = F.CanceledError;
 F.all = function(t) {
   return Promise.all(t);
@@ -2501,9 +2501,9 @@ var Xr = we && we.isMap, Ul = Xr ? Xt(Xr) : Dl, Il = "[object Set]";
 function Bl(e) {
   return Q(e) && G(e) == Il;
 }
-var Zr = we && we.isSet, Ml = Zr ? Xt(Zr) : Bl, Hl = 1, ql = 2, Vl = 4, fo = "[object Arguments]", zl = "[object Array]", Gl = "[object Boolean]", kl = "[object Date]", Kl = "[object Error]", po = "[object Function]", Jl = "[object GeneratorFunction]", Wl = "[object Map]", Xl = "[object Number]", ho = "[object Object]", Zl = "[object RegExp]", Yl = "[object Set]", Ql = "[object String]", ec = "[object Symbol]", tc = "[object WeakMap]", rc = "[object ArrayBuffer]", nc = "[object DataView]", oc = "[object Float32Array]", sc = "[object Float64Array]", ic = "[object Int8Array]", ac = "[object Int16Array]", uc = "[object Int32Array]", lc = "[object Uint8Array]", cc = "[object Uint8ClampedArray]", fc = "[object Uint16Array]", dc = "[object Uint32Array]", P = {};
-P[fo] = P[zl] = P[rc] = P[nc] = P[Gl] = P[kl] = P[oc] = P[sc] = P[ic] = P[ac] = P[uc] = P[Wl] = P[Xl] = P[ho] = P[Zl] = P[Yl] = P[Ql] = P[ec] = P[lc] = P[cc] = P[fc] = P[dc] = !0;
-P[Kl] = P[po] = P[tc] = !1;
+var Zr = we && we.isSet, Ml = Zr ? Xt(Zr) : Bl, Hl = 1, ql = 2, Vl = 4, fo = "[object Arguments]", zl = "[object Array]", Gl = "[object Boolean]", kl = "[object Date]", Kl = "[object Error]", po = "[object Function]", Jl = "[object GeneratorFunction]", Wl = "[object Map]", Xl = "[object Number]", ho = "[object Object]", Zl = "[object RegExp]", Yl = "[object Set]", Ql = "[object String]", ec = "[object Symbol]", tc = "[object WeakMap]", rc = "[object ArrayBuffer]", nc = "[object DataView]", oc = "[object Float32Array]", sc = "[object Float64Array]", ic = "[object Int8Array]", ac = "[object Int16Array]", uc = "[object Int32Array]", lc = "[object Uint8Array]", cc = "[object Uint8ClampedArray]", fc = "[object Uint16Array]", dc = "[object Uint32Array]", x = {};
+x[fo] = x[zl] = x[rc] = x[nc] = x[Gl] = x[kl] = x[oc] = x[sc] = x[ic] = x[ac] = x[uc] = x[Wl] = x[Xl] = x[ho] = x[Zl] = x[Yl] = x[Ql] = x[ec] = x[lc] = x[cc] = x[fc] = x[dc] = !0;
+x[Kl] = x[po] = x[tc] = !1;
 function Pe(e, t, r, n, o, s) {
   var i, a = t & Hl, u = t & ql, d = t & Vl;
   if (r && (i = o ? r(e, n, o, s) : r(e)), i !== void 0)
@@ -2522,7 +2522,7 @@ function Pe(e, t, r, n, o, s) {
       if (i = u || h ? {} : co(e), !a)
         return u ? tl(e, Ju(i, e)) : Qu(e, Ku(i, e));
     } else {
-      if (!P[f])
+      if (!x[f])
         return o ? e : {};
       i = Nl(e, f, a);
     }
@@ -2669,16 +2669,16 @@ function Hc(e, t, r, n, o, s) {
     h = a[f];
     var b = e[h], E = t[h];
     if (n)
-      var T = i ? n(E, b, h, t, e, s) : n(b, E, h, e, t, s);
-    if (!(T === void 0 ? b === E || o(b, E, r, n, s) : T)) {
+      var O = i ? n(E, b, h, t, e, s) : n(b, E, h, e, t, s);
+    if (!(O === void 0 ? b === E || o(b, E, r, n, s) : O)) {
       y = !1;
       break;
     }
     m || (m = h == "constructor");
   }
   if (y && !m) {
-    var R = e.constructor, x = t.constructor;
-    R != x && "constructor" in e && "constructor" in t && !(typeof R == "function" && R instanceof R && typeof x == "function" && x instanceof x) && (y = !1);
+    var R = e.constructor, P = t.constructor;
+    R != P && "constructor" in e && "constructor" in t && !(typeof R == "function" && R instanceof R && typeof P == "function" && P instanceof P) && (y = !1);
   }
   return s.delete(e), s.delete(t), y;
 }
@@ -2748,13 +2748,13 @@ function Xc(e, t, r) {
   function E(A) {
     return a = void 0, h && n ? g(A) : (n = o = void 0, i);
   }
-  function T() {
+  function O() {
     a !== void 0 && clearTimeout(a), d = 0, n = u = o = a = void 0;
   }
   function R() {
     return a === void 0 ? i : E(St());
   }
-  function x() {
+  function P() {
     var A = St(), $ = m(A);
     if (n = arguments, o = this, u = A, $) {
       if (a === void 0)
@@ -2764,7 +2764,7 @@ function Xc(e, t, r) {
     }
     return a === void 0 && (a = setTimeout(b, t)), i;
   }
-  return x.cancel = T, x.flush = R, x;
+  return P.cancel = O, P.flush = R, P;
 }
 function Ut(e, t, r) {
   (r !== void 0 && !Me(e[t], r) || r === void 0 && !(t in e)) && Kt(e, t, r);
@@ -2957,12 +2957,12 @@ const rt = {}, te = {
   let i = [];
   const a = (w) => {
     const v = [...new Set(w)];
-    return i.length !== v.length || !v.every((S) => i.includes(S)) ? (i = v, r.validatedChanged) : [];
+    return i.length !== v.length || !v.every((T) => i.includes(T)) ? (i = v, r.validatedChanged) : [];
   }, u = () => i.filter((w) => typeof f[w] > "u");
   let d = [];
   const c = (w) => {
     const v = [...new Set(w)];
-    return d.length !== v.length || !v.every((S) => d.includes(S)) ? (d = v, r.touchedChanged) : [];
+    return d.length !== v.length || !v.every((T) => d.includes(T)) ? (d = v, r.touchedChanged) : [];
   };
   let f = {};
   const h = (w) => {
@@ -2974,20 +2974,20 @@ const rt = {}, te = {
   }, l = () => Object.keys(f).length > 0;
   let y = 1500;
   const m = (w) => {
-    y = w, A.cancel(), A = x();
+    y = w, A.cancel(), A = P();
   };
-  let b = t, E = null, T = [], R = null;
-  const x = () => Xc((w) => {
+  let b = t, E = null, O = [], R = null;
+  const P = () => Xc((w) => {
     e({
-      get: (v, S = {}, _ = {}) => te.get(v, B(S), $(_, w, S)),
-      post: (v, S = {}, _ = {}) => te.post(v, B(S), $(_, w, S)),
-      patch: (v, S = {}, _ = {}) => te.patch(v, B(S), $(_, w, S)),
-      put: (v, S = {}, _ = {}) => te.put(v, B(S), $(_, w, S)),
-      delete: (v, S = {}, _ = {}) => te.delete(v, B(S), $(_, w, S))
+      get: (v, T = {}, _ = {}) => te.get(v, B(T), $(_, w, T)),
+      post: (v, T = {}, _ = {}) => te.post(v, B(T), $(_, w, T)),
+      patch: (v, T = {}, _ = {}) => te.patch(v, B(T), $(_, w, T)),
+      put: (v, T = {}, _ = {}) => te.put(v, B(T), $(_, w, T)),
+      delete: (v, T = {}, _ = {}) => te.delete(v, B(T), $(_, w, T))
     }).catch((v) => In(v) || Bn(v) && v.response?.status === 422 ? null : Promise.reject(v));
   }, y, { leading: !0, trailing: !0 });
-  let A = x();
-  const $ = (w, v, S = {}) => {
+  let A = P();
+  const $ = (w, v, T = {}) => {
     const _ = {
       ...w,
       ...v
@@ -3009,33 +3009,33 @@ const rt = {}, te = {
         ...a([...i, ...z]),
         ...h(rn({ ...f }, z))
       ].forEach((ee) => ee()), _.onPrecognitionSuccess ? _.onPrecognitionSuccess(j) : j),
-      onBefore: () => _.onBeforeValidation && _.onBeforeValidation({ data: S, touched: d }, { data: b, touched: T }) === !1 || (_.onBefore || (() => !0))() === !1 ? !1 : (R = d, E = S, !0),
+      onBefore: () => _.onBeforeValidation && _.onBeforeValidation({ data: T, touched: d }, { data: b, touched: O }) === !1 || (_.onBefore || (() => !0))() === !1 ? !1 : (R = d, E = T, !0),
       onStart: () => {
         s(!0).forEach((j) => j()), (_.onStart ?? (() => null))();
       },
       onFinish: () => {
-        s(!1).forEach((j) => j()), T = R, b = E, R = E = null, (_.onFinish ?? (() => null))();
+        s(!1).forEach((j) => j()), O = R, b = E, R = E = null, (_.onFinish ?? (() => null))();
       }
     };
-  }, V = (w, v, S) => {
+  }, V = (w, v, T) => {
     if (typeof w > "u") {
-      const _ = Array.from(S?.only ?? S?.validate ?? []);
-      c([...d, ..._]).forEach((z) => z()), A(S ?? {});
+      const _ = Array.from(T?.only ?? T?.validate ?? []);
+      c([...d, ..._]).forEach((z) => z()), A(T ?? {});
       return;
     }
     if (sr(v) && !n) {
       console.warn('Precognition file validation is not active. Call the "validateFiles" function on your form to enable it.');
       return;
     }
-    w = Je(w), Qe(b, w) !== v && (c([w, ...d]).forEach((_) => _()), A(S ?? {}));
+    w = Je(w), Qe(b, w) !== v && (c([w, ...d]).forEach((_) => _()), A(T ?? {}));
   }, B = (w) => n === !1 ? Mt(w) : w, H = {
     touched: () => d,
-    validate(w, v, S) {
-      return typeof w == "object" && !("target" in w) && (S = w, w = v = void 0), V(w, v, S), H;
+    validate(w, v, T) {
+      return typeof w == "object" && !("target" in w) && (T = w, w = v = void 0), V(w, v, T), H;
     },
     touch(w) {
       const v = Array.isArray(w) ? w : [Je(w)];
-      return c([...d, ...v]).forEach((S) => S()), H;
+      return c([...d, ...v]).forEach((T) => T()), H;
     },
     validating: () => o,
     valid: u,
@@ -3052,9 +3052,9 @@ const rt = {}, te = {
         c([]).forEach((v) => v());
       else {
         const v = [...d];
-        w.forEach((S) => {
-          v.includes(S) && v.splice(v.indexOf(S), 1), bo(b, S, Qe(t, S));
-        }), c(v).forEach((S) => S());
+        w.forEach((T) => {
+          v.includes(T) && v.splice(v.indexOf(T), 1), bo(b, T, Qe(t, T));
+        }), c(v).forEach((T) => T());
       }
       return H;
     },
@@ -3364,37 +3364,40 @@ const xf = { key: 0 }, ar = /* @__PURE__ */ Le({
       }
       return { modelValue: t.form[t.element.name] };
     }), o = D(() => {
-      const l = t.element.definition, y = l.component?.props, m = {}, b = (E, T) => {
-        y?.hasOwnProperty(E) && (m[E] = T);
+      const l = t.element.definition, y = l.component?.props, m = {}, b = (E, O) => {
+        y?.hasOwnProperty(E) && (m[E] = O);
       };
       if (m.id = `${t.form._prefix}-${t.element.name}`, b("form", t.form), b("schema", l.schema), b("error", i.value[0] ?? null), l.props)
-        for (const [E, T] of Object.entries(l.props))
-          m[E] = T;
+        for (const [E, O] of Object.entries(l.props))
+          m[E] = O;
       for (const E of Object.keys(l))
-        if (E !== "component" && E !== "props" && E !== "visible" && E !== "alert" && E !== "fieldset" && E !== "schema" && E !== "precognitive" && E !== "precognitiveEvent") {
-          const T = l[E];
-          if (E === "label" && (T === !1 || T === null || T === "")) continue;
-          b(E, T);
+        if (E !== "component" && E !== "props" && E !== "visible" && E !== "alert" && E !== "fieldset" && E !== "schema" && E !== "events") {
+          const O = l[E];
+          if (E === "label" && (O === !1 || O === null || O === "")) continue;
+          b(E, O);
         }
-      for (const [E, T] of Object.entries(n.value))
-        m[E] = T;
+      for (const [E, O] of Object.entries(n.value))
+        m[E] = O;
       return m;
     }), s = D(() => {
-      const l = r.value, m = typeof t.form.validate == "function" && t.element.definition.precognitive !== !1, b = t.element.definition.precognitiveEvent ?? "change", E = (T, R = "modelValue") => {
-        const x = {
-          [`update:${R}`]: (A) => {
-            t.form[T] = A, m && b === "update" && t.form.validate(T);
+      const l = r.value, y = t.element.definition.events, m = (b, E = "modelValue") => {
+        const O = {
+          [`update:${E}`]: (R) => {
+            t.form[b] = R, y?.update && y.update(t.form, b);
           }
         };
-        return m && b !== "update" && (x[b] = () => t.form.validate(T)), x;
+        if (y)
+          for (const [R, P] of Object.entries(y))
+            R !== "update" && (O[R] = () => P(t.form, b));
+        return O;
       };
       if (l) {
-        const T = {};
-        for (const { formKey: R } of l)
-          Object.assign(T, E(R, R));
-        return T;
+        const b = {};
+        for (const { formKey: E } of l)
+          Object.assign(b, m(E, E));
+        return b;
       }
-      return E(t.element.name);
+      return m(t.element.name);
     }), i = D(() => {
       const l = r.value;
       return l ? l.map(({ formKey: y }) => t.form.errors[y]).filter((y) => y) : [t.form.errors[t.element.name]];
