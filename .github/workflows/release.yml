@@ -13,6 +13,8 @@ concurrency:
 jobs:
   publish-gpr:
     runs-on: ubuntu-22.04
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
