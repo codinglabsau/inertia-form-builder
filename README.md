@@ -1,47 +1,69 @@
-# Coding Labs Inertia Form Builder
-A private library to build complex Inertia compatible forms without the boilerplate.
+<p align="center">
+  <img src="https://codinglabsau.github.io/inertia-form-builder/assets/logo-CWuGQBXm.png" alt="Inertia Form Builder" height="100">
+</p>
+
+<h1 align="center">Inertia Form Builder</h1>
+
+<p align="center">
+  A Vue 3 component library for building complex Inertia.js forms without the boilerplate.
+</p>
 
 ## Documentation
-The documentation is self-hosted; if you set it up already [it is probably here](http://inertia-form-builder-docs.test).
 
-> [!NOTE]
-> Local documentation should be rebuilt whenever the upstream changes.
+Full documentation, installation guide, and examples are available at:
 
-If you haven't set up the documentation locally, follow these steps:
+**[codinglabsau.github.io/inertia-form-builder](https://codinglabsau.github.io/inertia-form-builder/)**
+
+## Installation
 
 ```bash
-npm run docs:build
-cd docs/.vitepress/dist && herd link inertia-form-builder
+npm install @codinglabsau/inertia-form-builder
 ```
 
-To preview or update the documentation, run `npm run docs:dev` instead.
+Requires `@codinglabsau/gooey` for UI components. See the [installation guide](https://codinglabsau.github.io/inertia-form-builder/installation) for full setup instructions.
+
+## Features
+
+- Schema-based form definitions
+- Automatic model binding and validation
+- Built-in error display
+- Nested schemas with Grid and Section components
+- Laravel Precognition support for real-time validation
+- Conditional field visibility
 
 ## Development
-Spin up the vite dev server with:
-```bash
-vite
-```
-The local server contains a demo of all the components.
 
-To publish a new build:
-1. Increment the version in `package.json`
-2. Run `npm update` to update the lock file
-3. Ensure all components are registered in `src/index.ts`
-4. Run `npm run build`; this will format, lint, type check and do a vite build
-5. Push to GitHub; the GitHub Action will publish the new build to GitHub Packages
+```bash
+# Install dependencies
+npm install
+
+# Run development server with component demos
+npm run dev
+
+# Build library
+npm run build
+
+# Run tests
+npm run test
+```
 
 ## Changelog
-See [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+
+See [CHANGELOG](CHANGELOG.md) for release history.
 
 ## Security
+
 If you discover any security related issues, create an issue on GitHub.
 
 ## Credits
+
 - [Steve Thomas](https://github.com/stevethomas)
 - [All Contributors](../../contributors)
 
 ## License
-Proprietary. Not for public release.
+
+MIT
 
 ## About Coding Labs
+
 Coding Labs is a web app development agency based on the Gold Coast, Australia. See our open source projects [on our website](https://codinglabs.com.au/open-source).

@@ -20,6 +20,7 @@ import {
   SheetTrigger,
 } from '@codinglabsau/gooey'
 
+import GitHubIcon from './components/GitHubIcon.vue'
 import Logo from './components/Logo.vue'
 import SidebarNavigation from './components/SidebarNavigation.vue'
 
@@ -47,7 +48,7 @@ const sidebarOpen = ref(false)
 
       <TwoColumnLayoutSidebarTrigger @click="sidebarOpen = true" />
 
-      <div class="flex w-full justify-end">
+      <div class="flex w-full items-center justify-end gap-4">
         <div class="group flex cursor-pointer items-center space-x-2">
           <Sun class="size-5 text-primary" @click="mode = 'light'" />
 
@@ -55,6 +56,14 @@ const sidebarOpen = ref(false)
 
           <Moon class="size-5 text-primary" @click="mode = 'dark'" />
         </div>
+
+        <a
+          href="https://github.com/codinglabsau/inertia-form-builder"
+          target="_blank"
+          class="text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <GitHubIcon />
+        </a>
       </div>
     </Header>
 
