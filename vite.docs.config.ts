@@ -9,6 +9,7 @@ import Shiki from '@shikijs/markdown-it'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
+  base: '/inertia-form-builder/',
   build: {
     outDir: 'docs-dist',
     emptyOutDir: true,
