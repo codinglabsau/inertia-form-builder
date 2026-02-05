@@ -13,8 +13,6 @@ concurrency:
 jobs:
   publish-gpr:
     runs-on: ubuntu-22.04
-    env:
-      NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -26,6 +24,8 @@ jobs:
       - run: npm ci
 
       - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: Extract Package Version
         id: extract-version
