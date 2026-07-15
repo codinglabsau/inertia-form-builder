@@ -11,6 +11,22 @@ const props = defineProps<{
   form: Form
 }>()
 
+// Recognised top-level config keys. Any other top-level key is forwarded only if
+// the target component declares it as a prop — otherwise it is silently dropped.
+const CONFIG_KEYS = new Set([
+  'component',
+  'value',
+  'label',
+  'schema',
+  'fieldset',
+  'visible',
+  'alert',
+  'props',
+  'events',
+  'checked',
+  'items',
+])
+
 // Parse fieldset once and reuse across models, listeners, and errorBag
 const parsedFieldset = computed(() => {
   const fieldset = props.element.definition?.fieldset as Fieldset
@@ -81,6 +97,16 @@ const computedProps = computed(() => {
     ) {
       const val = definition[key]
       if (key === 'label' && (val === false || val === null || val === '')) continue
+
+      // Dev-only: warn when a top-level key is neither a recognised config key nor a
+      // declared prop of the target component — it is about to be silently dropped.
+      // Native HTML attributes (e.g. `type`) belong under `props` so they fall through.
+      if (import.meta.env.DEV && !CONFIG_KEYS.has(key) && !expectedProps?.hasOwnProperty(key)) {
+        console.warn(
+          `[inertia-form-builder] "${key}" on element "${props.element.name}" was dropped — the component doesn't declare it as a prop. Put native HTML attributes under \`props: { ${key}: '...' }\` so they fall through to the element.`,
+        )
+      }
+
       addIfExpected(key, val)
     }
   }

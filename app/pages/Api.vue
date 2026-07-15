@@ -410,8 +410,7 @@ form._prefix             // e.g. "xkqwmz" — used by Element.vue for id attrs`
       <Heading as="h3" class="text-lg">Full config</Heading>
 
       <p class="text-muted-foreground">
-        Core options shown below. Nesting (<code class="rounded bg-muted px-1">schema</code>
- ),
+        Core options shown below. Nesting (<code class="rounded bg-muted px-1">schema</code> ),
         multi-model (<code class="rounded bg-muted px-1">fieldset</code>
 
         ), and alerts (<code class="rounded bg-muted px-1">alert</code>) are documented in their own
@@ -459,7 +458,13 @@ form._prefix             // e.g. "xkqwmz" — used by Element.vue for id attrs`
         <Heading as="h3" class="text-lg">props</Heading>
 
         <p class="text-muted-foreground">
-          Forwarded to the rendered component. Only props the component declares are passed through.
+          Always forwarded to the rendered component. This is where native HTML attributes such as
+          <code class="rounded bg-muted px-1">type</code>
+          belong — keys under
+          <code class="rounded bg-muted px-1">props</code> fall through to the underlying input even
+          when the component doesn't declare them. A native attribute placed at the top level of the
+          definition is only passed when the component declares it as a prop, and is otherwise
+          dropped (the dev build warns).
         </p>
 
         <CodeBlock :code="propsCode" />

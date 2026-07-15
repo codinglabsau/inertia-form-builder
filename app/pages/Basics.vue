@@ -217,6 +217,16 @@ const submit = () => alert('submitted')
           Any props in the <code class="rounded bg-muted px-1">props</code> section are forwarded to
           the form element.
         </p>
+
+        <p class="mt-2 text-muted-foreground">
+          Native HTML attributes belong here too — a key under
+          <code class="rounded bg-muted px-1">props</code> always falls through to the underlying
+          input, even one the component doesn't declare as a prop (for example a
+          <code class="rounded bg-muted px-1">type</code> on a text input). A native attribute
+          placed at the top level of the element definition is only passed when the component
+          declares it as a prop, and is otherwise dropped (the dev build logs a warning when this
+          happens).
+        </p>
       </div>
 
       <CodeBlock :code="propsCode" />
