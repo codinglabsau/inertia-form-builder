@@ -11,6 +11,10 @@ const props = defineProps<{
   form: Form
 }>()
 
+// Tracks keys we've already warned about so a mis-declared attribute logs once per
+// element instance, not on every re-render (computedProps recomputes on model change).
+const warnedDroppedKeys = new Set<string>()
+
 // Recognised top-level config keys. Any other top-level key is forwarded only if
 // the target component declares it as a prop — otherwise it is silently dropped.
 const CONFIG_KEYS = new Set([
@@ -101,7 +105,17 @@ const computedProps = computed(() => {
       // Dev-only: warn when a top-level key is neither a recognised config key nor a
       // declared prop of the target component — it is about to be silently dropped.
       // Native HTML attributes (e.g. `type`) belong under `props` so they fall through.
-      if (import.meta.env.DEV && !CONFIG_KEYS.has(key) && !expectedProps?.hasOwnProperty(key)) {
+      // Guarded on `process.env.NODE_ENV` (not `import.meta.env.DEV`) so the check is
+      // resolved by the CONSUMER's bundler and reaches their dev build — a Vite-only
+      // `import.meta.env.DEV` is baked to `false` when this library is built and the
+      // warning would be dead-code-eliminated from the published package.
+      if (
+        process.env.NODE_ENV !== 'production' &&
+        !CONFIG_KEYS.has(key) &&
+        !expectedProps?.hasOwnProperty(key) &&
+        !warnedDroppedKeys.has(key)
+      ) {
+        warnedDroppedKeys.add(key)
         console.warn(
           `[inertia-form-builder] "${key}" on element "${props.element.name}" was dropped — the component doesn't declare it as a prop. Put native HTML attributes under \`props: { ${key}: '...' }\` so they fall through to the element.`,
         )

@@ -174,7 +174,7 @@ describe('Element', () => {
       expect(wrapper.find('input').attributes('type')).toBe('date')
     })
 
-    it('warns (dev) when a top-level attribute the component does not declare is dropped', () => {
+    it('warns (dev) when a top-level attribute the component does not declare is dropped', async () => {
       const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
       const form = createMockForm({ dob: '' })
 
@@ -191,12 +191,19 @@ describe('Element', () => {
       // Attribute is dropped, not forwarded...
       expect(wrapper.find('input').attributes('type')).toBeUndefined()
       // ...and the author is warned about it (ignore unrelated Vue dev warnings).
-      const messages = warn.mock.calls
-        .map((call) => call[0])
-        .filter((msg) => typeof msg === 'string' && msg.includes('[inertia-form-builder]'))
-      expect(messages).toHaveLength(1)
-      expect(messages[0]).toContain('"type" on element "dob" was dropped')
-      expect(messages[0]).toContain('props: { type:')
+      const forbuilderWarnings = () =>
+        warn.mock.calls
+          .map((call) => call[0])
+          .filter((msg) => typeof msg === 'string' && msg.includes('[inertia-form-builder]'))
+
+      expect(forbuilderWarnings()).toHaveLength(1)
+      expect(forbuilderWarnings()[0]).toContain('"type" on element "dob" was dropped')
+      expect(forbuilderWarnings()[0]).toContain('props: { type:')
+
+      // Re-renders (computedProps recomputes on model change) must not re-warn.
+      await wrapper.find('input').setValue('2026-07-15')
+      await wrapper.find('input').setValue('2026-07-16')
+      expect(forbuilderWarnings()).toHaveLength(1)
 
       warn.mockRestore()
     })

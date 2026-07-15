@@ -27,6 +27,25 @@ const simpleSchemaWithCustomId = useSchema({
   },
 })
 
+// Native HTML attributes (`type`, `placeholder`, ...) go under `props` so they fall
+// through to the underlying <input> — even though gooey's Input declares no `type` prop.
+const propsSchema = useSchema({
+  dob: {
+    component: Input,
+    label: 'Date of birth',
+    props: {
+      type: 'date',
+    },
+  },
+  website: {
+    component: Input,
+    props: {
+      type: 'url',
+      placeholder: 'https://example.com',
+    },
+  },
+})
+
 const labelsSchema = useSchema({
   default_category_id: Input,
   first_name: Input,
@@ -98,14 +117,21 @@ const labelsCode = `const schema = useSchema({
 })`
 
 const propsCode = `const schema = useSchema({
-  firstname: {
+  // Native HTML attributes fall through to the <input> via props —
+  // even ones the component doesn't declare (gooey's Input has no \`type\` prop).
+  dob: {
     component: Input,
-    props: {
-      id: 'custom-id',
-      placeholder: 'Enter name...',
-    },
+    label: 'Date of birth',
+    props: { type: 'date' },
   },
-})`
+  website: {
+    component: Input,
+    props: { type: 'url', placeholder: 'https://example.com' },
+  },
+})
+
+// ⚠️ A native attribute at the TOP LEVEL is dropped (dev build warns):
+//    dob: { component: Input, type: 'date' }  ✗  renders a plain text input`
 
 const reactivityCode = `const schema = useSchema(() => ({
   firstname: Input,
@@ -227,6 +253,22 @@ const submit = () => alert('submitted')
           declares it as a prop, and is otherwise dropped (the dev build logs a warning when this
           happens).
         </p>
+      </div>
+
+      <div class="grid gap-6 lg:grid-cols-2">
+        <Card>
+          <CardContent class="pt-6">
+            <form @submit.prevent="submit">
+              <FormBuilder :schema="propsSchema" />
+            </form>
+          </CardContent>
+        </Card>
+
+        <CodeBlock
+          :code="JSON.stringify(propsSchema.form.data(), null, 2)"
+          lang="json"
+          :copyable="false"
+        />
       </div>
 
       <CodeBlock :code="propsCode" />
