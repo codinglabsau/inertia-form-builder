@@ -32,7 +32,7 @@ const toggleValue = (itemValue: any, checked: boolean) => {
       <Checkbox
         :id="`${props.form._prefix}-${item.label ?? item}`"
         :model-value="isChecked(item.value ?? item)"
-        @update:model-value="toggleValue(item.value ?? item, $event)"
+        @update:model-value="toggleValue(item.value ?? item, $event === true)"
       />
 
       <Label :for="`${props.form._prefix}-${item.label ?? item}`" class="cursor-pointer">

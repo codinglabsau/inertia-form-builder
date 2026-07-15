@@ -230,7 +230,12 @@ const visible = computed(() => {
       v-on="listeners"
     />
 
-    <Alert v-if="alert && alert.visible()" variant="warning" class="mt-2">
+    <!-- gooey v2 Alert only types default/destructive; warning look via gooey's own warning tokens -->
+    <Alert
+      v-if="alert && alert.visible()"
+      variant="default"
+      class="mt-2 border-warning/50 text-warning dark:border-warning [&>svg]:text-warning"
+    >
       <AlertDescription class="flex items-center justify-between">
         {{ alert.text }}
         <Button
