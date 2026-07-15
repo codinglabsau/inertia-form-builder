@@ -62,6 +62,25 @@ const MockInput = defineComponent({
   },
 })
 
+// Mirrors gooey `Input`: single-root <input>, declares NO `type` prop, v-model via
+// value + onInput. Native HTML attributes reach the DOM only through Vue attribute
+// fallthrough — exactly the behaviour top-level definition keys must not bypass.
+const FallthroughInput = defineComponent({
+  name: 'FallthroughInput',
+  inheritAttrs: true,
+  props: {
+    modelValue: [String, Number],
+  },
+  emits: ['update:modelValue'],
+  setup(props, { emit }) {
+    return () =>
+      h('input', {
+        value: props.modelValue,
+        onInput: (e: Event) => emit('update:modelValue', (e.target as HTMLInputElement).value),
+      })
+  },
+})
+
 // Create mock form
 const createMockForm = (data: Record<string, any> = {}): any => ({
   _prefix: 'test',
@@ -136,6 +155,83 @@ describe('Element', () => {
       })
 
       expect(wrapper.find('label').exists()).toBe(false)
+    })
+  })
+
+  describe('native HTML attributes', () => {
+    it('forwards attributes placed under props via fallthrough', () => {
+      const form = createMockForm({ dob: '' })
+      const wrapper = mount(Element, {
+        props: {
+          element: {
+            name: 'dob',
+            definition: { component: FallthroughInput, props: { type: 'date' } },
+          },
+          form,
+        },
+      })
+
+      expect(wrapper.find('input').attributes('type')).toBe('date')
+    })
+
+    it('warns (dev) when a top-level attribute the component does not declare is dropped', async () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      const form = createMockForm({ dob: '' })
+
+      const wrapper = mount(Element, {
+        props: {
+          element: {
+            name: 'dob',
+            definition: { component: FallthroughInput, type: 'date' },
+          },
+          form,
+        },
+      })
+
+      // Attribute is dropped, not forwarded...
+      expect(wrapper.find('input').attributes('type')).toBeUndefined()
+      // ...and the author is warned about it (ignore unrelated Vue dev warnings).
+      const forbuilderWarnings = () =>
+        warn.mock.calls
+          .map((call) => call[0])
+          .filter((msg) => typeof msg === 'string' && msg.includes('[inertia-form-builder]'))
+
+      expect(forbuilderWarnings()).toHaveLength(1)
+      expect(forbuilderWarnings()[0]).toContain('"type" on element "dob" was dropped')
+      expect(forbuilderWarnings()[0]).toContain('props: { type:')
+
+      // Re-renders (computedProps recomputes on model change) must not re-warn.
+      await wrapper.find('input').setValue('2026-07-15')
+      await wrapper.find('input').setValue('2026-07-16')
+      expect(forbuilderWarnings()).toHaveLength(1)
+
+      warn.mockRestore()
+    })
+
+    it('does not warn for recognised config keys', () => {
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      const form = createMockForm({ dob: '' })
+
+      mount(Element, {
+        props: {
+          element: {
+            name: 'dob',
+            definition: {
+              component: FallthroughInput,
+              label: 'Date of birth',
+              value: '2000-01-01',
+            },
+          },
+          form,
+        },
+      })
+
+      const messages = warn.mock.calls
+        .map((call) => call[0])
+        .filter((msg) => typeof msg === 'string' && msg.includes('[inertia-form-builder]'))
+      expect(messages).toHaveLength(0)
+
+      warn.mockRestore()
     })
   })
 

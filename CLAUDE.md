@@ -2,6 +2,19 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## ⚠️ Public repository — no PII, ever
+
+This is a **public open-source repository**. Everything pushed here is world-readable and permanent — GitHub keeps PR-body and commit **edit history publicly visible with no scrub API**, so it has to be clean the *first* time.
+
+Never add personal or client-identifying information to **any** pushed artefact — code, comments, tests, fixtures, commit messages, or PR descriptions:
+
+- No real names, emails, phone numbers, addresses, or account IDs (use `John Doe`, `jane@example.com`, `123 Main St`).
+- No client or app names, internal project/ticket keys, or incident details.
+- No live infrastructure identifiers, credentials, tokens, URLs, or environment specifics.
+- Motivate changes from the **problem class**, never from the internal incident that surfaced it.
+
+Demo/example data and test fixtures must use obviously-fake placeholders.
+
 ## Project Overview
 
 Inertia Form Builder is a Vue 3 component library for building complex Inertia.js-compatible forms without boilerplate. It provides a schema-based approach where you define form fields declaratively, and the library handles model binding, validation, error display, and form state.

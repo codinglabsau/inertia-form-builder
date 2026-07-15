@@ -31,6 +31,27 @@ Requires `@codinglabsau/gooey` for UI components. See the [installation guide](h
 - Laravel Precognition support for real-time validation
 - Conditional field visibility
 
+## Native HTML attributes
+
+Put native HTML attributes (`type`, `placeholder`, `autocomplete`, `min`, etc.) under
+`props` — not at the top level of the element definition. Keys under `props` are always
+forwarded and fall through to the underlying input, whereas a top-level key is only passed
+when the component explicitly declares it as a prop and is otherwise dropped:
+
+```ts
+const schema = useSchema({
+  dob: {
+    component: Input,
+    props: { type: 'date' }, // ✅ falls through to the <input>
+  },
+  // dob: { component: Input, type: 'date' } // ❌ dropped (dev build warns)
+})
+```
+
+In development a warning is logged when a top-level key is neither a recognised config key
+(`component`, `props`, `value`, `label`, `visible`, `alert`, `fieldset`, `schema`, `events`,
+`checked`, `items`) nor a declared prop of the component, so silent drops are easy to catch.
+
 ## Development
 
 ```bash

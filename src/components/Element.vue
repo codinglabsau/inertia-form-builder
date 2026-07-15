@@ -11,6 +11,26 @@ const props = defineProps<{
   form: Form
 }>()
 
+// Tracks keys we've already warned about so a mis-declared attribute logs once per
+// element instance, not on every re-render (computedProps recomputes on model change).
+const warnedDroppedKeys = new Set<string>()
+
+// Recognised top-level config keys. Any other top-level key is forwarded only if
+// the target component declares it as a prop — otherwise it is silently dropped.
+const configKeys = new Set([
+  'component',
+  'value',
+  'label',
+  'schema',
+  'fieldset',
+  'visible',
+  'alert',
+  'props',
+  'events',
+  'checked',
+  'items',
+])
+
 // Parse fieldset once and reuse across models, listeners, and errorBag
 const parsedFieldset = computed(() => {
   const fieldset = props.element.definition?.fieldset as Fieldset
@@ -81,6 +101,26 @@ const computedProps = computed(() => {
     ) {
       const val = definition[key]
       if (key === 'label' && (val === false || val === null || val === '')) continue
+
+      // Dev-only: warn when a top-level key is neither a recognised config key nor a
+      // declared prop of the target component — it is about to be silently dropped.
+      // Native HTML attributes (e.g. `type`) belong under `props` so they fall through.
+      // Guarded on `process.env.NODE_ENV` (not `import.meta.env.DEV`) so the check is
+      // resolved by the CONSUMER's bundler and reaches their dev build — a Vite-only
+      // `import.meta.env.DEV` is baked to `false` when this library is built and the
+      // warning would be dead-code-eliminated from the published package.
+      if (
+        process.env.NODE_ENV !== 'production' &&
+        !configKeys.has(key) &&
+        !expectedProps?.hasOwnProperty(key) &&
+        !warnedDroppedKeys.has(key)
+      ) {
+        warnedDroppedKeys.add(key)
+        console.warn(
+          `[inertia-form-builder] "${key}" on element "${props.element.name}" was dropped — the component doesn't declare it as a prop. Put native HTML attributes under \`props: { ${key}: '...' }\` so they fall through to the element.`,
+        )
+      }
+
       addIfExpected(key, val)
     }
   }
@@ -190,7 +230,12 @@ const visible = computed(() => {
       v-on="listeners"
     />
 
-    <Alert v-if="alert && alert.visible()" variant="warning" class="mt-2">
+    <!-- gooey v2 Alert only types default/destructive; warning look via gooey's own warning tokens -->
+    <Alert
+      v-if="alert && alert.visible()"
+      variant="default"
+      class="mt-2 border-warning/50 text-warning dark:border-warning [&>svg]:text-warning"
+    >
       <AlertDescription class="flex items-center justify-between">
         {{ alert.text }}
         <Button
