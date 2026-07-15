@@ -17,7 +17,7 @@ const warnedDroppedKeys = new Set<string>()
 
 // Recognised top-level config keys. Any other top-level key is forwarded only if
 // the target component declares it as a prop — otherwise it is silently dropped.
-const CONFIG_KEYS = new Set([
+const configKeys = new Set([
   'component',
   'value',
   'label',
@@ -111,7 +111,7 @@ const computedProps = computed(() => {
       // warning would be dead-code-eliminated from the published package.
       if (
         process.env.NODE_ENV !== 'production' &&
-        !CONFIG_KEYS.has(key) &&
+        !configKeys.has(key) &&
         !expectedProps?.hasOwnProperty(key) &&
         !warnedDroppedKeys.has(key)
       ) {
