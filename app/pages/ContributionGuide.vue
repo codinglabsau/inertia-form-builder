@@ -5,15 +5,16 @@ import CodeBlock from '../components/CodeBlock.vue'
 
 const devCode = `npm run dev`
 
-const publishSteps = `# 1. Increment the version in package.json
-# 2. Update the lock file
-npm update
+const publishSteps = `# 1. Bump the version in package.json + package-lock.json together
+#    (patch | minor | major — does not touch other dependencies)
+npm version minor --no-git-tag-version
 
-# 3. Ensure all components are registered in src/index.ts
-# 4. Build (formats, lints, type-checks, then vite build)
+# 2. Ensure all components are registered in src/index.ts
+# 3. Build (formats, lints, type-checks, then vite build)
 npm run build
 
-# 5. Push to GitHub — the Action publishes to GitHub Packages`
+# 4. Commit (including dist/) and push to main
+# 5. Publish a GitHub release tagged vX.Y.Z — the Action publishes to GitHub Packages`
 </script>
 
 <template>

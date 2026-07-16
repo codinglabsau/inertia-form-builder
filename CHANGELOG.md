@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.2.0] - 2026-07-16
+### Added
+- `description` config key on form elements — muted helper text rendered directly under the input, above any alert or validation error. Honours newlines and sets a `{id}-description` id for `aria-describedby` wiring. Ignored on nested Grid/Section elements (use Section's own `description` prop there).
+
 ## [1.7.0] - 2024-10-01
 ### Changed
 - Added a `Alert` prop to the `Element` component
