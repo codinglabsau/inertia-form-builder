@@ -20,6 +20,7 @@ type ElementConfig<T extends Component = Component> = {
   component: T
   value?: any
   label?: string | false | null
+  description?: string
   schema?: ElementMap
   fieldset?: Fieldset
   visible?: (form: Form) => boolean

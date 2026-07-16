@@ -21,6 +21,7 @@ const configKeys = new Set([
   'component',
   'value',
   'label',
+  'description',
   'schema',
   'fieldset',
   'visible',
@@ -97,7 +98,8 @@ const computedProps = computed(() => {
       key !== 'alert' &&
       key !== 'fieldset' &&
       key !== 'schema' &&
-      key !== 'events'
+      key !== 'events' &&
+      key !== 'description'
     ) {
       const val = definition[key]
       if (key === 'label' && (val === false || val === null || val === '')) continue
@@ -188,6 +190,13 @@ const label = computed(() => {
 
 const isNested = computed(() => !!props.element.definition.schema)
 
+// Muted helper text rendered directly under the input. Suppressed for nested
+// layout elements (Grid/Section) — those have no single input to describe.
+const description = computed(() => {
+  if (isNested.value) return null
+  return props.element.definition.description || null
+})
+
 const showLabel = computed(() => {
   const labelValue = props.element.definition.label
   if (labelValue === false || labelValue === null || labelValue === '') {
@@ -229,6 +238,14 @@ const visible = computed(() => {
       v-bind="computedProps"
       v-on="listeners"
     />
+
+    <p
+      v-if="description"
+      :id="`${computedProps.id}-description`"
+      class="mt-1.5 whitespace-pre-line text-sm leading-6 text-muted-foreground"
+    >
+      {{ description }}
+    </p>
 
     <!-- gooey v2 Alert only types default/destructive; warning look via gooey's own warning tokens -->
     <Alert

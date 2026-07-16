@@ -46,6 +46,7 @@ const componentConfigCode = `{
   component: Input,                      // Required — the Vue component to render
   value: '',                             // Initial value (default: null)
   label: 'Full Name',                    // Custom label (default: humanised key)
+  description: 'As it appears on your ID', // Helper text rendered under the input
   props: {                               // Forwarded to component
     type: 'email',
     placeholder: 'you@example.com',
@@ -111,6 +112,22 @@ const labelCode = `const schema = useSchema({
       city: Input,
       state: Input,
     },
+  },
+})`
+
+const descriptionCode = `const schema = useSchema({
+  // Muted helper text rendered directly under the input
+  slug: {
+    component: Input,
+    label: 'URL slug',
+    description: 'Lowercase letters, numbers and hyphens only.',
+  },
+
+  // Newlines are honoured (rendered with white-space: pre-line)
+  password: {
+    component: Input,
+    props: { type: 'password' },
+    description: 'Minimum 12 characters.\\nAvoid reusing an old password.',
   },
 })`
 
@@ -410,7 +427,8 @@ form._prefix             // e.g. "xkqwmz" — used by Element.vue for id attrs`
       <Heading as="h3" class="text-lg">Full config</Heading>
 
       <p class="text-muted-foreground">
-        Core options shown below. Nesting (<code class="rounded bg-muted px-1">schema</code> ),
+        Core options shown below. Nesting (<code class="rounded bg-muted px-1">schema</code>
+ ),
         multi-model (<code class="rounded bg-muted px-1">fieldset</code>
 
         ), and alerts (<code class="rounded bg-muted px-1">alert</code>) are documented in their own
@@ -452,6 +470,32 @@ form._prefix             // e.g. "xkqwmz" — used by Element.vue for id attrs`
         </p>
 
         <CodeBlock :code="labelCode" />
+      </div>
+
+      <div class="space-y-4">
+        <Heading as="h3" class="text-lg">description</Heading>
+
+        <p class="text-muted-foreground">
+          Muted helper text rendered directly under the input, above any alert or validation error.
+          Newlines are honoured (<code class="rounded bg-muted px-1">white-space: pre-line</code>
+),
+          and the paragraph is given an <code class="rounded bg-muted px-1">id</code>
+ of
+          <code class="rounded bg-muted px-1">{elementId}-description</code>
+          for
+          <code class="rounded bg-muted px-1">aria-describedby</code>
+ wiring. Ignored on nested
+          elements (<code class="rounded bg-muted px-1">Grid</code>
+
+           /<code
+            class="rounded bg-muted px-1"
+            >Section</code
+          >
+), which describe a group rather than a single input &mdash; use Section's own
+          <code class="rounded bg-muted px-1">description</code> prop there.
+        </p>
+
+        <CodeBlock :code="descriptionCode" />
       </div>
 
       <div class="space-y-4">

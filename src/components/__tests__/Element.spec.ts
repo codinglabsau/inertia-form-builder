@@ -142,6 +142,43 @@ describe('Element', () => {
       expect(wrapper.find('label').exists()).toBe(false)
     })
 
+    it('renders description helper text under the input', () => {
+      const form = createMockForm({ name: '' })
+      const wrapper = mount(Element, {
+        props: {
+          element: {
+            name: 'name',
+            definition: { component: MockInput, description: 'We never share this.' },
+          },
+          form,
+        },
+      })
+
+      const description = wrapper.find('p')
+      expect(description.exists()).toBe(true)
+      expect(description.text()).toBe('We never share this.')
+      expect(description.attributes('id')).toBe('test-name-description')
+    })
+
+    it('does not render description for nested layout elements', () => {
+      const form = createMockForm({ name: '' })
+      const wrapper = mount(Element, {
+        props: {
+          element: {
+            name: 'group',
+            definition: {
+              component: MockInput,
+              description: 'ignored',
+              schema: { name: { component: MockInput } },
+            },
+          },
+          form,
+        },
+      })
+
+      expect(wrapper.find('p').exists()).toBe(false)
+    })
+
     it('hides label for hidden inputs', () => {
       const form = createMockForm({ name: '' })
       const wrapper = mount(Element, {

@@ -27,6 +27,7 @@ Requires `@codinglabsau/gooey` for UI components. See the [installation guide](h
 - Schema-based form definitions
 - Automatic model binding and validation
 - Built-in error display
+- Inline field descriptions (helper text)
 - Nested schemas with Grid and Section components
 - Laravel Precognition support for real-time validation
 - Conditional field visibility
@@ -49,8 +50,8 @@ const schema = useSchema({
 ```
 
 In development a warning is logged when a top-level key is neither a recognised config key
-(`component`, `props`, `value`, `label`, `visible`, `alert`, `fieldset`, `schema`, `events`,
-`checked`, `items`) nor a declared prop of the component, so silent drops are easy to catch.
+(`component`, `props`, `value`, `label`, `description`, `visible`, `alert`, `fieldset`, `schema`,
+`events`, `checked`, `items`) nor a declared prop of the component, so silent drops are easy to catch.
 
 ## Development
 

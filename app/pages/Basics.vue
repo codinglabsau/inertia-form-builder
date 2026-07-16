@@ -60,6 +60,23 @@ const labelsSchema = useSchema({
   },
 })
 
+const descriptionsSchema = useSchema({
+  username: {
+    component: Input,
+    description: 'Public — visible on your profile.',
+  },
+  api_token: {
+    component: Input,
+    label: 'API token',
+    description:
+      'Store this somewhere safe. It grants full access to your account and is only shown once, so copy it now — you will not be able to see it again after leaving this page.',
+  },
+  nickname: {
+    component: Input,
+    // no description — renders with nothing extra
+  },
+})
+
 /* eslint-disable no-useless-escape */
 const simpleCode = `<script setup>
 import { Input } from '@codinglabsau/gooey'
@@ -114,6 +131,24 @@ const labelsCode = `const schema = useSchema({
     value: 'invisible',
     label: false,
   },
+})`
+
+const descriptionsCode = `const schema = useSchema({
+  // Muted helper text rendered directly under the input
+  username: {
+    component: Input,
+    description: 'Public — visible on your profile.',
+  },
+
+  // Long descriptions wrap; sits above any validation error
+  api_token: {
+    component: Input,
+    label: 'API token',
+    description: 'Store this somewhere safe. It grants full access ...',
+  },
+
+  // No description — renders with nothing extra
+  nickname: Input,
 })`
 
 const propsCode = `const schema = useSchema({
@@ -233,6 +268,37 @@ const submit = () => alert('submitted')
       </div>
 
       <CodeBlock :code="labelsCode" />
+    </section>
+
+    <section class="space-y-6">
+      <div>
+        <Heading as="h2" class="text-xl">Descriptions</Heading>
+
+        <p class="mt-2 text-muted-foreground">
+          Add <code class="rounded bg-muted px-1">description</code> to render muted helper text
+          directly under the input. It sits above any validation error, honours newlines, and is
+          wired for <code class="rounded bg-muted px-1">aria-describedby</code>. Omit it and nothing
+          extra renders.
+        </p>
+      </div>
+
+      <div class="grid gap-6 lg:grid-cols-2">
+        <Card>
+          <CardContent class="pt-6">
+            <form @submit.prevent="submit">
+              <FormBuilder :schema="descriptionsSchema" />
+            </form>
+          </CardContent>
+        </Card>
+
+        <CodeBlock
+          :code="JSON.stringify(descriptionsSchema.form.data(), null, 2)"
+          lang="json"
+          :copyable="false"
+        />
+      </div>
+
+      <CodeBlock :code="descriptionsCode" />
     </section>
 
     <section class="space-y-6">
