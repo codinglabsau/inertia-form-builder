@@ -111,21 +111,21 @@ const schema = useSchema('post', '/users', {
       <ul class="list-inside list-disc space-y-1 text-muted-foreground">
         <li>
           <code class="rounded bg-muted px-1">PrimaryButton</code>
- &rarr;
+          &rarr;
           <code class="rounded bg-muted px-1">Button</code>
         </li>
 
         <li>
           <code class="rounded bg-muted px-1">Error</code>
- &rarr;
+          &rarr;
           <code class="rounded bg-muted px-1">FieldError</code>
         </li>
 
         <li>
           <code class="rounded bg-muted px-1">WarningAlert</code>
- &rarr;
+          &rarr;
           <code class="rounded bg-muted px-1">Alert</code>
- (with
+          (with
           <code class="rounded bg-muted px-1">variant="warning"</code>)
         </li>
       </ul>
@@ -163,9 +163,9 @@ const schema = useSchema('post', '/users', {
       <p class="text-muted-foreground">
         If using both
         <code class="rounded bg-muted px-1">showLabel: false</code>
- and
+        and
         <code class="rounded bg-muted px-1">label: 'Text'</code>
-, move the display label to
+        , move the display label to
         <code class="rounded bg-muted px-1">props</code>:
       </p>
 
@@ -192,10 +192,7 @@ const schema = useSchema('post', '/users', {
       <p class="text-muted-foreground">
         Replace <code class="rounded bg-muted px-1">precognitive</code>
 
-        /<code
-          class="rounded bg-muted px-1"
-          >precognitiveEvent</code
-        >
+        /<code class="rounded bg-muted px-1">precognitiveEvent</code>
 
         with <code class="rounded bg-muted px-1">events</code>:
       </p>
@@ -264,9 +261,11 @@ const schema = useSchema('post', '/users', {
             </tr>
 
             <tr>
-              <td class="px-4 py-2"><code>precognitive</code>
+              <td class="px-4 py-2">
+                <code>precognitive</code>
 
-               / <code>precognitiveEvent</code></td>
+                / <code>precognitiveEvent</code>
+              </td>
 
               <td class="px-4 py-2"><code>events: { blur: (form, name) => ... }</code></td>
             </tr>

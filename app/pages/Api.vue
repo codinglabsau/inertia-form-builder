@@ -478,20 +478,17 @@ form._prefix             // e.g. "xkqwmz" — used by Element.vue for id attrs`
         <p class="text-muted-foreground">
           Muted helper text rendered directly under the input, above any alert or validation error.
           Newlines are honoured (<code class="rounded bg-muted px-1">white-space: pre-line</code>
-),
+ ),
           and the paragraph is given an <code class="rounded bg-muted px-1">id</code>
- of
+          of
           <code class="rounded bg-muted px-1">{elementId}-description</code>
           for
           <code class="rounded bg-muted px-1">aria-describedby</code>
- wiring. Ignored on nested
-          elements (<code class="rounded bg-muted px-1">Grid</code>
 
-           /<code
-            class="rounded bg-muted px-1"
-            >Section</code
-          >
-), which describe a group rather than a single input &mdash; use Section's own
+          wiring. Ignored on nested elements (<code class="rounded bg-muted px-1">Grid</code>
+
+          /<code class="rounded bg-muted px-1">Section</code>
+          ), which describe a group rather than a single input &mdash; use Section's own
           <code class="rounded bg-muted px-1">description</code> prop there.
         </p>
 
