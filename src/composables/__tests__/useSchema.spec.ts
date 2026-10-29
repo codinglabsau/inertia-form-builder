@@ -125,6 +125,25 @@ describe('useSchema', () => {
       expect(schema.form.street).toBe('Main St')
       expect(schema.form.city_id).toBe(5)
     })
+
+    it('keeps array and plain object fieldset values as-is', () => {
+      const schema = useSchema({
+        variant: {
+          component: MockInput,
+          fieldset: {
+            options: ['Small', 'Large'],
+            empty: [],
+            meta: { colour: 'red' },
+            config: { value: 'unwrapped' },
+          },
+        },
+      })
+
+      expect(schema.form.options).toEqual(['Small', 'Large'])
+      expect(schema.form.empty).toEqual([])
+      expect(schema.form.meta).toEqual({ colour: 'red' })
+      expect(schema.form.config).toBe('unwrapped')
+    })
   })
 
   describe('reactivity', () => {

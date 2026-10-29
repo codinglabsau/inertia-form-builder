@@ -81,6 +81,7 @@ const computedProps = computed(() => {
   addIfExpected('form', props.form)
   addIfExpected('schema', definition.schema)
   addIfExpected('error', errorBag.value[0] ?? null)
+  addIfExpected('description', definition.description)
 
   // User-specified props — always forward (HTML attrs like disabled, readonly fall through)
   if (definition.props) {
@@ -190,10 +191,15 @@ const label = computed(() => {
 
 const isNested = computed(() => !!props.element.definition.schema)
 
+// Components that declare a `description` prop (e.g. Section) render it themselves.
+const componentRendersDescription = computed(
+  () => !!props.element.definition.component?.props?.hasOwnProperty('description'),
+)
+
 // Muted helper text rendered directly under the input. Suppressed for nested
 // layout elements (Grid/Section) — those have no single input to describe.
 const description = computed(() => {
-  if (isNested.value) return null
+  if (isNested.value || componentRendersDescription.value) return null
   return props.element.definition.description || null
 })
 

@@ -179,6 +179,54 @@ describe('Element', () => {
       expect(wrapper.find('p').exists()).toBe(false)
     })
 
+    it('forwards description to a nested layout component that declares it', () => {
+      const MockSection = defineComponent({
+        props: { schema: Object, form: Object, description: String },
+        setup(props) {
+          return () => h('section', {}, props.description)
+        },
+      })
+      const form = createMockForm({ name: '' })
+      const wrapper = mount(Element, {
+        props: {
+          element: {
+            name: 'group',
+            definition: {
+              component: MockSection,
+              description: 'Grouped fields.',
+              schema: { name: { component: MockInput } },
+            },
+          },
+          form,
+        },
+      })
+
+      expect(wrapper.find('section').text()).toBe('Grouped fields.')
+      expect(wrapper.find('p').exists()).toBe(false)
+    })
+
+    it('lets an input that declares description render it instead of the helper text', () => {
+      const DescribedInput = defineComponent({
+        props: { modelValue: String, description: String },
+        setup(props) {
+          return () => h('label', {}, props.description)
+        },
+      })
+      const form = createMockForm({ agree: '' })
+      const wrapper = mount(Element, {
+        props: {
+          element: {
+            name: 'agree',
+            definition: { component: DescribedInput, label: false, description: 'Required.' },
+          },
+          form,
+        },
+      })
+
+      expect(wrapper.find('label').text()).toBe('Required.')
+      expect(wrapper.find('p').exists()).toBe(false)
+    })
+
     it('hides label for hidden inputs', () => {
       const form = createMockForm({ name: '' })
       const wrapper = mount(Element, {

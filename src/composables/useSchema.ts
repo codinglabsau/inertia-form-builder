@@ -81,6 +81,13 @@ const randomStringGenerator = (length: number): string => {
   return result
 }
 
+/** A `{ model?, value? }` config object, as opposed to a raw value such as an array or plain object */
+const isFieldsetConfig = (value: any): value is { model?: string; value?: any } =>
+  !!value &&
+  typeof value === 'object' &&
+  !Array.isArray(value) &&
+  ('model' in value || 'value' in value)
+
 /** Extracts initial form field values from element definitions */
 const prepareFields = (elements: ElementMap): Record<string, any> => {
   const result: Record<string, any> = {}
@@ -104,13 +111,12 @@ const prepareFields = (elements: ElementMap): Record<string, any> => {
     const fieldset = element?.fieldset as Fieldset
     if (fieldset) {
       for (const [fieldsetKey, fieldsetValue] of Object.entries(fieldset)) {
-        if (fieldsetValue && typeof fieldsetValue === 'object' && fieldsetValue.model) {
+        if (isFieldsetConfig(fieldsetValue) && fieldsetValue.model) {
           result[fieldsetValue.model] = fieldsetValue.value ?? null
         } else {
-          result[fieldsetKey] =
-            fieldsetValue && typeof fieldsetValue === 'object'
-              ? (fieldsetValue.value ?? null)
-              : fieldsetValue
+          result[fieldsetKey] = isFieldsetConfig(fieldsetValue)
+            ? (fieldsetValue.value ?? null)
+            : fieldsetValue
         }
       }
       continue
