@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // @ts-ignore - gooey types use unresolved path aliases
-import { Button } from '@codinglabsau/gooey'
+import { Button, Spinner } from '@codinglabsau/gooey'
 import type { Schema, Element as ElementType } from '../composables/useSchema'
 import Element from './Element.vue'
 import { computed } from 'vue'
@@ -37,7 +37,8 @@ const elements = computed<ElementType[]>(() => {
     <slot name="actions-wrapper" :form="schema.form">
       <div class="flex justify-end gap-2">
         <slot name="actions" :form="schema.form">
-          <Button type="submit" :loading="schema.form.processing">
+          <Button type="submit" :disabled="schema.form.processing">
+            <Spinner v-show="schema.form.processing" />
             {{ submit }}
           </Button>
         </slot>

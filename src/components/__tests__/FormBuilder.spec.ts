@@ -6,9 +6,14 @@ import FormBuilder from '../FormBuilder.vue'
 // Mock gooey Button
 vi.mock('@codinglabsau/gooey', () => ({
   Button: defineComponent({
-    props: ['type', 'loading'],
+    props: ['type'],
     setup(_, { slots }) {
       return () => h('button', { type: 'submit' }, slots.default?.())
+    },
+  }),
+  Spinner: defineComponent({
+    setup() {
+      return () => h('svg', { class: 'spinner' })
     },
   }),
   FieldError: defineComponent({
@@ -116,6 +121,29 @@ describe('FormBuilder', () => {
       })
 
       expect(wrapper.find('button').text()).toBe('Create')
+    })
+
+    it('enables the submit button and hides the spinner while idle', () => {
+      const schema = createMockSchema({ name: MockInput })
+
+      const wrapper = mount(FormBuilder, {
+        props: { schema },
+      })
+
+      expect(wrapper.find('button').attributes('disabled')).toBeUndefined()
+      expect(wrapper.find('.spinner').isVisible()).toBe(false)
+    })
+
+    it('disables the submit button and shows the spinner while processing', () => {
+      const schema = createMockSchema({ name: MockInput })
+      schema.form.processing = true
+
+      const wrapper = mount(FormBuilder, {
+        props: { schema },
+      })
+
+      expect(wrapper.find('button').attributes('disabled')).toBeDefined()
+      expect(wrapper.find('.spinner').isVisible()).toBe(true)
     })
   })
 
